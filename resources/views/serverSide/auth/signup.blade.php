@@ -6,12 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <title>Document</title>
+    <title>PetSo - Sign Up</title>
 </head>
 <body>
-    {{-- h-[780px] --}}
-
-    <section class="w-full h-[1034px] flex items-center justify-center bg-[url('https://i.pinimg.com/564x/c3/c0/d7/c3c0d727075049f29d42f2ab72fff4c1.jpg')]">
+    <section class="w-full h-[1034px] flex items-center justify-center bg-cover bg-[url('image/backgroundSignup.jpeg')]">
         <div class="w-[580px] bg-slate-50 rounded-2xl p-10">
             <form class="w-full">
                 <h1 class="text-3xl font-bold text-center mb-10">Sign Up</h1>
