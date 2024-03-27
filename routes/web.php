@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
@@ -34,10 +35,16 @@ Route::middleware('auth')->group(function () {
     Route::post('auth', [AuthenticatedSessionController::class, 'destroy'])->name('auth.logout');
 
     
-    // Our resource routes
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
-    Route::resource('products', ProductController::class);
 });
+
+Route::get('/dashboard/category/index', [CategoryController::class, 'index']);
+Route::get('/dashboard/category/create', [CategoryController::class, 'create']);
+Route::post('/dashboard/category/create', [CategoryController::class, 'store']);
+Route::post('/dashboard/category/index/{id}', [CategoryController::class, 'destroy']);
+Route::get('/dashboard/category/update/{id}', [CategoryController::class, 'edit']);
+Route::post('/dashboard/category/update/{id}', [CategoryController::class, 'update']);
+Route::get('/dashboard/category/show/{id}', [CategoryController::class, 'show']);
 
 require __DIR__.'/auth.php';
