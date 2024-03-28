@@ -27,7 +27,6 @@
                         <form class="form-group mt-" method="post"
                             action="{{ url('/dashboard/category/update/' . $category->id) }}" enctype="multipart/form-data">
                             {!! csrf_field() !!}
-
                             <div class="form-group">
                                 <label for="formGroupExampleInput2">Name*</label>
                                 <input class="form-control mt-2" value="{{ $category->name }}" type="text" name="name" id="name" required placeholder="Name">

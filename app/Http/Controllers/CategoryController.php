@@ -42,20 +42,19 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id):View
+    public function show(string $id): View
     {
-        $categories = Category::all();
-        return view('/dashboard/category/show', ['categories' => $categories]);
+        $category = Category::findOrFail($id);
+        return view('/dashboard/category/show', ['category' => $category]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id):View
+    public function edit(string $id): View
     {
-        $categories = Category::all();
-        return view('/dashboard/category/update', ['categories' => $categories]);
-
+        $category = Category::findOrFail($id);
+        return view('/dashboard/category/update', ['category' => $category]);
     }
 
     /**

@@ -3,110 +3,86 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $products = Product::latest()->paginate(50);
-        return view('products.index', compact('products'));
+        return view('/dashboard/products/index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('products.create');
+        $categories = Category::all();
+        return view('/dashboard/products/create', compact('categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        request()->validate([
-            'name' => 'required',
-            'price' => 'required',
-            'detail' => 'required',
-            'size' => 'required',
-            'images' => 'required',
+        // Upload and save the image
+        $nameImage = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images'), $nameImage);
+
+        // Retrieve or create the category based on the input
+        $category = Category::firstOrCreate(['name' => $request->input('category')]);
+
+        // Create a new product instance
+        $product = new Product([
+            'name' => $request->input('name'),
+            'price' => $request->input('price'),
+            'detail' => $request->input('detail'),
+            'size' => $request->input('size'),
+            'image' => $nameImage,
+            'category_id' => $category->id, // Assign the category ID
         ]);
 
-        Product::create($request->all());
+        // Save the product
+        $product->save();
 
-        return redirect()->route('products.index')
-            ->with('success', 'Product created successfully.');
+        // Redirect with success message
+        return redirect('/dashboard/products/index')->with('success', 'Product created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
+    public function show(string $id): View
     {
-        return view('products.show', compact('product'));
+        $products = Product::findOrFail($id);
+        $categories = Category::all();
+        return view('/dashboard/products/show', compact('products', 'categories'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
+    public function edit(string $id)
     {
-        return view('products.edit', compact('product'));
+        $products = Product::findOrFail($id);
+        $categories = Category::all();
+        return view('/dashboard/products/update', compact('products', 'categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, string $id): RedirectResponse
     {
-        request()->validate([
-            'name' => 'required',
-            'price' => 'required',
-            'detail' => 'required',
-            'size' => 'required',
-            'images' => 'required',
-        ]);
+        $products = Product::findOrFail($id);
 
-        $product->update($request->all());
-
-        return redirect()->route('products.index')
-            ->with('success', 'Product updated successfully');
+        $products->name = $request->input('name');
+        $products->price = $request->input('price');
+        $products->detail = $request->input('detail');
+        $products->size = $request->input('size');
+        if ($request->hasFile('images')) {
+            $nameImage = time().'.'.$request->image->extension();  
+            $request->image->move(public_path('images'), $nameImage);
+            $products->image = $nameImage;
+        }
+        $products->category->name = $request->input('category');
+        $products->save();
+        return redirect('/dashboard/products/index')->with('success', 'Product updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Product $product)
+    public function destroy(string $id): RedirectResponse
     {
-        $product->delete();
-
-        return redirect()->route('products.index')
-            ->with('success', 'Product deleted successfully');
+        Product::destroy($id);
+        return redirect('/dashboard/products/index/')->with('success', 'Product deleted successfully.');
     }
 }

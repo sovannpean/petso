@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('detail')->nullable();
             $table->string('size')->nullable();
             $table->string('images')->nullable();
+            $table->string('category_id')->nullable();
             $table->timestamps();
         });
     }
