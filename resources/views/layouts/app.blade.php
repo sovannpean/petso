@@ -19,7 +19,7 @@
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="bg-gray-100">
+        <div>
             @include('layouts.navigation')
 
             <!-- Page Heading -->
