@@ -1,3 +1,3 @@
 <x-app-layout>
-    <h1>home</h1>
+    <h1>Cat</h1>
 </x-app-layout>
