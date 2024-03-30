@@ -22,15 +22,12 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 //     return view('/pages/welcom');
 // });
 
+Route::get('/', function () {
+    return view('/pages/homePage');
+});
 Route::get('/cat', function () {
     return view('/pages/catPage');
 });
-Route::get('/', function () {
-    return view('pages/homePage');
-})->middleware(['auth', 'verified'])->name('homePage');
-// Route::get('/cat', function () {
-//     return view('pages/catPage');
-// })->middleware(['auth', 'verified'])->name('homePage');
 
 // Dashboard
 Route::get('/dashboard', function () {

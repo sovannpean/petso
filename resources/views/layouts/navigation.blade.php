@@ -6,11 +6,18 @@
         <div class="flex justify-between items-center">
             <div class="flex items-center lg:gap-32">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('homePage') }}">
-                        <x-application-logo class="block w-auto fill-current text-gray-800" />
+                <div>
+                    <a href="/">
+                        <x-application-logo />
                     </a>
                 </div>
+
+                {{-- <div class="shrink-0 flex items-center">
+                    <a href="{{ route('dashboard') }}">
+                        <x-application-logo class="block w-auto fill-current text-gray-800" />
+                    </a>
+                </div> --}}
+                
 
                 <!-- Navigation Links -->
                 {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -41,11 +48,11 @@
                                             <div>{{ Auth::user()->name }}</div>
                                         </div>
                                                                    
-                                        <div class="ms-1">
+                                        {{-- <div class="ms-1">
                                             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                             </svg>
-                                        </div>
+                                        </div> --}}
                                     </button>
                                 </x-slot>
             

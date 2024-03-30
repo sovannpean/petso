@@ -7,6 +7,9 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        {{-- logo --}}
+        <link rel="shortcut icon" href="{{asset('image/main-logo.jpg')}}" type="image/x-icon">
+
         {{-- Icon Link --}}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -23,13 +26,13 @@
             @include('layouts.navigation')
 
             <!-- Page Heading -->
-            {{-- @if (isset($header))
+            @if (isset($header))
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
-            @endif --}}
+            @endif
 
             <!-- Page Content -->
             <main>
