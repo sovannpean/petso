@@ -27,6 +27,16 @@
             </div>
         </div>
 
+        {{-- new products --}}
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 my-5 place-items-center gap-4">
+
+            {{-- Loop Here --}}
+            <x-cart-new />
+            <x-cart-new />
+            <x-cart-new />
+            <x-cart-new />
+        </div>
+
     </section>
     
 </x-app-layout>
