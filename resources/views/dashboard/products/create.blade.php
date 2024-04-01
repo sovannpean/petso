@@ -21,12 +21,12 @@
 
                 <div class="form-group">
                     <label for="price">Price *</label>
-                    <input class="form-control mt-2" type="number" name="price" id="price" required placeholder="Price">
+                    <input class="form-control mt-2" type="text" name="price" id="price" required placeholder="Price">
                 </div>
 
                 <div class="form-group">
                     <label for="size">Size *</label>
-                    <input class="form-control mt-2" type="number" name="size" id="size" required placeholder="Size">
+                    <input class="form-control mt-2" type="text" name="size" id="size" required placeholder="Size">
                 </div>
 
                 <div class="form-group mt-4">
