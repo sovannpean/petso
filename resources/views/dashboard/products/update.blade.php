@@ -45,7 +45,7 @@
                         <label for="image" class="cursor-pointer">
                             <div class="w-[450px] h-[430px] border-2 border-gray-300 border-dashed flex flex-col items-center justify-center relative">
                                 <i class="fa-regular fa-image text-9xl text-gray-400"></i>
-                                <img src="" id="image-preview" class="text-white absolute">
+                                <img src="" id="image-preview" class="text-white absolute w-full">
                                 <p class="mb-2 text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                                 <input class="form-control hidden" type="file" name="image" id="image" accept="images/*" onchange="showFile(event)" required>
                             </div>
@@ -56,7 +56,7 @@
                         {{-- detail --}}
                         <div class="form-group">
                             <label for="detail">Detail</label>
-                            <textarea class="form-control w-full mt-2 bg-gray-100 p-4 rounded-lg" rows="14" name="detail" id="detail" required placeholder="{{ $products->detail }}"></textarea>
+                            <textarea class="form-control w-full mt-2 bg-gray-100 p-4 rounded-lg" rows="14" name="detail" id="detail" required placeholder="Detail your product">{{ $products->detail }}</textarea>
                         </div>
 
                         {{-- Category --}}
