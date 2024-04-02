@@ -1,49 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-           <!-- Core theme CSS (includes Bootstrap)-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    </head>
-    <body>
-        <main class="mb-4 mt-5">
-            <div class="container">
+@extends('dashboard')
 
-                <div class="card mt-5" onclick="history.back()" style="cursor: pointer;">
-                    <div class="card-header">
-                        Back
+@section('content')
+    <section class="max-w-screen-2xl mx-auto px-10">
+        <div>
+            <a href="javascript:void(0);" onclick="history.back()">
+                <i class="fa-solid fa-arrow-left text-2xl bg-blue-300 px-4 py-2.5 text-gray-700 hover:bg-blue-400 rounded-full"></i>
+            </a>
+        </div>
+
+        {{-- form --}}
+        <div class="mt-10 border">
+            <form class="form-group" method="POST" action="{{url('/dashboard/category/create')}}" enctype="multipart/form-data">
+
+                {!! csrf_field() !!}
+                <div class="bg-blue-200 py-4 text-center text-xl font-semibold">
+                    <h1>Create New Category</h1>
+                </div>
+                <div class="flex items-center my-5 justify-between px-10">
+                    <div class="flex flex-col gap-2">
+                        <label for="crate-category">Name</label>
+                        <input class="form-control bg-gray-100 py-4 px-2 w-[400px]" type="text" name="name" id="name" required placeholder="Name of Category">
+                    </div>
+                    <div>
+                        <button style="float: right;" class="btn btn-primary text-uppercase" type="submit" name="submit">Create</button>
                     </div>
                 </div>
-            
-                <form class="form-group" method="POST" action="{{url('/dashboard/category/create')}}" enctype="multipart/form-data">
-                    {!! csrf_field() !!}
-                    <div class="card mb-4 mt-5">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col">
-                                    <h2>Create Category</h2>
-                                </div>
-                                <div class="col">
-                                    <button style="float: right;" class="btn btn-primary text-uppercase" type="submit" name="submit">Create</button>
-                                    {{-- <a style="float: right;" class="btn btn-primary" href="{{url('admin/Post/newpost')}}">New Post</a> --}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body mt-3">
-                            <div class="form-group">
-                                <div class="col-4">
-                                    <input  class="form-control mt-2 " type="text" name="name" id="name" required placeholder="Create Catecgory ">
-                                </div>
-            
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                    </div>
-                </form>
-               </div>
-        </main>
-    </body>
-</html>
+            </form>
+        </div>
+    </section>
+@endsection 
 

@@ -1,75 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('dashboard')
 
-<head>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-</head>
-
-<body>
-    <div class="container mt-5">
-        <div class="card mt-5" onclick="history.back()" style="cursor: pointer;">
-            <div class="card-header">
-                Back
+@section('content')
+    <section class="max-w-screen-2xl mx-auto">
+        <div class="flex justify-between items-center px-10">
+            <a href="javascript:void(0);" onclick="history.back()">
+                <i class="fa-solid fa-arrow-left text-2xl bg-blue-300 px-4 py-2.5 text-gray-700 hover:bg-blue-400 rounded-full"></i>
+            </a>
+            <div class="flex items-center gap-2 font-semibold">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <h1>Please update the Pets information</h1>
             </div>
         </div>
 
-        <div class="card mb-4 mt-5">
-            <div class="card-header">
-                <h2>Please update the Pets information</h2>
-            </div>
+        {{-- form --}}
+        <div class="mt-10 px-10">
+            <form action="{{ url('/dashboard/products/update/' . $products->id) }}" method="post" action="" enctype="multipart/form-data">
 
-            <div class="card-body mt-2">
-                <div class="row">
-                    <div class="col">
-                        <form class="form-group mt-" method="post"
-                            action="{{ url('/dashboard/products/update/' . $products->id) }}" enctype="multipart/form-data">
-                            {!! csrf_field() !!}
+                {!! csrf_field() !!}
 
-                            <div class="form-group">
-                                <label for="formGroupExampleInput2">Name *</label>
-                                <input class="form-control mt-2" value="{{ $products->name }}" type="text" name="name" id="name" required placeholder="Name">
-                            </div>
-
-                            <div class="form-group mt-4">
-                                <label for="formGroupExampleInput2">Price *</label>
-                                <textarea class="form-control mt-2" name="age" id="age" required placeholder="Price">{{ $products->price }}</textarea>
-                            </div>
-
-                            <div class="form-group mt-4">
-                                <label for="formGroupExampleInput2">Size *</label>
-                                <textarea class="form-control mt-2" name="sex" id="sex" required placeholder="Size">{{ $products->size }}</textarea>
-                            </div>
-
-                            <div class="form-group mt-4">
-                                <label for="formGroupExampleInput2">Detail *</label>
-                                <textarea class="form-control mt-2" name="vaccine" id="vaccine" required placeholder="Detail">{{ $products->detail }}</textarea>
-                            </div>
-
-                            <div class="form-group mt-4">
-                                <label for="image" class="form-label">Image *</label>
-                                <img src="" id="image-preview">
-                                <input class="form-control" type="file" name="image" id="image" 
-                                accept="images/*" onchange="showFile(event)" required>
-                            </div>
-                            <div class="form-group mt-4">
-                                <label for="formGroupExampleInput2">Category *</label>
-                                <textarea class="form-control mt-2" name="content" id="content" required placeholder="Content">{{ $products->category }}</textarea>
-                            </div>
-
-                            <button type="submit" name="submit" class="btn btn-primary mt-4">Update</button>
-                        </form>
+                <div class="flex justify-between">
+                    {{-- For name --}}
+                    <div class="flex flex-col">
+                        <label for="ename">Name</label>
+                        <input type="text" name="name" id="name" value="{{ $products->name }}" placeholder="Product Name" required class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-[450px]">
                     </div>
 
-                    <div class="col">
-                        <img style="border-radius: 10px; border: 1px solid black; max-height: 400px;" src="{{ asset('images/' . $products->images) }}" alt="" id="image-preview">
+                    {{-- For price --}}
+                    <div class="flex flex-col">
+                        <label for="price">Price</label>
+                        <input type="text" name="price" id="price" value="{{ $products->price }}" placeholder="Product Price" required class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-[450px]">
+                    </div>
+
+                    {{-- For size --}}
+                    <div class="flex flex-col">
+                        <label for="size">Size</label>
+                        <input type="text" name="size" id="size" value="{{ $products->size }}" placeholder="Product Size" required class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-[450px]">
                     </div>
                 </div>
-            </div>
+
+                <div class="mt-10 flex gap-10">
+                    {{-- image --}}
+                    <div>
+                        <label for="image" class="form-label">Image</label>
+                        <label for="image" class="cursor-pointer">
+                            <div class="w-[450px] h-[430px] border-2 border-gray-300 border-dashed flex flex-col items-center justify-center relative">
+                                <i class="fa-regular fa-image text-9xl text-gray-400"></i>
+                                <img src="" id="image-preview" class="text-white absolute">
+                                <p class="mb-2 text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                <input class="form-control hidden" type="file" name="image" id="image" accept="images/*" onchange="showFile(event)" required>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="w-full">
+                        {{-- detail --}}
+                        <div class="form-group">
+                            <label for="detail">Detail</label>
+                            <textarea class="form-control w-full mt-2 bg-gray-100 p-4 rounded-lg" rows="14" name="detail" id="detail" required placeholder="{{ $products->detail }}"></textarea>
+                        </div>
+
+                        {{-- Category --}}
+                        <div class="flex items-center justify-between mt-5 text-gray-200">
+                            <div class="flex gap-2 font-medium bg-blue-600 px-5 py-2.5 text-center rounded-lg">
+                                <label for="category">Category:</label><br>
+                                <select name="category_id" class="form-control hover:cursor-pointer bg-blue-600">
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <button type="submit" name="submit" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg px-5 py-2.5 text-center">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
-    </div>
+    </section>
 
     <script>
         function showFile(event) {
@@ -83,6 +91,5 @@
             reader.readAsDataURL(input.files[0]);
         }
     </script>
-</body>
-
+@endsection  
 
