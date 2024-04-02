@@ -60,7 +60,7 @@
 
                                 {{-- Image --}}
                                 <th scope="row" class="flex items-center justify-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <img src="{{asset('images/' . $item->image)}}" alt="pro-image" class="w-auto h-8 mr-3">
+                                    <img src="{{ asset('/images/' . $item->images) }}" height="50" width="50" onchange="showFile(event)" required>
                                 </th>
 
                                 {{-- Price --}}
@@ -96,11 +96,9 @@
 
                                 {{-- Categories --}}
                                 <td class="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    @if($item->category)
-                                        {{ $item->category->name }}
-                                    @else
-                                        Category not available
-                                    @endif
+                                    @foreach($categories as $category)
+                                    <div value="{{ $category->id }}">{{ $category->name }}</div>
+                                @endforeach
                                 </td>
 
                                 {{-- Show --}}
@@ -184,6 +182,18 @@
             </nav>
         </div>
     </section>
+    <script>
+        function showFile(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function () {
+                var dataURL = reader.result;
+                var output = document.getElementById('image-preview');
+                output.src = dataURL;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
 @endsection    
 
 {{-- @extends('dashboard')

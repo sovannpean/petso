@@ -77,11 +77,7 @@
                 </div>
             </form>
         </div>
-    </section>
-@endsection  
-
-@push('scripts')
-<script>
+        <script>
     function showFile(event) {
         var input = event.target;
         var reader = new FileReader();
@@ -94,4 +90,8 @@
         reader.readAsDataURL(input.files[0]);
     }
 </script>
+    </section>
+@endsection  
+
+@push('scripts')
 @endpush

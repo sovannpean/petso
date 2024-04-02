@@ -12,8 +12,9 @@ class ProductController extends Controller
 {
     public function index()
     {
+        $categories = Category::all();
         $products = Product::latest()->paginate(50);
-        return view('/dashboard/products/index', compact('products'));
+        return view('/dashboard/products/index', compact('products'), compact('categories'));
     }
 
     public function create()
@@ -24,27 +25,22 @@ class ProductController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        // Upload and save the image
         $nameImage = time() . '.' . $request->image->extension();
         $request->image->move(public_path('images'), $nameImage);
 
-        // Retrieve or create the category based on the input
         $category = Category::firstOrCreate(['name' => $request->input('category')]);
 
-        // Create a new product instance
         $product = new Product([
             'name' => $request->input('name'),
             'price' => $request->input('price'),
             'detail' => $request->input('detail'),
             'size' => $request->input('size'),
-            'image' => $nameImage,
-            'category_id' => $category->id, // Assign the category ID
+            'images' => $nameImage,
+            'category_id' => $category->id,
         ]);
 
-        // Save the product
         $product->save();
 
-        // Redirect with success message
         return redirect('/dashboard/products/index')->with('success', 'Product created successfully.');
     }
 

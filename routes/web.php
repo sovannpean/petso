@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OverViewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +24,9 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 //     return view('/pages/welcom');
 // });
 
-Route::get('/', function () {
-    return view('/pages/homePage');
-});
+// Route::get('/', function () {
+//     return view('/pages/homePage');
+// });
 Route::get('/cat', function () {
     return view('/pages/catPage');
 });
@@ -47,6 +49,7 @@ Route::middleware('auth')->group(function () {
 });
 require __DIR__.'/auth.php';
 
+//category
 Route::get('/dashboard/category/index', [CategoryController::class, 'index']);
 Route::get('/dashboard/category/create', [CategoryController::class, 'create']);
 Route::post('/dashboard/category/create', [CategoryController::class, 'store']);
@@ -55,6 +58,7 @@ Route::get('/dashboard/category/update/{id}', [CategoryController::class, 'edit'
 Route::post('/dashboard/category/update/{id}', [CategoryController::class, 'update']);
 Route::get('/dashboard/category/show/{id}', [CategoryController::class, 'show']);
 
+//product
 Route::get('/dashboard/products/index', [ProductController::class, 'index']);
 Route::get('/dashboard/products/create', [ProductController::class, 'create']);
 Route::post('/dashboard/products/create', [ProductController::class, 'store']);
@@ -62,4 +66,10 @@ Route::get('/dashboard/products/update/{id}', [ProductController::class, 'edit']
 Route::post('/dashboard/products/update/{id}', [ProductController::class, 'update']);
 Route::get('/dashboard/products/show/{id}', [ProductController::class, 'show']);
 Route::post('/dashboard/products/index/{id}', [ProductController::class, 'destroy']);
+
+//overView
+Route::get('/dashboard/overView/index', [OverViewController::class, 'index']);
+
+//page
+Route::get('/', [HomeController::class, 'index']);
 

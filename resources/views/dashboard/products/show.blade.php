@@ -16,23 +16,37 @@
         <div class="mt-20 grid grid-cols-2">
             {{-- For image --}}
             <div class="w-[600px] h-[450px] border-2 border-dashed border-rose-200">
-                <img src="/images/{{ $products->images }}" alt="Product" class="w-full h-full">
+                <img src="{{ asset('/images/' . $products->images) }}"height="50" width="auto" onchange="showFile(event)">
             </div>
 
             {{-- About product --}}
             <div class="text-lg font-medium">
                 <h1 class="text-2xl mb-5 font-semibold">For   : 
                     <label for="category" class="text-blue-700">
-                        {{ $products->category }}
+                        @foreach($categories as $category)
+                        <h1 value="{{ $category->id }}">{{ $category->name }}</h1>
+                    @endforeach
                     </label>
                 </h1>
                 <h1>Name  : {{ $products->name }}</h1>
                 <h1 class="text-rose-500">Price : {{ $products->price }}</h1>
                 <h1>Size  : {{ $products->size}}</h1>
                 <h1>Detail: {{ $products->detail}}</h1>
+                <h1 type="file" name="image" id="image" accept="images/*" onchange="showFile(event)" >Detail: {{ $products->images}}</h1>
             </div>
         </div>
         
     </section>
-
+    <script>
+        function showFile(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function () {
+                var dataURL = reader.result;
+                var output = document.getElementById('image-preview');
+                output.src = dataURL;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
 @endsection  
