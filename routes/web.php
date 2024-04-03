@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OverViewController;
 
@@ -72,4 +73,10 @@ Route::get('/dashboard/overView/index', [OverViewController::class, 'index']);
 
 //page
 Route::get('/', [HomeController::class, 'index']);
+
+//coupong
+Route::get('/dashboard/coupong/index', [CouponController::class, 'index']);
+Route::get('/dashboard/coupong/create', [CouponController::class, 'create']);
+Route::post('/dashboard/coupong/store', [CouponController::class, 'store'])->name('dashboard.coupong.store');
+
 
