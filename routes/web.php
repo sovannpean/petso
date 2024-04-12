@@ -77,6 +77,6 @@ Route::get('/', [HomeController::class, 'index']);
 //coupong
 Route::get('/dashboard/coupong/index', [CouponController::class, 'index']);
 Route::get('/dashboard/coupong/create', [CouponController::class, 'create']);
-Route::post('/dashboard/coupong/store', [CouponController::class, 'store'])->name('dashboard.coupong.store');
+Route::post('/dashboard/coupong/create', [CouponController::class, 'store']);
 
 

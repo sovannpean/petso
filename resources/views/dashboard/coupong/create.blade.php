@@ -11,7 +11,6 @@
                 <h1>Add A New Coupong</h1>
             </div>
         </div>
-
         {{-- form --}}
         <div class="mt-10 px-10">
             <form action="{{ route('dashboard.coupong.store') }}" method="post" id="discountForm" enctype="multipart/form-data">
@@ -27,11 +26,9 @@
                         {{-- For Discount --}}
                         <div class="flex flex-col mt-5">
                             <label for="size">Discount Amount</label>
-                            <input type="text" name="size" id="size" placeholder="Product Size" required class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-full">
+                            <input type="discount-amount" name="discount-amount" id="discount-amount" placeholder="" required class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-full">
                         </div>
-                        
                     </div>
-    
                     <div>
                         {{-- For name --}}
                         <div class="flex flex-col">
@@ -54,8 +51,7 @@
                         </div>
                     </div>
                 </div>
-                {{-- For Date --}}
-                
+                {{-- For Date --}} 
                 <div date-rangepicker class="grid grid-cols-3 mt-5">
                     <div class="relative">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
