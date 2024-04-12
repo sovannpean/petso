@@ -77,9 +77,9 @@ Route::get('/dashboard/overView/index', [OverViewController::class, 'index']);
 Route::get('/', [HomeController::class, 'index']);
 
 //coupong
-Route::get('/dashboard/coupong/index', [CcouponController::class, 'index']);
-Route::get('/dashboard/coupong/create', [CcouponController::class, 'create']);
-Route::post('/dashboard/coupong/create', [CcouponController::class, 'store']);
+// Route::get('/dashboard/coupong/index', [CcouponController::class, 'index']);
+// Route::get('/dashboard/coupong/create', [CcouponController::class, 'create']);
+// Route::post('/dashboard/coupong/create', [CcouponController::class, 'store']);
 
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
 Route::post('/events', [EventController::class, 'store'])->name('events.store');
