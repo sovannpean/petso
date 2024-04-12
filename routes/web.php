@@ -7,9 +7,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\CouponController;
+use App\Http\Controllers\CcouponController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OverViewController;
+use App\Http\Controllers\EventController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -75,8 +77,9 @@ Route::get('/dashboard/overView/index', [OverViewController::class, 'index']);
 Route::get('/', [HomeController::class, 'index']);
 
 //coupong
-Route::get('/dashboard/coupong/index', [CouponController::class, 'index']);
-Route::get('/dashboard/coupong/create', [CouponController::class, 'create']);
-Route::post('/dashboard/coupong/create', [CouponController::class, 'store']);
+Route::get('/dashboard/coupong/index', [CcouponController::class, 'index']);
+Route::get('/dashboard/coupong/create', [CcouponController::class, 'create']);
+Route::post('/dashboard/coupong/create', [CcouponController::class, 'store']);
 
-
+Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+Route::post('/events', [EventController::class, 'store'])->name('events.store');
