@@ -83,3 +83,9 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
 Route::post('/events', [EventController::class, 'store'])->name('events.store');
+
+
+use App\Http\Controllers\CouponController;
+
+Route::get('/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
+Route::post('/coupons', [CouponController::class, 'store'])->name('coupons.store');
