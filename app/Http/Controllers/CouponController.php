@@ -4,15 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Coupon;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class CouponController extends Controller
 {
+    public function index():View
+    {
+        $coupons = Coupon::all();
+        return view('dashboard.coupons.index', compact('coupons') );
+    } 
+    
     public function create()
     {
-        return view('coupons.create');
+        return view('dashboard.coupons.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request):RedirectResponse
     {
         $request->validate([
             'code' => 'required|unique:coupons',
@@ -24,7 +32,19 @@ class CouponController extends Controller
         ]);
 
         Coupon::create($request->all());
-
-        return redirect()->route('coupons.create')->with('success', 'Coupon created successfully.');
+        return redirect('/dashboard/coupons/index')->with('success', 'Product created successfully.');
     }
+
+    public function show(string $id): View
+    {
+        $coupons = Coupon::findOrFail($id);
+        return view('dashboard.coupons.show', compact('coupons',) );
+    }
+
+    public function destroy(string $id): RedirectResponse
+    {
+        Coupon::destroy($id);
+        return redirect('/dashboard/coupons/index')->with('success', 'Product deleted successfully.');
+    }
+
 }

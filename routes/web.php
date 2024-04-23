@@ -87,5 +87,7 @@ Route::post('/events', [EventController::class, 'store'])->name('events.store');
 
 use App\Http\Controllers\CouponController;
 
-Route::get('/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
-Route::post('/coupons', [CouponController::class, 'store'])->name('coupons.store');
+Route::get('/dashboard/coupons/index', [CouponController::class, 'index'])->name('coupons.index');
+Route::get('/dashboard/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
+Route::post('/dashboard/coupons', [CouponController::class, 'store'])->name('coupons.store');
+Route::get('/dashboard/coupons/show', [CouponController::class, 'show'])->name('coupons.show');
