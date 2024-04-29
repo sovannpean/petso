@@ -65,7 +65,7 @@
                                 <label for="category">Category:</label><br>
                                 <select name="category_id" class="form-control hover:cursor-pointer bg-blue-600">
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        <option value="{{ $category->name }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

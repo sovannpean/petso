@@ -27,9 +27,9 @@ class ProductController extends Controller
     {
         $nameImage = time() . '.' . $request->image->extension();
         $request->image->move(public_path('images'), $nameImage);
-
-        $category = Category::firstOrCreate(['name' => $request->input('category')]);
-
+    
+        $category = Category::firstOrCreate(['name' => $request->input('category_name')]);
+    
         $product = new Product([
             'name' => $request->input('name'),
             'price' => $request->input('price'),
@@ -38,9 +38,9 @@ class ProductController extends Controller
             'images' => $nameImage,
             'category_id' => $category->id,
         ]);
-
+    
         $product->save();
-
+    
         return redirect('/dashboard/products/index')->with('success', 'Product created successfully.');
     }
 

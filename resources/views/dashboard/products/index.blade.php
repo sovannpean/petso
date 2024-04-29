@@ -95,11 +95,7 @@
                                 </td>
 
                                 {{-- Categories --}}
-                                <td class="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    @foreach($categories as $category)
-                                    <div value="{{ $category->id }}">{{ $category->name }}</div>
-                                @endforeach
-                                </td>
+                                <td class="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $item->category->name }}</td>
 
                                 {{-- Show --}}
                                 <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
