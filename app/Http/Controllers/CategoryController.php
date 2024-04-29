@@ -10,6 +10,12 @@ use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
+
+    public function homeshow()
+    {
+        $categories = Category::all();
+        return view('/components/nav-menu', compact('categories'));
+    }
     /**
      * Display a listing of the resource.
      */

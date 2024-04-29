@@ -75,6 +75,8 @@ Route::get('/dashboard/overView/index', [OverViewController::class, 'index']);
 
 //page
 Route::get('/', [HomeController::class, 'index']);
+//homePage
+Route::get('/components/nav-menu', [CategoryController::class, 'homeshow'])->name('menu');
 
 //coupong
 // Route::get('/dashboard/coupong/index', [CcouponController::class, 'index']);

@@ -1,6 +1,3 @@
-{{-- @php
-    $isActive = true;
-@endphp --}}
 <nav class="border-b border-gray-100 bg-white dark:bg-gray-900 w-full dark:border-gray-600">
     <div class="max-w-screen-2xl mx-auto m-5 flex items-center gap-10">
         <div>            
@@ -12,11 +9,11 @@
                 </svg>
             </button>
             <div id="dropdown-pet" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="categories">
-                    {{-- @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach --}}
-                </ul>
+                {{-- <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="categories">
+                    @foreach($categories as $category)
+                        <li><a href=" $category->name) }}">{{ $category->name }}</a></li>
+                    @endforeach
+                </ul> --}}
             </div>
         </div>
 

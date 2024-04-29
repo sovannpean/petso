@@ -63,7 +63,7 @@
                         <div class="flex items-center justify-between mt-5 text-gray-200">
                             <div class="flex gap-2 font-medium bg-blue-600 px-5 py-2.5 text-center rounded-lg">
                                 <label for="category">Category:</label><br>
-                                <select name="category_id" class="form-control hover:cursor-pointer bg-blue-600">
+                                <select name="category_name" class="form-control hover:cursor-pointer bg-blue-600">
                                     @foreach($categories as $category)
                                         <option value="{{ $category->name }}">{{ $category->name }}</option>
                                     @endforeach
