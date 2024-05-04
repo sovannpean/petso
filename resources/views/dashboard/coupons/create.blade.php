@@ -36,7 +36,7 @@
         </div>
         <div>
             <label for="discount_amount">Discount Amount:</label>
-            <input type="number" id="discount_amount" name="discount_amount" min="0" step="0.01" required class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-full">
+            <input type="text" id="discount_amount" name="discount_amount" min="0" step="0.01" required class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-full">
         </div>
         <div>
             <label for="status">Status:</label>
