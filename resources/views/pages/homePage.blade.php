@@ -4,7 +4,7 @@
             <nav class="absolute top-40 right-10">
                 <h1 class="mb-4 text-center text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-[#192a82] from-[#828ecf]">Chose Pets</span></h1>
                 <div class="flex justify-end gap-5 mt-5">
-                    <div class="bg-[#115542] hover:bg-[#226753] px-5 py-2 rounded-lg">
+                    <div class="bg-[#6a5242] hover:bg-[#226753] px-5 py-2 rounded-lg">
                         <a href="#">
                             <i class="fa-solid fa-bowl-rice text-white text-2xl pr-2"></i>
                             <label for="all" class="text-xl text-white">All</label>
@@ -35,7 +35,7 @@
                 <div class="mb-5">
                     <div class="flex items-center justify-between">
                         <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
-                        <h1 class="text-2xl font-semibold">For Dog</h1>
+                        <h1 class="text-2xl font-semibold">All Products</h1>
                         <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
                     </div>
                     <div class="text-center text-[#af9a4f]">
