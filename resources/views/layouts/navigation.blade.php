@@ -1,6 +1,6 @@
 <x-top-nav />
 
-<nav x-data="{ open: false }" class="bg-white pt-5">
+<nav x-data="{ open: false }" class="bg-white py-5">
     <!-- Primary Navigation Menu -->
     <div class="max-w-screen-xl mx-auto">
         <div class="flex justify-between items-center">

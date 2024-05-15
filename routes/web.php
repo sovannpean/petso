@@ -33,6 +33,9 @@ use App\Http\Controllers\EventController;
 Route::get('/cat', function () {
     return view('/pages/catPage');
 });
+Route::get('/detail-product', function () {
+    return view('/pages/detailproductPage');
+});
 
 // Dashboard
 Route::get('/dashboard', function () {

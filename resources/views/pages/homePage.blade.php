@@ -48,14 +48,14 @@
                     {{-- loop --}}
                     <div class="border border-gray-200">
                         <div>
-                            <a href="#">
+                            <a href="/detail-product">
                                 <img src="{{asset('image/dogfood3.jpeg')}}" alt="" class="w-full h-[350px] object-cover">
                             </a>
                         </div>
                         <div class="bg-[#48b194]">
                             <div class="flex justify-between items-center p-4">
                                 <div>
-                                    <a href="#">
+                                    <a href="/detail-product">
                                         <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
                                         <h1 class="font-semibold text-gray-100">$140.43</h1>
                                         <h1 class="line-through text-sm">$160.0</h1>

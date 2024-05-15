@@ -8,7 +8,7 @@
                 </svg>
             </div>
             <input type="search" id="search" class="block w-full ps-10 text-ml text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Find anything here..." required />
-            <button type="submit" class="text-white absolute end-0 bottom-0 top-0 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-r-full text-ml px-4">Search</button>
+            <button type="submit" class="text-white absolute end-0 bottom-0 top-0 bg-[#115542] hover:bg-[#32836c] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-r-full text-ml px-4">Search</button>
         </div>
     </form>
 </div>
