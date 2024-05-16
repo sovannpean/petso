@@ -30,11 +30,25 @@ use App\Http\Controllers\EventController;
 // Route::get('/', function () {
 //     return view('/pages/homePage');
 // });
-Route::get('/cat', function () {
-    return view('/pages/catPage');
+Route::get('/food-cat', function () {
+    return view('/pages/cats/foodPage');
 });
 Route::get('/detail-product', function () {
     return view('/pages/detailproductPage');
+});
+
+// dog
+Route::get('/food-dog', function () {
+    return view('/pages/dogs/foodPage');
+});
+Route::get('/healthcare-dog', function () {
+    return view('/pages/dogs/healthcarePage');
+});
+Route::get('/toy-dog', function () {
+    return view('/pages/dogs/toyPage');
+});
+Route::get('/treat-dog', function () {
+    return view('/pages/dogs/treatPage');
 });
 
 // Dashboard

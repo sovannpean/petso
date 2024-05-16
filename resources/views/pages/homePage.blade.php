@@ -1,25 +1,24 @@
 <x-app-layout>
     <div style="background-image: url({{ url('image/main-banner.jpeg') }});">
         <div class="h-[487px] relative max-w-screen-xl mx-auto">
-            <nav class="absolute top-40 right-10">
-                <h1 class="mb-4 text-center text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-[#192a82] from-[#828ecf]">Chose Pets</span></h1>
-                <div class="flex justify-end gap-5 mt-5">
-                    <div class="bg-[#6a5242] hover:bg-[#226753] px-5 py-2 rounded-lg">
-                        <a href="#">
-                            <i class="fa-solid fa-bowl-rice text-white text-2xl pr-2"></i>
-                            <label for="all" class="text-xl text-white">All</label>
+            <div class="absolute top-20 right-0">
+                <h1 class="text-5xl font-extrabold text-gray-900 dark:text-white">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r to-[#192a82] from-[#828ecf]">Making healthier dog <br> food a reality.</span>
+                </h1>
+                <p class="text-2xl text-gray-100 mt-4">High quality ingredients, balanced by experts.</p>
+            </div>
+            <nav class="absolute bottom-[-20px] right-0">
+                <div class="flex justify-end gap-5">
+                    <div class="bg-white py-2 px-8 rounded-xl">
+                        <a href="/food-dog">
+                            <h1 class="mb-2 font-bold">Dogs</h1>
+                            <img src="{{asset('image/dog.png')}}" alt="" class="w-32 object-cover">
                         </a>
                     </div>
-                    <div class="bg-[#115542] hover:bg-[#226753] px-5 py-2 rounded-lg">
+                    <div class="bg-white py-2 px-8 rounded-xl">
                         <a href="#">
-                            <i class="fa-solid fa-shield-dog text-white text-2xl pr-2"></i>
-                            <label for="dog" class="text-xl text-white">For Dog</label>
-                        </a>
-                    </div>
-                    <div class="bg-[#115542] hover:bg-[#226753] px-5 py-2 rounded-lg">
-                        <a href="#">
-                            <i class="fa-solid fa-shield-cat text-white text-2xl pr-2"></i>
-                            <label for="cat" class="text-xl text-white">For Cat</label>
+                            <h1 class="mb-2 font-bold">Cats</h1>
+                            <img src="{{asset('image/cat.png')}}" alt="" class="w-32 object-cover">
                         </a>
                     </div>
                 </div>
