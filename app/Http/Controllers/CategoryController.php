@@ -10,27 +10,30 @@ use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
-
-    public function homeshow()
+    /**
+     * Display categories in the navigation menu.
+     */
+    public function homeshow(): View
     {
         $categories = Category::all();
-        return view('/components/nav-menu', compact('categories'));
+        return view('components.nav-menu', compact('categories'));
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         $categories = Category::all();
-        return view('/dashboard/category/index', ['categories' => $categories]);
+        return view('dashboard.category.index', compact('categories'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        return view('/dashboard/category/create');
+        return view('dashboard.category.create');
     }
 
     /**
@@ -38,11 +41,24 @@ class CategoryController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $categories = new Category([
-            'name' => $request->input('name'),
+        $request->validate([
+            'name' => 'required|string|max:255|unique:category,name',
         ]);
-        $categories->save();
-        return redirect('/dashboard/category/index')->with('success', 'Category added successfully!');
+
+        try {
+            $category = new Category([
+                'name' => $request->input('name'),
+            ]);
+            $category->save();
+
+            return redirect()->route('categories.index')->with('success', 'Category added successfully!');
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->errorInfo[1] == 1062) {
+                return redirect()->back()->withErrors(['name' => 'Category name already exists.'])->withInput();
+            } else {
+                return redirect()->back()->withErrors(['error' => 'An unexpected error occurred. Please try again later.'])->withInput();
+            }
+        }
     }
 
     /**
@@ -51,7 +67,7 @@ class CategoryController extends Controller
     public function show(string $id): View
     {
         $category = Category::findOrFail($id);
-        return view('/dashboard/category/show', ['category' => $category]);
+        return view('dashboard.category.show', compact('category'));
     }
 
     /**
@@ -60,7 +76,7 @@ class CategoryController extends Controller
     public function edit(string $id): View
     {
         $category = Category::findOrFail($id);
-        return view('/dashboard/category/update', ['category' => $category]);
+        return view('dashboard.category.update', compact('category'));
     }
 
     /**
@@ -68,19 +84,23 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id): RedirectResponse
     {
-        $categories = Category::find($id);
-        $categories->name = $request->input('name');
+        $request->validate([
+            'name' => 'required|string|max:255|unique:category,name,' . $id,
+        ]);
 
-        $categories->save();
-        return redirect('/dashboard/category/index')->with('flash_message', 'Update successful!');
+        $category = Category::findOrFail($id);
+        $category->name = $request->input('name');
+        $category->save();
+
+        return redirect()->route('categories.index')->with('flash_message', 'Update successful!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
         Category::destroy($id);
-        return redirect('/dashboard/category/index')->with('flash_message', 'Deleted!');
+        return redirect()->route('categories.index')->with('flash_message', 'Deleted!');
     }
 }

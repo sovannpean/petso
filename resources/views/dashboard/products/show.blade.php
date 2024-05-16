@@ -1,54 +1,39 @@
 @extends('dashboard')
 
 @section('content')
-    <section class="max-w-screen-2xl mx-auto px-10">
-        <div class="flex justify-between items-center">
-            <a href="javascript:void(0);" onclick="history.back()">
-                <i class="fa-solid fa-arrow-left text-2xl bg-blue-300 px-4 py-2.5 text-gray-700 hover:bg-blue-400 rounded-full"></i>
-            </a>
-            <div class="flex items-center gap-2 font-semibold">
-                <i class="fa-solid fa-pen-to-square"></i>
-                <h1>Please update the Pets information</h1>
-            </div>
-        </div>
+    <head>
+        <title>Product</title>
+    </head>
 
-        {{-- Show Products --}}
-        <div class="mt-20 grid grid-cols-2">
-            {{-- For image --}}
-            <div class="w-[600px] h-[450px] border-2 border-dashed border-rose-200">
-                <img src="{{ asset('/images/' . $products->images) }}" onchange="showFile(event)" class="w-full h-full object-cover">
-            </div>
-
-            {{-- About product --}}
-            <div class="text-lg font-medium">
-                <div class="flex gap-5 items-center">
-                    <h1>For: </h1>
-                    @foreach($categories as $category)
-                        <h1 value="{{ $category->id }}" class="text-2xl font-semibold text-blue-900">
-                            {{ $category->name }}
-                        </h1>
-                    @endforeach
+    <section>
+        <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
+            <div class="grid grid-cols-2 gap-5">
+                <div class="text-lg text-start">
+                    <div>
+                        <h4><strong>Name: </strong> {{ $products->name }}</h4>
+                    </div>
+                    <div>
+                        <h4><strong>Size: </strong> {{ $products->size }}</h4>
+                    </div>
+                    <div>
+                        <h4><strong>Price: </strong> {{ $products->price }}</h4>
+                    </div>
+                    <div>
+                        <h4><strong>Weight: </strong> {{ $products->weight }}</h4>
+                    </div>
+                    <div>
+                        <h4><strong>Category: </strong> {{ $categories->firstWhere('id', $products->category_id)->name }}</h4>
+                    </div>
+                    <div>
+                        <h4><strong>Detail: </strong> {{ $products->detail }}</h4>
+                    </div>
                 </div>
-
-                <h1>Name  : {{ $products->name }}</h1>
-                <h1 class="text-rose-500">Price : {{ $products->price }}</h1>
-                <h1>Size  : {{ $products->size}}</h1>
-                <h1>Detail: {{ $products->detail}}</h1>
-                <h1 type="file" name="image" id="image" accept="images/*" onchange="showFile(event)" >Detail: {{ $products->images}}</h1>
+                <div>
+                    <div>
+                        <img src="{{ asset('/images/' . $products->images) }}" alt="Product Image" class="object-cover rounded-lg">
+                    </div>
+                </div>
             </div>
         </div>
-        
     </section>
-    <script>
-        function showFile(event) {
-            var input = event.target;
-            var reader = new FileReader();
-            reader.onload = function () {
-                var dataURL = reader.result;
-                var output = document.getElementById('image-preview');
-                output.src = dataURL;
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    </script>
-@endsection  
+@endsection

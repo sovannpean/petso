@@ -90,9 +90,10 @@ Route::post('/dashboard/category/index/{id}', [CategoryController::class, 'destr
 Route::get('/dashboard/category/update/{id}', [CategoryController::class, 'edit']);
 Route::post('/dashboard/category/update/{id}', [CategoryController::class, 'update']);
 Route::get('/dashboard/category/show/{id}', [CategoryController::class, 'show']);
+Route::resource('categories', CategoryController::class);
 
 //product
-Route::get('/dashboard/products/index', [ProductController::class, 'index']);
+Route::get('/dashboard/products/index', [ProductController::class, 'index'])->name('dashboard.products.index');
 Route::get('/dashboard/products/create', [ProductController::class, 'create']);
 Route::post('/dashboard/products/create', [ProductController::class, 'store']);
 Route::get('/dashboard/products/update/{id}', [ProductController::class, 'edit']);

@@ -37,8 +37,9 @@
                             <th scope="col" class="px-4 py-3 text-center">Name</th>
                             <th scope="col" class="px-4 py-3 text-center">Image</th>
                             <th scope="col" class="px-4 py-3 text-center">Price</th>
+                             <th scope="col" class="px-4 py-3 text-center">Size</th>
+                            <th scope="col" class="px-4 py-3 text-center">Weight</th>
                             <th scope="col" class="px-4 py-3 text-center">Detail</th>
-                            <th scope="col" class="px-4 py-3 text-center">Size</th>
                             <th scope="col" class="px-4 py-3 text-center">Rating</th>
                             <th scope="col" class="px-4 py-3 text-center">Category</th>
                             <th scope="col" class="px-4 py-3 text-center">Actions</th>
@@ -66,11 +67,15 @@
                                 {{-- Price --}}
                                 <td class="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $item->price}}</td>
 
+                                {{-- Size --}}
+                                <td class="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $item->size}}</td>
+
+                                 {{-- weight --}}
+                                <td class="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $item->weight}}</td>
+
                                 {{-- Detail --}}
                                 <td class="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $item->detail}}</td>
 
-                                {{-- Size --}}
-                                <td class="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $item->size}}</td>
 
                                 {{-- Rating --}}
                                 <td class="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -97,11 +102,11 @@
                                 {{-- Categories --}}
                                 <td class="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $item->category->name }}</td>
 
-                                {{-- Show --}}
+                                 {{-- Show --}}
                                 <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
                                     <a href="{{ url('/dashboard/products/show', $item->id)}}" title="View Item" class="btn btn-primary btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</a>
                                 </td>
-
+                                
                                 {{-- Edit and Delete --}}
                                 <td class="px-4 py-2 text-center">
                                     <button id="{{ $loop->iteration }}" data-dropdown-toggle="{{ $item->name}}" class="inline-flex items-center text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
@@ -192,76 +197,3 @@
     </script>
 @endsection    
 
-{{-- @extends('dashboard')
-
-@section('content')
-<head>
-    <title>Product</title>
-</head>
-<main>
-    <div class="container" style="width: 100%">
-        <div class="card mb-4 mt-5">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col">
-                        <h2>Product list</h2>
-                    </div>
-                    <div class="col-md-6">
-                        <form class="d-flex" role="search" action="" method="GET" name="search">
-                            <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
-                    </div>
-                    <div class="col">
-                        <a class="btn btn-primary float-right" href="{{ url('/dashboard/products/create') }}">Add new Product</a>
-                    </div>
-                </div>
-            </div>
-
-            <table class="table table-striped mt-5">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Detail</th>
-                        <th scope="col">Size</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($products as $item)
-                    <tr>
-                        <td scope="row">{{ $loop->iteration }}</td>
-                        <td>{{ $item->name}}</td>
-                        <td>{{ $item->price}}</td>
-                        <td>{{ $item->detail}}</td>
-                        <td>{{ $item->size}}</td>
-                        <td><img src="{{asset('images/' . $item->image)}}" height=50 width="auto" alt="{{ $item->name }}"></td>
-                        <td>
-                            @if($item->category)
-                                {{ $item->category->name }}
-                            @else
-                                Category not available
-                            @endif
-                        </td>
-                        <td>
-                            <a href="{{ url('/dashboard/products/show', $item->id)}}" title="View Item" class="btn btn-primary btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</a>
-                            <a href="{{ url('/dashboard/products/update', $item->id)}}" title="Edit Item" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
-                            <form method="POST" action="{{ url('/dashboard/products/index/' . $item->id)}}" accept-charset="UTF-8" style="display:inline">
-                                {{ csrf_field() }}
-                                <button type="submit" class="btn btn-danger btn-sm" title="Delete" onclick="return confirm(&quot;Confirm delete?&quot;)">
-                                    <i class="fa fa-trash" class="fa fa-trash-o" aria-hidden="true"></i> Delete
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</main>
-@endsection --}}

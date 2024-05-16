@@ -10,75 +10,115 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $categories = Category::all();
-        $products = Product::latest()->paginate(50);
-        return view('/dashboard/products/index', compact('products'), compact('categories'));
+        $products = Product::all();
+        return view('dashboard.products.index', compact('products', 'categories'));
     }
 
-    public function create()
+    public function create(): View
     {
         $categories = Category::all();
-        return view('/dashboard/products/create', compact('categories'));
+        return view('dashboard.products.create', compact('categories'));
     }
 
     public function store(Request $request): RedirectResponse
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'detail' => 'required|string',
+            'size' => 'required|string|max:255',
+            'weight' => 'required|numeric',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_name' => 'required|string|max:255',
+        ]);
+
         $nameImage = time() . '.' . $request->image->extension();
         $request->image->move(public_path('images'), $nameImage);
-    
+
         $category = Category::firstOrCreate(['name' => $request->input('category_name')]);
-    
+
+        $price = $this->calculatePrice($request->input('weight'));
+
+        
         $product = new Product([
             'name' => $request->input('name'),
-            'price' => $request->input('price'),
+            'price' => $price,
             'detail' => $request->input('detail'),
             'size' => $request->input('size'),
+            'weight' => $request->input('weight'),
             'images' => $nameImage,
             'category_id' => $category->id,
         ]);
-    
+
+         //dd($request->all());
+
         $product->save();
-    
-        return redirect('/dashboard/products/index')->with('success', 'Product created successfully.');
+
+        return redirect()->route('dashboard.products.index')->with('success', 'Product created successfully.');
     }
 
     public function show(string $id): View
     {
-        $products = Product::findOrFail($id);
+        $products = Product::find($id);
         $categories = Category::all();
-        return view('/dashboard/products/show', compact('products', 'categories'));
+        return view('dashboard.products.show', compact('products', 'categories'));
     }
 
-    public function edit(string $id)
+    public function edit(string $id): View
     {
-        $products = Product::findOrFail($id);
+        $product = Product::findOrFail($id);
         $categories = Category::all();
-        return view('/dashboard/products/update', compact('products', 'categories'));
+        return view('dashboard.products.update', compact('product', 'categories'));
     }
 
     public function update(Request $request, string $id): RedirectResponse
     {
-        $products = Product::findOrFail($id);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'detail' => 'required|string',
+            'size' => 'required|string|max:255',
+            'weight' => 'required|numeric',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_name' => 'required|string|max:255',
+        ]);
 
-        $products->name = $request->input('name');
-        $products->price = $request->input('price');
-        $products->detail = $request->input('detail');
-        $products->size = $request->input('size');
-        if ($request->hasFile('images')) {
-            $nameImage = time().'.'.$request->image->extension();  
-            $request->image->move(public_path('images'), $nameImage);
-            $products->image = $nameImage;
+        $product = Product::findOrFail($id);
+
+        $product->name = $request->input('name');
+        $product->detail = $request->input('detail');
+        $product->size = $request->input('size');
+        $product->weight = (float) $request->input('weight'); 
+        
+        $product->price = $this->calculatePrice($product->weight);
+
+        if ($request->hasFile('image')) {
+            $nameImage = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('/images'), $nameImage);
+            $product->images = $nameImage;
         }
-        $products->category->name = $request->input('category');
-        $products->save();
-        return redirect('/dashboard/products/index')->with('success', 'Product updated successfully');
+
+        $category = Category::firstOrCreate(['name' => $request->input('category_name')]);
+        $product->category_id = $category->id;
+
+        dd($request->all());
+
+        $product->save();
+
+        return redirect()->route('dashboard.products.index')->with('success', 'Product updated successfully.');
     }
 
     public function destroy(string $id): RedirectResponse
     {
         Product::destroy($id);
-        return redirect('/dashboard/products/index/')->with('success', 'Product deleted successfully.');
+        return redirect()->route('dashboard.products.index')->with('success', 'Product deleted successfully.');
+    }
+
+    private function calculatePrice(float $weight): float
+    {
+        // Implement your price calculation logic here.
+        // For example, let's assume the price is $10 per kg.
+        return $weight * 10;
     }
 }
