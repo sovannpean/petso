@@ -16,18 +16,20 @@
         <div class="mt-20 grid grid-cols-2">
             {{-- For image --}}
             <div class="w-[600px] h-[450px] border-2 border-dashed border-rose-200">
-                <img src="{{ asset('/images/' . $products->images) }}"height="50" width="auto" onchange="showFile(event)">
+                <img src="{{ asset('/images/' . $products->images) }}" onchange="showFile(event)" class="w-full h-full object-cover">
             </div>
 
             {{-- About product --}}
             <div class="text-lg font-medium">
-                <h1 class="text-2xl mb-5 font-semibold">For   : 
-                    <label for="category" class="text-blue-700">
-                        @foreach($categories as $category)
-                        <h1 value="{{ $category->id }}">{{ $category->name }}</h1>
+                <div class="flex gap-5 items-center">
+                    <h1>For: </h1>
+                    @foreach($categories as $category)
+                        <h1 value="{{ $category->id }}" class="text-2xl font-semibold text-blue-900">
+                            {{ $category->name }}
+                        </h1>
                     @endforeach
-                    </label>
-                </h1>
+                </div>
+
                 <h1>Name  : {{ $products->name }}</h1>
                 <h1 class="text-rose-500">Price : {{ $products->price }}</h1>
                 <h1>Size  : {{ $products->size}}</h1>
