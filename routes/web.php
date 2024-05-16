@@ -101,6 +101,16 @@ Route::post('/dashboard/products/update/{id}', [ProductController::class, 'updat
 Route::get('/dashboard/products/show/{id}', [ProductController::class, 'show']);
 Route::post('/dashboard/products/index/{id}', [ProductController::class, 'destroy']);
 
+Route::prefix('dashboard')->group(function () {
+    Route::get('products', [ProductController::class, 'index'])->name('dashboard.products.index');
+    Route::get('products/create', [ProductController::class, 'create'])->name('dashboard.products.create');
+    Route::post('products', [ProductController::class, 'store'])->name('dashboard.products.store');
+    Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('dashboard.products.edit');
+    Route::put('products/{product}', [ProductController::class, 'update'])->name('dashboard.products.update');
+    Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('dashboard.products.destroy');
+});
+
+
 //overView
 Route::get('/dashboard/overView/index', [OverViewController::class, 'index']);
 
@@ -124,3 +134,11 @@ Route::get('/dashboard/coupons/index', [CouponController::class, 'index'])->name
 Route::get('/dashboard/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
 Route::post('/dashboard/coupons', [CouponController::class, 'store'])->name('coupons.store');
 Route::get('/dashboard/coupons/show', [CouponController::class, 'show'])->name('coupons.show');
+
+Route::prefix('dashboard')->group(function () {
+    Route::get('/dashboard/coupons/index', [CouponController::class, 'index'])->name('coupons.index');
+    Route::get('/dashboard/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
+    Route::post('/dashboard/coupons/coupons', [CouponController::class, 'store'])->name('coupons.store');
+    Route::get('/dashboard/coupons/coupons/apply', [CouponController::class, 'applyForm'])->name('coupons.applyForm');
+    Route::post('/dashboard/coupons/coupons/apply', [CouponController::class, 'apply'])->name('coupons.apply');
+});

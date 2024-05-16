@@ -17,4 +17,14 @@ class Coupon extends Model
         'starts_at',
         'expires_at',
     ];
+
+    protected $casts = [
+        'starts_at' => 'datetime',
+        'expires_at' => 'datetime',
+    ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'coupon_product');
+    }
 }
