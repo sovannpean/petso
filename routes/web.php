@@ -30,11 +30,19 @@ use App\Http\Controllers\EventController;
 // Route::get('/', function () {
 //     return view('/pages/homePage');
 // });
+
+// cat
 Route::get('/food-cat', function () {
     return view('/pages/cats/foodPage');
 });
-Route::get('/detail-product', function () {
-    return view('/pages/detailproductPage');
+Route::get('/healthcare-cat', function () {
+    return view('/pages/cats/healthcarePage');
+});
+Route::get('/toy-cat', function () {
+    return view('/pages/cats/toyPage');
+});
+Route::get('/treat-cat', function () {
+    return view('/pages/cats/treatPage');
 });
 
 // dog
@@ -49,6 +57,11 @@ Route::get('/toy-dog', function () {
 });
 Route::get('/treat-dog', function () {
     return view('/pages/dogs/treatPage');
+});
+
+// detail
+Route::get('/detail-product', function () {
+    return view('/pages/detailproductPage');
 });
 
 // Dashboard

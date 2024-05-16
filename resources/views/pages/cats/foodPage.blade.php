@@ -37,13 +37,13 @@
                         <a href="#" class="bg-[#48b194] px-5 py-1.5 rounded-full">
                             <h1 class="text-white font-medium">Food</h1>
                         </a>
-                        <a href="#" class="border border-[#48b194] px-5 py-1.5 rounded-full">
+                        <a href="/healthcare-cat" class="border border-[#48b194] px-5 py-1.5 rounded-full">
                             <h1 class="text-gray-900 font-medium">Healthcare</h1>
                         </a>
-                        <a href="#" class="border border-[#48b194] px-5 py-1.5 rounded-full">
+                        <a href="/toy-cat" class="border border-[#48b194] px-5 py-1.5 rounded-full">
                             <h1 class="text-gray-900 font-medium">Toy</h1>
                         </a>
-                        <a href="#" class="border border-[#48b194] px-5 py-1.5 rounded-full">
+                        <a href="/treat-cat" class="border border-[#48b194] px-5 py-1.5 rounded-full">
                             <h1 class="text-gray-900 font-medium">Treat</h1>
                         </a>
                     </div>

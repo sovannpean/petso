@@ -16,7 +16,7 @@
                         </a>
                     </div>
                     <div class="bg-white py-2 px-8 rounded-xl">
-                        <a href="#">
+                        <a href="/food-cat">
                             <h1 class="mb-2 font-bold">Cats</h1>
                             <img src="{{asset('image/cat.png')}}" alt="" class="w-32 object-cover">
                         </a>
