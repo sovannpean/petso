@@ -14,8 +14,9 @@
 
         {{-- form --}}
         <div class="mt-10 px-10">
-            <form action="{{ url('/dashboard/products/update' . $product->id) }}" enctype="multipart/form-data">
-                @csrf
+            <form action="{{ url('/dashboard/products/update/' . $product->id) }}" method="POST" enctype="multipart/form-data">
+                {{-- @csrf --}}
+                {!! csrf_field() !!}
                 <div class="flex justify-between">
                     {{-- For name --}}
                     <div class="flex flex-col">

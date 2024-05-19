@@ -67,7 +67,7 @@
 
                             {{-- Price --}}
                             <td class="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                ${{ number_format($item->price, 2) }}
+                                ${{ number_format((float)$item->price, 2) }}
                             </td>
 
                             {{-- Size --}}
