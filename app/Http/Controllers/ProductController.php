@@ -102,7 +102,7 @@ class ProductController extends Controller
         $category = Category::firstOrCreate(['name' => $request->input('category_name')]);
         $product->category_id = $category->id;
 
-        dd($request->all());
+        // dd($request->all());
 
         $product->save();
 
