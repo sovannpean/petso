@@ -1,7 +1,7 @@
 @extends('dashboard')
 
 @section('content')
-    <section class="max-w-screen-2xl mx-auto">
+    <section class="max-w-screen-xl mx-auto">
         <div class="flex justify-between items-center px-10">
             <a href="javascript:void(0);" onclick="history.back()">
                 <i class="fa-solid fa-arrow-left text-2xl bg-blue-300 px-4 py-2.5 text-gray-700 hover:bg-blue-400 rounded-full"></i>
@@ -15,42 +15,42 @@
         {{-- form --}}
         <div class="mt-10 px-10">
             <form action="{{ url('/dashboard/products/update/' . $product->id) }}" method="POST" enctype="multipart/form-data">
-                {{-- @csrf --}}
-                {!! csrf_field() !!}
-                <div class="flex justify-between">
+                @csrf
+                {{-- {!! csrf_field() !!} --}}
+                <div class="grid grid-cols-2 gap-5">
                     {{-- For name --}}
                     <div class="flex flex-col">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" id="name" value="{{ $product->name }}" placeholder="Product Name" required class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-[450px]">
+                        <label for="name" class="font-semibold">Name</label>
+                        <input type="text" name="name" id="name" value="{{ $product->name }}" placeholder="Product Name" required class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-full">
                     </div>
 
                     {{-- For size --}}
                     <div class="flex flex-col">
-                        <label for="size">Size</label>
-                        <input type="text" name="size" id="size" value="{{ $product->size }}" placeholder="Product Size" required class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-[450px]">
+                        <label for="size" class="font-semibold">Size</label>
+                        <input type="text" name="size" id="size" value="{{ $product->size }}" placeholder="Product Size" required class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-full">
                     </div>
 
                     {{-- For weight --}}
                     <div class="flex flex-col">
-                        <label for="weight">Weight</label>
-                        <input type="number" step="0.01" name="weight" id="weight" value="{{ $product->weight }}" placeholder="Product Weight" required class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-[450px]" oninput="calculatePrice()">
+                        <label for="weight" class="font-semibold">Weight</label>
+                        <input type="number" step="0.01" name="weight" id="weight" value="{{ $product->weight }}" placeholder="Product Weight" required class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-full" oninput="calculatePrice()">
                     </div>
 
                     {{-- For price (read-only) --}}
                     <div class="flex flex-col">
-                        <label for="price">Price</label>
-                        <input type="text" name="price" id="price" value="{{ $product->price }}" placeholder="Product Price" readonly class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-[450px]">
+                        <label for="price" class="font-semibold">Price</label>
+                        <input type="text" name="price" id="price" value="{{ $product->price }}$" placeholder="Product Price" readonly class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-full">
                     </div>
                 </div>
 
                 <div class="mt-10 flex gap-10">
                     {{-- Image --}}
                     <div>
-                        <label for="image" class="form-label">Image</label>
+                        <label for="image" class="form-label font-semibold">Image</label>
                         <label for="image" class="cursor-pointer">
                             <div class="w-[450px] h-[430px] border-2 border-gray-300 border-dashed flex flex-col items-center justify-center relative">
                                 <i class="fa-regular fa-image text-9xl text-gray-400"></i>
-                                <img src="{{ asset('/images/' . $product->images) }}" id="image-preview" class="text-white absolute w-full" alt="Product Image">
+                                <img src="{{ asset('/images/' . $product->images) }}" id="image-preview" class="text-white absolute w-full h-full object-cover rounded-lg" alt="Product Image">
                                 <p class="mb-2 text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                                 <input class="form-control hidden" type="file" name="image" id="image" accept="images/*" onchange="showFile(event)">
                             </div>
@@ -60,8 +60,8 @@
                     <div class="w-full">
                         {{-- Detail --}}
                         <div class="form-group">
-                            <label for="detail">Detail</label>
-                            <textarea class="form-control w-full mt-2 bg-gray-100 p-4 rounded-lg" rows="14" name="detail" id="detail" required placeholder="Detail your product">{{ $product->detail }}</textarea>
+                            <label for="detail" class="font-semibold">Detail</label>
+                            <textarea class="form-control w-full mt-2 bg-gray-100 p-4 rounded-lg" rows="13" name="detail" id="detail" required placeholder="Detail your product">{{ $product->detail }}</textarea>
                         </div>
 
                         {{-- Category --}}
