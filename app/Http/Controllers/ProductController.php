@@ -141,9 +141,13 @@ class ProductController extends Controller
         if ($product->isNearlyOutOfStock()) {
             Notification::route('mail', 'admin@example.com')->notify(new ProductLowStock($product));
 
-            return view('products.show', ['product' => $product, 'lowStock' => true]);
-        }
+    // show all products to home page
+    public function productDetail($id)
+    {
+        // Fetch the product by ID
+        $product = Product::findOrFail($id);
 
-        return view('products.show', ['product' => $product, 'lowStock' => false]);
+        // Pass the product to the view
+        return view('pages.detailproductPage', compact('product'));
     }
 }
