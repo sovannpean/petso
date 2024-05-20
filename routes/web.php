@@ -134,3 +134,8 @@ Route::post('/dashboard/coupons/coupons/apply', [CouponController::class, 'apply
 
 Route::get('/dashboard/subcategory/index', [SubcategoryController::class, 'index']);
 Route::get('/dashboard/subcategory/create', [SubcategoryController::class, 'create']);
+Route::post('/dashboard/subcategory/create', [SubcategoryController::class, 'store']);
+Route::get('/dashboard/subcategory/update/{id}', [SubcategoryController::class, 'edit']);
+Route::post('/dashboard/subcategory/update/{id}', [SubcategoryController::class, 'update']);
+Route::get('/dashboard/subcategory/show/{id}', [SubcategoryController::class, 'show']);
+Route::post('/dashboard/subcategory/index/{id}', [SubcategoryController::class, 'destroy']);

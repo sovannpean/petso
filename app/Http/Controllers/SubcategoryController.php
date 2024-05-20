@@ -3,70 +3,68 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 
-class SubcategoryController extends Controller
+
+class SubCategoryController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        return view('dashboard.subcategory.index');
+        $subcategories = SubCategory::with('category')->get();
+        $categories = Category::all();
+        return view('dashboard.subcategory.index', compact('subcategories', 'categories'));
     }
 
-    public function create(): View
+    public function create()
     {
-        $categories = Category::whereNull('parent_id')->get();
+        $categories = Category::all();
         return view('dashboard.subcategory.create', compact('categories'));
     }
 
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:category,name',
-            'parent_id' => 'required|exists:category,id'
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:category,id',
         ]);
 
-        Category::create([
-            'name' => $request->input('name'),
-            'parent_id' => $request->input('parent_id'),
-        ]);
+        SubCategory::create($request->all());
 
-        return redirect()->route('subcategories.index')->with('success', 'Subcategory added successfully!');
+        return redirect('/dashboard/subcategory/index')->with('success', 'SubCategory created successfully.');
     }
 
-    public function show(string $id): View
+    public function show($id)
     {
-        $subcategory = Category::with('parent')->findOrFail($id);
-        return view('dashboard.subcategory.show', compact('subcategory'));
+        $categories = Category::all();
+        $subcategories = SubCategory::find($id);
+        return view('dashboard.subcategory.show', compact('subcategories', 'categories'));
     }
 
-    public function edit(string $id): View
+    public function edit($id)
     {
-        $subcategory = Category::findOrFail($id);
-        $categories = Category::whereNull('parent_id')->get();
-        return view('dashboard.subcategory.edit', compact('subcategory', 'categories'));
+        $categories = Category::all();
+        $subcategories = SubCategory::find($id);
+        return view('dashboard.subcategory.edit', compact('subcategories', 'categories'));
     }
 
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request, SubCategory $subcategory)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:category,name,' . $id,
-            'parent_id' => 'required|exists:category,id'
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
-        $subcategory = Category::findOrFail($id);
-        $subcategory->update([
-            'name' => $request->input('name'),
-            'parent_id' => $request->input('parent_id'),
-        ]);
+        $subcategory->update($request->all());
 
-        return redirect()->route('subcategories.index')->with('success', 'Update successful!');
+        return redirect('dashboard.subcategory.index')->with('success', 'SubCategory updated successfully.');
     }
 
     public function destroy(string $id): RedirectResponse
     {
-        Category::destroy($id);
-        return redirect()->route('subcategories.index')->with('success', 'Deleted successfully!');
+        SubCategory::destroy($id);
+
+        return redirect('/dashboard/subcategory/index')->with('success', 'SubCategory deleted successfully.');
     }
 }
