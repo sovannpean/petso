@@ -53,7 +53,7 @@
                             {{-- <li>{{ $product->name }}</li> --}}
                             <div class="border border-gray-200 bg-[#48b194]">
                                 <div class="bg-gray-100">
-                                    <a href="/detail-product">
+                                    <a href="{{ route('products.detail', $product->id) }}">
                                         <img src="{{ asset('/images/' . $product->images) }}" alt="" class="w-full h-[350px] object-cover">
                                     </a>
                                 </div>

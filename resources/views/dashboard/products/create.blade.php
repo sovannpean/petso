@@ -72,6 +72,9 @@
     </div>
 </section>
 
+<!-- Include CKEditor CDN -->
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+
 <script>
     function showFile(event) {
         var input = event.target;
@@ -94,6 +97,9 @@
             document.getElementById('price').value = '';
         }
     }
+
+    // Initialize CKEditor for the detail textarea
+    CKEDITOR.replace('detail');
 </script>
 
 @push('scripts')
