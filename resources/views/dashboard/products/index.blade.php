@@ -96,8 +96,11 @@
                                 </td>
 
                                 {{-- Name --}}
-                                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                {{-- <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
                                     {{ $item->name }}
+                                </td> --}}
+                                <td class="px-4 py-2 text-start font-medium text-gray-900 dark:text-white w-[240px]">
+                                    <p class="line-clamp-2">{{ $item->name }}</p>
                                 </td>
 
                                 {{-- Image --}}
@@ -125,13 +128,10 @@
 
                                 {{-- Weight --}}
                                 <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $item->weight }}
+                                    {{ $item->weight }}kg
                                 </td>
 
                                 {{-- Detail --}}
-                                {{-- <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $item->detail }}
-                                </td> --}}
                                 <td class="px-4 py-2 text-start font-medium text-gray-900 dark:text-white w-[240px]">
                                     <p class="line-clamp-2">{{ $item->detail }}</p>
                                 </td>

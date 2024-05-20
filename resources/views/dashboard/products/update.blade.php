@@ -15,9 +15,9 @@
         {{-- form --}}
         <div class="mt-10 px-10">
             <form action="{{ url('/dashboard/products/update/' . $product->id) }}" method="POST" enctype="multipart/form-data">
-                {{-- @csrf --}}
-                {!! csrf_field() !!}
-                <div class="flex justify-between">
+                @csrf
+                {{-- {!! csrf_field() !!} --}}
+                <div class="grid grid-cols-2 gap-5">
                     {{-- For name --}}
                     <div class="flex flex-col">
                         <label for="name" class="font-semibold">Name</label>

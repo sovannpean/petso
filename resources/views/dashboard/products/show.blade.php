@@ -45,11 +45,11 @@
                 </h1>
                 <h1 class="text-sm">
                     <span class="font-bold">WEIGHT</span> 
-                    <span class="text-gray-500">{{ $item->price }}</span>  
+                    <span class="text-gray-500">{{ $item->price }}kg</span>  
                 </h1>
             </div>
             <div class="w-full bg-[#17554B] rounded-full mt-5">
-                <h4 class="text-center py-2 text-gray-100 font-semibold">{{ $item->weight }} $</h4>
+                <h4 class="text-center py-2 text-gray-100 font-semibold">{{ $item->weight }}$</h4>
             </div>            
         </div>
     </div>
