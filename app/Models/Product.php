@@ -19,8 +19,12 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function coupons()
+    public function coupon()
     {
-        return $this->belongsToMany(Coupon::class, 'coupon_product');
+        return $this->belongsTo(Coupon::class);
+    }
+    public function getDiscountedPrice($discountPercentage)
+    {
+        return $this->price * ((100 - $discountPercentage) / 100);
     }
 }
