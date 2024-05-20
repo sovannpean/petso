@@ -13,7 +13,7 @@ class ProductController extends Controller
     public function index(): View
     {
         $categories = Category::all();
-        $products = Product::with('coupon')->get(); 
+        $products = Product::with('coupons')->get();
         return view('dashboard.products.index', compact('products', 'categories'));
     }
 

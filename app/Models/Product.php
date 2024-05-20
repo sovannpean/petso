@@ -2,29 +2,34 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'name', 'price', 'detail', 'size', 'weight', 'images', 'category_id'
     ];
 
-    public function category(): BelongsTo
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function coupon()
+    public function coupons()
     {
-        return $this->belongsTo(Coupon::class);
+        return $this->belongsToMany(Coupon::class);
     }
-    public function getDiscountedPrice($discountPercentage)
+
+    public function getDiscountedPriceAttribute()
     {
-        return $this->price * ((100 - $discountPercentage) / 100);
+        $discountedPrice = $this->price;
+
+        foreach ($this->coupons as $coupon) {
+            if ($coupon->status && now()->between($coupon->starts_at, $coupon->expires_at)) {
+                $discountedPrice *= ((100 - $coupon->discount_amount) / 100);
+            }
+        }
+
+        return $discountedPrice;
     }
 }

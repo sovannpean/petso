@@ -7,10 +7,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\CcouponController;
+use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OverViewController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\CouponController;
 
 
 /*
@@ -119,30 +120,17 @@ Route::get('/', [HomeController::class, 'index']);
 //homePage
 Route::get('/components/nav-menu', [CategoryController::class, 'homeshow'])->name('menu');
 
-//coupong
-// Route::get('/dashboard/coupong/index', [CcouponController::class, 'index']);
-// Route::get('/dashboard/coupong/create', [CcouponController::class, 'create']);
-// Route::post('/dashboard/coupong/create', [CcouponController::class, 'store']);
 
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
 Route::post('/events', [EventController::class, 'store'])->name('events.store');
 
 
-use App\Http\Controllers\CouponController;
-
 Route::get('/dashboard/coupons/index', [CouponController::class, 'index'])->name('coupons.index');
 Route::get('/dashboard/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
 Route::post('/dashboard/coupons', [CouponController::class, 'store'])->name('coupons.store');
 Route::get('/dashboard/coupons/show', [CouponController::class, 'show'])->name('coupons.show');
+Route::get('/dashboard/coupons/coupons/apply', [CouponController::class, 'applyForm'])->name('coupons.applyForm');
+Route::post('/dashboard/coupons/coupons/apply', [CouponController::class, 'apply'])->name('coupons.apply');
 
-Route::prefix('dashboard')->group(function () {
-    Route::get('/dashboard/coupons/index', [CouponController::class, 'index'])->name('coupons.index');
-    Route::get('/dashboard/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
-    Route::post('/dashboard/coupons/coupons', [CouponController::class, 'store'])->name('coupons.store');
-    Route::get('/dashboard/coupons/coupons/apply', [CouponController::class, 'applyForm'])->name('coupons.applyForm');
-    Route::post('/dashboard/coupons/coupons/apply', [CouponController::class, 'apply'])->name('coupons.apply');
-});
-
-
-// 
-// Route::get('/home', [CategoryController::class, 'showAllProducts']);
+Route::get('/dashboard/subcategory/index', [SubcategoryController::class, 'index']);
+Route::get('/dashboard/subcategory/create', [SubcategoryController::class, 'create']);
