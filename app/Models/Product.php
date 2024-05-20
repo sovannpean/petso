@@ -37,4 +37,9 @@ class Product extends Model
         return $this->stock <= 10; // or any threshold you prefer
     }
 
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class)->withPivot('quantity');
+    }
+
 }

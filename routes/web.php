@@ -12,6 +12,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OverViewController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\OrderController;
+
 
 
 /*
@@ -139,3 +141,9 @@ Route::get('/dashboard/subcategory/update/{id}', [SubcategoryController::class, 
 Route::post('/dashboard/subcategory/update/{id}', [SubcategoryController::class, 'update']);
 Route::get('/dashboard/subcategory/show/{id}', [SubcategoryController::class, 'show']);
 Route::post('/dashboard/subcategory/index/{id}', [SubcategoryController::class, 'destroy']);
+
+
+Route::get('/dashboard/orders/index', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/dashboard/orders/create', [OrderController::class, 'create'])->name('orders.create');
+Route::post('/dashboard/orders/create', [OrderController::class, 'store'])->name('orders.store');
+Route::patch('/dashboard/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
