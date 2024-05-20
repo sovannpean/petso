@@ -116,6 +116,8 @@ Route::get('/dashboard/overView/index', [OverViewController::class, 'index']);
 
 //page
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/pages/detailproductPage/{id}', [ProductController::class, 'productDetail'])->name('products.detail');
+
 //homePage
 Route::get('/components/nav-menu', [CategoryController::class, 'homeshow'])->name('menu');
 

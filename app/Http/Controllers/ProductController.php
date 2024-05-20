@@ -123,4 +123,12 @@ class ProductController extends Controller
     }
 
     // show all products to home page
+    public function productDetail($id)
+    {
+        // Fetch the product by ID
+        $product = Product::findOrFail($id);
+
+        // Pass the product to the view
+        return view('pages.detailproductPage', compact('product'));
+    }
 }

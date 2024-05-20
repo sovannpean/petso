@@ -29,7 +29,7 @@
     {{-- for food pet --}}
     <div class="max-w-screen-xl mx-auto">
         <div>
-            {{-- for All products --}}
+            {{-- for new products --}}
             <div class="my-10">
                 <div class="mb-5">
                     <div class="flex items-center justify-between">
@@ -52,7 +52,7 @@
                             {{-- <li>{{ $product->name }}</li> --}}
                             <div class="border border-gray-200 bg-[#48b194]">
                                 <div class="bg-gray-100">
-                                    <a href="/detail-product">
+                                    <a href="{{ route('products.detail', $product->id) }}">
                                         <img src="{{ asset('/images/' . $product->images) }}" alt="" class="w-full h-[350px] object-cover">
                                     </a>
                                 </div>

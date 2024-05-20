@@ -19,6 +19,21 @@
 
         <!-- Scripts -->
         <script src="https://cdn.tailwindcss.com"></script>
+
+        {{--  --}}
+        <style>
+            /* Ensure list styles are displayed properly */
+            .ck-content ul, .ck-content ol {
+                list-style: initial;
+                margin: 0 0 1em 1.5em;
+            }
+            .ck-content ul {
+                list-style-type: disc;
+            }
+            .ck-content ol {
+                list-style-type: decimal;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased bg-gray-100">
         <div>

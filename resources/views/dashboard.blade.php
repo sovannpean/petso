@@ -12,6 +12,32 @@
 
     {{-- Title --}}
     <title>dashboard</title>
+    
+    {{-- rich text editor style --}}
+    <style>
+        /* Ensure list styles are displayed properly */
+        .ck-content ul,
+        .ck-content ol {
+            list-style: initial;
+            margin: 0 0 1em 1.5em;
+        }
+        .ck-content ul {
+            list-style-type: disc;
+        }
+        .ck-content ol {
+            list-style-type: decimal;
+        }
+    
+        /* Line clamping styles */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 3.6em; /* Adjust based on line height */
+        }
+    </style>
 </head>
 
 <body>

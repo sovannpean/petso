@@ -20,16 +20,16 @@
         <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0 mt-10">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
                 <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
-                    <img class="w-full dark:hidden" src="{{asset('image/dogfood3.jpeg')}}" alt="" />
+                    <img class="w-full dark:hidden" src="{{ asset('/images/' . $product->images) }}" alt="" />
                 </div>
 
                 <div class="mt-6 sm:mt-8 lg:mt-0">
                     <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-                        Etiam Gradre
+                        {{ $product->name }}
                     </h1>
                     <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
                         <p class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
-                            $1,249.99
+                            {{ $product->price }}$
                         </p>
 
                         <div class="flex items-center gap-2 mt-2 sm:mt-0">
@@ -74,6 +74,11 @@
                             </a>
                         </div>
                     </div>
+                    <div class="mt-5">
+                        <p><span class="text-sm font-bold">CATEGORY: </span> {{ $product->category->name }}</p>
+                        <p><span class="text-sm font-bold">SIZE: </span> {{ $product->size }}</p>
+                        <p><span class="text-sm font-bold">WEIGHT: </span> {{ $product->weight }} kg</p>
+                    </div>
 
                     <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
                         <div class="flex items-center">
@@ -117,9 +122,9 @@
 
                     <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 
-                    <p class="mb-6 text-gray-500 dark:text-gray-400">
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                    </p>
+                    <div class="mt-2 p-4 rounded-lg ck-content">
+                        {!! $product->detail !!}
+                    </div>
                 </div>
             </div>
         </div>
