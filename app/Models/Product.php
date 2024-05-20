@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-        'name', 'price', 'detail', 'size', 'weight', 'images', 'category_id'
+        'name', 'price', 'detail', 'size', 'weight', 'images', 'category_id', 'stock'
     ];
 
     public function category()
@@ -32,4 +32,9 @@ class Product extends Model
 
         return $discountedPrice;
     }
+    public function isNearlyOutOfStock()
+    {
+        return $this->stock <= 10; // or any threshold you prefer
+    }
+
 }

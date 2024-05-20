@@ -6,6 +6,15 @@
 </head>
 
 <section>
+    @foreach ($products as $product)
+        @if ($product->lowStock)
+            <div class="alert alert-warning">
+                The product {{ $product->name }} is nearly out of stock!
+            </div>
+        @endif
+    @endforeach
+
+
     <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
         <div class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
             <div class="flex items-center flex-1 space-x-4">
@@ -42,6 +51,7 @@
                         <th scope="col" class="px-4 py-3 text-center">Weight</th>
                         <th scope="col" class="px-4 py-3 text-center">Detail</th>
                         <th scope="col" class="px-4 py-3 text-center">Rating</th>
+                        <th scope="col" class="px-4 py-3 text-center">Stock</th>
                         <th scope="col" class="px-4 py-3 text-center">Category</th>
                         <th scope="col" class="px-4 py-3 text-center">Actions</th>
                         <th scope="col" class="px-4 py-3 text-center">Delete/Edit</th>
@@ -114,6 +124,8 @@
                                     </svg>
                                 </div>
                             </td>
+                            <p>Stock: {{ $product->stock }}</p>
+
 
                             {{-- Category --}}
                             <td class="px-4 py-2 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">

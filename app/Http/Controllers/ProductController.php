@@ -7,6 +7,8 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use App\Notifications\ProductLowStock;
+use Illuminate\Support\Facades\Notification;
 
 class ProductController extends Controller
 {
@@ -14,6 +16,11 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $products = Product::with('coupons')->get();
+        
+        foreach ($products as $product) {
+            $product->lowStock = $product->isNearlyOutOfStock();
+        }
+
         return view('dashboard.products.index', compact('products', 'categories'));
     }
 
@@ -121,6 +128,16 @@ class ProductController extends Controller
         // For example, let's assume the price is $10 per kg.
         return $weight * 10;
     }
+    public function checkStock(Product $product)
+    {
+        if ($product->isNearlyOutOfStock()) {
+            Notification::route('mail', 'admin@example.com')->notify(new ProductLowStock($product));
 
-    // show all products to home page
+            return view('products.show', ['product' => $product, 'lowStock' => true]);
+        }
+
+        return view('products.show', ['product' => $product, 'lowStock' => false]);
+    }
+
+
 }
