@@ -142,3 +142,7 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/dashboard/coupons/coupons/apply', [CouponController::class, 'applyForm'])->name('coupons.applyForm');
     Route::post('/dashboard/coupons/coupons/apply', [CouponController::class, 'apply'])->name('coupons.apply');
 });
+
+
+// 
+// Route::get('/home', [CategoryController::class, 'showAllProducts']);

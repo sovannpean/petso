@@ -121,4 +121,6 @@ class ProductController extends Controller
         // For example, let's assume the price is $10 per kg.
         return $weight * 10;
     }
+
+    // show all products to home page
 }

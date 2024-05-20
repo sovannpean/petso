@@ -103,4 +103,7 @@ class CategoryController extends Controller
         Category::destroy($id);
         return redirect()->route('categories.index')->with('flash_message', 'Deleted!');
     }
+
+    // show dog product to front-end
+
 }
