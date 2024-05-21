@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Added user_id column
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->integer('quantity');
@@ -19,7 +20,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('order_product');
+        Schema::dropIfExists('orders'); // Correct table name
     }
-
 };
