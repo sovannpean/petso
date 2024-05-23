@@ -13,6 +13,10 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     use HasFactory, Notifiable, HasRoles;
 
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
     /**
      * The attributes that are mass assignable.
      *

@@ -13,8 +13,10 @@ use App\Http\Controllers\OverViewController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\OrderController;
-
-
+use App\Http\Controllers\Auth\SocialAuthController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\RatingController;
+use App\Http\Controllers\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +35,12 @@ use App\Http\Controllers\OrderController;
 // Route::get('/', function () {
 //     return view('/pages/homePage');
 // });
-
+// Route::get('/favorite', function () {
+//     return view('/pages/favoritePage');
+// });
+Route::get('/order', function () {
+    return view('/pages/orderPage');
+});
 // cat
 Route::get('/food-cat', function () {
     return view('/pages/cats/foodPage');
@@ -147,3 +154,10 @@ Route::get('/dashboard/orders/index', [OrderController::class, 'index'])->name('
 Route::get('/dashboard/orders/create', [OrderController::class, 'create'])->name('orders.create');
 Route::post('/dashboard/orders/create', [OrderController::class, 'store'])->name('orders.store');
 Route::patch('/dashboard/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+
+Route::get('login/{provider}', [SocialAuthController::class, 'redirectToProvider'])->name('social.login');
+Route::get('login/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback']);
+
+Route::post('/ratings/rate', [RatingController::class, 'rateProduct']);
+
+Route::get('/pages/favoritePage', [WishlistController::class, 'index' ]);

@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Notifications\ProductLowStock;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -16,10 +17,11 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $products = Product::with('coupons')->get();
-        
+
         foreach ($products as $product) {
             $product->lowStock = $product->isNearlyOutOfStock();
         }
+
 
         return view('dashboard.products.index', compact('products', 'categories'));
     }
@@ -70,6 +72,11 @@ class ProductController extends Controller
     {
         $products = Product::find($id);
         $categories = Category::all();
+
+        $wishlistItems = session('wishlist')->getContent();
+        $wishlistCount = $wishlistItems->count();
+        $wishlistProductIds = $wishlistItems->pluck('id')->toArray();
+
         return view('dashboard.products.show', compact('products', 'categories'));
     }
 
@@ -138,6 +145,5 @@ class ProductController extends Controller
 
         return view('products.show', ['product' => $product, 'lowStock' => false]);
     }
-
 
 }

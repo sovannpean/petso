@@ -42,4 +42,19 @@ class Product extends Model
         return $this->belongsToMany(Order::class)->withPivot('quantity');
     }
 
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+    
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function averageRating()
+    {
+        return $this->ratings()->avg('rating');
+    }
+
 }
