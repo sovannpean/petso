@@ -15,11 +15,22 @@ class OrderController extends Controller
         return view('dashboard.orders.index', compact('orders'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $products = Product::all();
-        return view('dashboard.orders.create', compact('products'));
+        // Validate the request data
+        $request->validate([
+            'selected_products' => 'required|array',
+            'selected_products.*' => 'exists:products,id',
+        ]);
+
+        // Process the order
+        $selectedProducts = $request->input('selected_products');
+
+
+        // Return a response or redirect
+        return redirect()->back()->with('success', 'Order created successfully!');
     }
+
 
     public function store(Request $request)
     {

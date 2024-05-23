@@ -160,4 +160,10 @@ Route::get('login/{provider}/callback', [SocialAuthController::class, 'handlePro
 
 Route::post('/ratings/rate', [RatingController::class, 'rateProduct']);
 
-Route::get('/pages/favoritePage', [WishlistController::class, 'index' ]);
+Route::get('/pages/favoritePage', [WishlistController::class, 'index']);
+Route::post('/add-to-wishlist', [WishlistController::class, 'addWishlist'])->name('wishlist.add');
+Route::delete('/wishlist/remove', [WishlistController::class, 'delete'])->name('wishlist.remove');
+
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::post('/order/add', [OrderController::class, 'addOrder'])->name('order.add');
+Route::post('/order/create', [OrderController::class, 'create'])->name('order.create');

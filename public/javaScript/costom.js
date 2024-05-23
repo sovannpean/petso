@@ -1,48 +1,39 @@
-import axios from 'axios';
+$(document).ready(function () {
+    $('.add-to-wishlist').on('click', function (e) {
+        e.preventDefault();
 
-// Add to Wishlist
-function addToWishlist(productId) {
+        var productId = $(this).data('product_id');
 
-    
-    $.ajax({
-        url: '/api/wishlist',
-        type: 'POST',
-        data: {
-            product_id: productId,
-        },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Ensure CSRF token is included
-        },
-        success: function (response) {
-            console.log('Added to wishlist', response);
-            // Update the UI accordingly
-        },
-        error: function (xhr, status, error) {
-            console.error('Error adding to wishlist:', error);
-        }
+        $.ajax({
+            url: '{{ route('/pages/favoritePage/add/') }}',
+            method: 'POST',
+            data: {
+                product_id: productId,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function (response) {
+                if (response.status === 'success') {
+                    alert(response.message);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function (xhr) {
+                alert('An error occurred. Please try again.');
+            }
+        });
     });
-}
+});
 
-// Remove from Wishlist
-function removeFromWishlist(productId) {
-    axios.delete(`/api/wishlist/${productId}`)
-        .then(response => {
-            console.log('Removed from wishlist', response.data);
-            // Update the UI accordingly
-        })
-        .catch(error => {
-            console.error('Error removing from wishlist:', error);
-        });
-}
+document.getElementById('select-all').addEventListener('change', function (e) {
+    let checkboxes = document.querySelectorAll('.select-item');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = e.target.checked;
+    });
+});
 
-// Fetch Wishlist
-function fetchWishlist() {
-    axios.get('/api/wishlist')
-        .then(response => {
-            console.log('Wishlist:', response.data);
-            // Render wishlist items in the UI
-        })
-        .catch(error => {
-            console.error('Error fetching wishlist:', error);
-        });
-}
+document.getElementById('order-selected').addEventListener('click', function () {
+    let form = document.getElementById('order-form');
+    form.method = 'POST'; // Ensure the method is POST
+    form.submit();
+});

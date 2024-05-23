@@ -1,3 +1,6 @@
 <x-app-layout>
-    <h1>order</h1>
+    <div class="container">
+        <h1>My Orders</h1>
+
+    </div>   
 </x-app-layout>
