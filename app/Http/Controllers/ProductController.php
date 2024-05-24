@@ -7,13 +7,22 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use App\Notifications\ProductLowStock;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
     public function index(): View
     {
         $categories = Category::all();
-        $products = Product::all();
+        $products = Product::with('coupons')->get();
+
+        foreach ($products as $product) {
+            $product->lowStock = $product->isNearlyOutOfStock();
+        }
+
+
         return view('dashboard.products.index', compact('products', 'categories'));
     }
 
@@ -63,6 +72,11 @@ class ProductController extends Controller
     {
         $products = Product::find($id);
         $categories = Category::all();
+
+        $wishlistItems = session('wishlist')->getContent();
+        $wishlistCount = $wishlistItems->count();
+        $wishlistProductIds = $wishlistItems->pluck('id')->toArray();
+
         return view('dashboard.products.show', compact('products', 'categories'));
     }
 
@@ -121,14 +135,15 @@ class ProductController extends Controller
         // For example, let's assume the price is $10 per kg.
         return $weight * 10;
     }
-
-    // show all products to home page
-    public function productDetail($id)
+    public function checkStock(Product $product)
     {
-        // Fetch the product by ID
-        $product = Product::findOrFail($id);
+        if ($product->isNearlyOutOfStock()) {
+            Notification::route('mail', 'admin@example.com')->notify(new ProductLowStock($product));
 
-        // Pass the product to the view
-        return view('pages.detailproductPage', compact('product'));
+            return view('products.show', ['product' => $product, 'lowStock' => true]);
+        }
+
+        return view('products.show', ['product' => $product, 'lowStock' => false]);
     }
+
 }

@@ -2,25 +2,59 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'name', 'price', 'detail', 'size', 'weight', 'images', 'category_id'
+        'name', 'price', 'detail', 'size', 'weight', 'images', 'category_id', 'stock'
     ];
 
-    public function category(): BelongsTo
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
     public function coupons()
     {
-        return $this->belongsToMany(Coupon::class, 'coupon_product');
+        return $this->belongsToMany(Coupon::class);
     }
+
+    public function getDiscountedPriceAttribute()
+    {
+        $discountedPrice = $this->price;
+
+        foreach ($this->coupons as $coupon) {
+            if ($coupon->status && now()->between($coupon->starts_at, $coupon->expires_at)) {
+                $discountedPrice *= ((100 - $coupon->discount_amount) / 100);
+            }
+        }
+
+        return $discountedPrice;
+    }
+    public function isNearlyOutOfStock()
+    {
+        return $this->stock <= 10; // or any threshold you prefer
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class)->withPivot('quantity');
+    }
+
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+    
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function averageRating()
+    {
+        return $this->ratings()->avg('rating');
+    }
+
 }

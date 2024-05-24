@@ -18,5 +18,19 @@ class Category extends Model
     {
         return $this->belongsTo(Product::class, 'category_id');
     }
-}
 
+    public function sub_categories(): BelongsTo
+    {
+        return $this->belongsTo(SubCategory::class, 'category_id');
+    }
+    
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+}

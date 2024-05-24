@@ -22,11 +22,11 @@
                     <x-text-input id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                 </div>
 
-                {{-- Email --}}
+                {{-- Phone --}}
                 <div class="mb-5">
-                    <x-input-label for="email" :value="__('Email')" class="block mb-2 text-sm font-medium text-gray-900"/>
-                    <x-text-input id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" type="email" name="email" :value="old('email')" required autocomplete="username" />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    <x-input-label for="phone" :value="__('Phone Number')" class="block mb-2 text-sm font-medium text-gray-900"/>
+                    <x-text-input id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" type="text" name="phone" :value="old('phone')" required autocomplete="username" />
+                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 
                 {{-- Password --}}
@@ -73,7 +73,7 @@
                     <hr class="w-[35%]">
                 </div>
 
-                {{-- Sign up with socail medai --}}
+                {{-- Sign up with social media --}}
                 <div class="flex justify-between">
                     <div class="items-center justify-center gap-3 flex border rounded-md w-[150px] h-[50px] hover:bg-[#5B96A6] hover:text-white">
                         <i class="fa-brands fa-google text-2xl"></i>

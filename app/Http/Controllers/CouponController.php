@@ -5,70 +5,50 @@ namespace App\Http\Controllers;
 use App\Models\Coupon;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 
 class CouponController extends Controller
 {
-    public function index(): View
+    public function index()
     {
         $coupons = Coupon::all();
-        $products = Product::all(); // Fetch all products for the dropdown
+        $products = Product::all();
         return view('dashboard.coupons.index', compact('coupons', 'products'));
     }
 
-    public function create(): View
+    public function create()
     {
-        $products = Product::all();
-        return view('dashboard.coupons.create', compact('products'));
+        return view('dashboard.coupons.create');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
-            'code' => 'required|string|unique:coupons,code|max:255',
-            'name' => 'required|string|max:255',
-            'discount_amount' => 'required|numeric|min:0|max:100', // Ensure it's a percentage
+            'code' => 'required|unique:coupons',
+            'name' => 'required',
+            'discount_amount' => 'required|numeric|min:0|max:100',
             'starts_at' => 'required|date',
-            'expires_at' => 'required|date|after:starts_at',
-            'product_ids' => 'required|array',
-            'product_ids.*' => 'exists:products,id',
+            'expires_at' => 'required|date|after_or_equal:starts_at',
         ]);
 
-        $coupon = Coupon::create([
-            'code' => $request->input('code'),
-            'name' => $request->input('name'),
-            'discount_amount' => $request->input('discount_amount'),
-            'status' => $request->input('status', true),
-            'starts_at' => $request->input('starts_at'),
-            'expires_at' => $request->input('expires_at'),
-        ]);
-
-        $coupon->products()->sync($request->input('product_ids'));
+        Coupon::create($request->all());
 
         return redirect()->route('coupons.index')->with('success', 'Coupon created successfully.');
     }
 
-    public function apply(Request $request): RedirectResponse
+    public function apply(Request $request)
     {
         $request->validate([
-            'product_id' => 'required|exists:products,id',
             'coupon_code' => 'required|exists:coupons,code',
+            'product_id' => 'required|exists:products,id',
         ]);
 
-        $product = Product::find($request->input('product_id'));
         $coupon = Coupon::where('code', $request->input('coupon_code'))->first();
+        $product = Product::find($request->input('product_id'));
 
-        if ($coupon && $coupon->status && now()->between($coupon->starts_at, $coupon->expires_at)) {
-            // Apply percentage discount
-            $discountAmount = $product->price * ($coupon->discount_amount / 100);
-            $product->price = max(0, $product->price - $discountAmount);
-
-            // Save the updated price
-            $product->save();
+        if ($coupon && $product) {
+            $product->coupons()->attach($coupon);
         }
 
         return redirect()->route('dashboard.products.index')->with('success', 'Coupon applied successfully.');
     }
-
 }

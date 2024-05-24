@@ -30,9 +30,7 @@
                 <h4 class="text-3xl font-bold">{{ $item->name }}</h4>
             </div>
             <div class="mt-2">
-                <div class="ck-content">
-                    {!! $item->detail !!}
-                </div>
+                <h4 class="text-sm text-gray-500">{{ $item->detail }}</h4>
             </div>
             <div class="mt-4">
                 <h1 class="text-sm">

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="shortcut icon" href="{{asset('image/main-logo.jpg')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('image/main-logo.jpg') }}" type="image/x-icon">
     <title>PetSo - Login</title>
 </head>
 <body>
@@ -15,11 +15,11 @@
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <h1 class="text-3xl font-bold text-center mb-10">Login</h1>
-                <!-- Email Address -->
+                <!-- Phone Number -->
                 <div class="mb-5">
-                    <x-input-label for="email" :value="__('Email')" />
-                    <x-text-input id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    <x-input-label for="phone" :value="__('Phone Number')" />
+                    <x-text-input id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" type="text" name="phone" :value="old('phone')" required autofocus />
+                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
     
                 <!-- Password -->
@@ -48,7 +48,7 @@
                 </div>
     
                 <div class="flex items-center justify-end mb-10">
-                    <button class=" text-white bg-blue-700 w-[500px] hover:bg-blue-800 py-2.5 font-medium rounded-lg">
+                    <button class="text-white bg-blue-700 w-[500px] hover:bg-blue-800 py-2.5 font-medium rounded-lg">
                         {{ __('Log in') }}
                     </button>
                 </div>
@@ -59,20 +59,20 @@
                     <hr class="w-[35%]">
                 </div>
 
-                {{-- Sign up with socail medai --}}
+                {{-- Sign up with social media --}}
                 <div class="flex justify-between">
-                    <div class="items-center justify-center gap-3 flex border rounded-md w-[150px] h-[50px] hover:bg-[#5B96A6] hover:text-white">
+                    <a href="{{ route('social.login', 'google') }}" class="items-center justify-center gap-3 flex border rounded-md w-[150px] h-[50px] hover:bg-[#5B96A6] hover:text-white">
                         <i class="fa-brands fa-google text-2xl"></i>
                         <label for="google" class="font-semibold">Google</label>
-                    </div>
-                    <div class="items-center justify-center gap-3 flex border rounded-md w-[150px] h-[50px] hover:bg-[#5B96A6] hover:text-white">
+                    </a>
+                    <a href="{{ route('social.login', 'facebook') }}" class="items-center justify-center gap-3 flex border rounded-md w-[150px] h-[50px] hover:bg-[#5B96A6] hover:text-white">
                         <i class="fa-brands fa-facebook text-2xl"></i>
-                        <label for="google" class="font-semibold">Facebook</label>
-                    </div>
-                    <div class="items-center justify-center gap-3 flex border rounded-md w-[150px] h-[50px] hover:bg-[#5B96A6] hover:text-white">
+                        <label for="facebook" class="font-semibold">Facebook</label>
+                    </a>
+                    <a href="{{ route('social.login', 'apple') }}" class="items-center justify-center gap-3 flex border rounded-md w-[150px] h-[50px] hover:bg-[#5B96A6] hover:text-white">
                         <i class="fa-brands fa-apple text-2xl"></i>
-                        <label for="google" class="font-semibold">Apple Id</label>
-                    </div>
+                        <label for="apple" class="font-semibold">Apple Id</label>
+                    </a>
                 </div>
                 <div class="mt-5 text-center ">
                     <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('register') }}">
@@ -84,4 +84,3 @@
     </section>
 </body>
 </html>
-

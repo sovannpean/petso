@@ -50,15 +50,6 @@
                     </select>
                 </div>
 
-                <div class="flex flex-col mt-4">
-                    <label for="product_ids">Products</label>
-                    <select name="product_ids[]" id="product_ids" class="bg-gray-100 px-4 py-2 mt-2 rounded-md w-[450px]" multiple>
-                        @foreach ($products as $product)
-                            <option value="{{ $product->id }}">{{ $product->name }} - ${{ $product->price }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
                 <div class="mt-6">
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Create
