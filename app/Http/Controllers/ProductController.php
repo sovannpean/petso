@@ -1,3 +1,4 @@
+Sovann Pean, [May 24, 2024 at 3:36:28 PM]:
 <?php
 
 namespace App\Http\Controllers;
@@ -50,7 +51,7 @@ class ProductController extends Controller
 
         $price = $this->calculatePrice($request->input('weight'));
 
-        
+
         $product = new Product([
             'name' => $request->input('name'),
             'price' => $price,
@@ -61,7 +62,7 @@ class ProductController extends Controller
             'category_id' => $category->id,
         ]);
 
-         //dd($request->all());
+        //dd($request->all());
 
         $product->save();
 
@@ -103,8 +104,8 @@ class ProductController extends Controller
         $product->name = $request->input('name');
         $product->detail = $request->input('detail');
         $product->size = $request->input('size');
-        $product->weight = (float) $request->input('weight'); 
-        
+        $product->weight = (float) $request->input('weight');
+
         $product->price = $this->calculatePrice($product->weight);
 
         if ($request->hasFile('image')) {
@@ -139,17 +140,10 @@ class ProductController extends Controller
     {
         if ($product->isNearlyOutOfStock()) {
             Notification::route('mail', 'admin@example.com')->notify(new ProductLowStock($product));
+
+            return view('products.show', ['product' => $product, 'lowStock' => true]);
         }
+
+        return view('products.show', ['product' => $product, 'lowStock' => false]);
     }
-}      
-
-    // show all products to home page
-    // public function productDetail($id)
-    // {
-    //     // Fetch the product by ID
-    //     $product = Product::findOrFail($id);
-
-    //     // Pass the product to the view
-    //     return view('pages.detailproductPage', compact('product'));
-    // }
-    
+}
