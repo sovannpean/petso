@@ -52,7 +52,7 @@ class Product extends Model
 
     public function wishlists()
     {
-        return $this->hasMany(Wishlist::class);
+        return $this->belongsTo(Wishlist::class);
     }
     
     public function ratings()
@@ -63,6 +63,11 @@ class Product extends Model
     public function averageRating()
     {
         return $this->ratings()->avg('rating');
+    }
+    
+    public function relatedProducts()
+    {
+        return $this->belongsToMany(Product::class, 'related_products', 'product_id', 'related_product_id');
     }
 
 }

@@ -1,29 +1,34 @@
-$(document).ready(function () {
-    $('.add-to-wishlist').on('click', function (e) {
-        e.preventDefault();
+document.addEventListener('DOMContentLoaded', function () {
+    const forms = document.querySelectorAll('.add-to-wishlist-form');
 
-        var productId = $(this).data('product_id');
+    forms.forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
 
-        $.ajax({
-            url: '{{ route('/pages/favoritePage/add/') }}',
-            method: 'POST',
-            data: {
-                product_id: productId,
-                _token: '{{ csrf_token() }}'
-            },
-            success: function (response) {
-                if (response.status === 'success') {
-                    alert(response.message);
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function (xhr) {
-                alert('An error occurred. Please try again.');
-            }
+            const formData = new FormData(form);
+            const url = form.action;
+
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Product successfully added to favorites');
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         });
     });
 });
+
+
 
 document.getElementById('select-all').addEventListener('change', function (e) {
     let checkboxes = document.querySelectorAll('.select-item');
