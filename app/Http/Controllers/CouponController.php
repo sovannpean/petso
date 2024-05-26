@@ -49,6 +49,6 @@ class CouponController extends Controller
             $product->coupons()->attach($coupon);
         }
 
-        return redirect()->route('dashboard.products.index')->with('success', 'Coupon applied successfully.');
+        return redirect('/dashboard/products/index')->with('success', 'Coupon applied successfully.');
     }
 }

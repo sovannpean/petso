@@ -2,17 +2,25 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
-        'name', 'price', 'detail', 'size', 'weight', 'images', 'category_id', 'stock'
+        'name','detail', 'price', 'stock', 'weight', 'images', 'category_id', 'sub_category_id'
     ];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function subCategory()
+    {
+        return $this->belongsTo(SubCategory::class);
     }
 
     public function coupons()
@@ -34,7 +42,7 @@ class Product extends Model
     }
     public function isNearlyOutOfStock()
     {
-        return $this->stock <= 10; // or any threshold you prefer
+        return $this->stock <= 3;
     }
 
     public function orders()

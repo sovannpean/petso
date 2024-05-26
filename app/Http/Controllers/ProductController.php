@@ -4,82 +4,67 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Notifications\ProductLowStock;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
     public function index(): View
     {
         $categories = Category::all();
+        $subcategories = SubCategory::all();
+        
         $products = Product::with('coupons')->get();
 
         foreach ($products as $product) {
             $product->lowStock = $product->isNearlyOutOfStock();
         }
 
-
-        return view('dashboard.products.index', compact('products', 'categories'));
+        return view('dashboard.products.index', compact('products', 'categories' ,'subcategories'));
     }
 
     public function create(): View
     {
         $categories = Category::all();
+        $subcategories = SubCategory::all(); 
         return view('dashboard.products.create', compact('categories'));
     }
 
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'detail' => 'required|string',
-            'size' => 'required|string|max:255',
-            'weight' => 'required|numeric',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'category_name' => 'required|string|max:255',
-        ]);
+            $nameImage = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $nameImage);
 
-        $nameImage = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('images'), $nameImage);
+            $category = Category::firstOrCreate(['name' => $request->input('category_name')]);
+            $sub_category = SubCategory::firstOrCreate(['name' => $request->input('sub_category_name')]);
 
-        $category = Category::firstOrCreate(['name' => $request->input('category_name')]);
+            $price = $this->calculatePrice($request->input('weight'));
 
-        $price = $this->calculatePrice($request->input('weight'));
+            $product = new Product([
+                'name' => $request->input('name'),
+                'price' => $price,
+                'detail' => $request->input('detail'),
+                'stock' => $request->input('stock'),
+                'weight' => $request->input('weight'),
+                'images' => $nameImage,
+                'category_id' => $category->id,
+                'sub_category_id' => $sub_category->id,
+            ]);
+            $product->save();
 
-
-
-        $product = new Product([
-            'name' => $request->input('name'),
-            'price' => $price,
-            'detail' => $request->input('detail'),
-            'size' => $request->input('size'),
-            'weight' => $request->input('weight'),
-            'images' => $nameImage,
-            'category_id' => $category->id,
-        ]);
-
-        //dd($request->all());
-        //dd($request->all());
-
-        $product->save();
-
-        return redirect()->route('dashboard.products.index')->with('success', 'Product created successfully.');
+            return redirect('/dashboard/products/index')->with('success', 'Product created successfully.');
     }
 
     public function show(string $id): View
     {
         $products = Product::find($id);
         $categories = Category::all();
-
-        $wishlistItems = session('wishlist')->getContent();
-        $wishlistCount = $wishlistItems->count();
-        $wishlistProductIds = $wishlistItems->pluck('id')->toArray();
-
-        return view('dashboard.products.show', compact('products', 'categories'));
+        $subcategories = SubCategory::all(); 
+        return view('dashboard.products.update', compact('product', 'categories', 'subcategories'));
     }
 
     public function edit(string $id): View
@@ -94,10 +79,12 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'detail' => 'required|string',
-            'size' => 'required|string|max:255',
+            'stock' => 'required|string|max:255',
+            'price' => 'required|numeric',
             'weight' => 'required|numeric',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'category_name' => 'required|string|max:255',
+            'sub_category_name' => 'required|string|max:255',
         ]);
 
         $product = Product::findOrFail($id);
@@ -119,6 +106,10 @@ class ProductController extends Controller
 
         $category = Category::firstOrCreate(['name' => $request->input('category_name')]);
         $product->category_id = $category->id;
+
+
+        $sub_category = SubCategory::firstOrCreate(['name' => $request->input('sub_category_name')]);
+        $product->sub_category_id = $sub_category->id;
 
         // dd($request->all());
 

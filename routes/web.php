@@ -103,22 +103,13 @@ Route::get('/dashboard/category/show/{id}', [CategoryController::class, 'show'])
 Route::resource('categories', CategoryController::class);
 
 //product
-Route::get('/dashboard/products/index', [ProductController::class, 'index'])->name('dashboard.products.index');
+Route::get('/dashboard/products/index', [ProductController::class, 'index']);
 Route::get('/dashboard/products/create', [ProductController::class, 'create']);
 Route::post('/dashboard/products/create', [ProductController::class, 'store']);
 Route::get('/dashboard/products/update/{id}', [ProductController::class, 'edit']);
 Route::post('/dashboard/products/update/{id}', [ProductController::class, 'update']);
 Route::get('/dashboard/products/show/{id}', [ProductController::class, 'show']);
 Route::post('/dashboard/products/index/{id}', [ProductController::class, 'destroy']);
-
-Route::prefix('dashboard')->group(function () {
-    Route::get('products', [ProductController::class, 'index'])->name('dashboard.products.index');
-    Route::get('products/create', [ProductController::class, 'create'])->name('dashboard.products.create');
-    Route::post('products', [ProductController::class, 'store'])->name('dashboard.products.store');
-    Route::get('products/{product}/edit', [ProductController::class, 'edit'])->name('dashboard.products.edit');
-    Route::put('products/{product}', [ProductController::class, 'update'])->name('dashboard.products.update');
-    Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('dashboard.products.destroy');
-});
 
 
 //overView

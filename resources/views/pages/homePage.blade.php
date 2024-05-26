@@ -7,23 +7,20 @@
                 </h1>
                 <p class="text-2xl text-gray-100 mt-4">High quality ingredients, balanced by experts.</p>
             </div>
+            
             <nav class="absolute bottom-[-20px] right-0">
                 <div class="flex justify-end gap-5">
+                @foreach($categories as $category)
                     <div class="bg-white py-2 px-8 rounded-xl">
-                        <a href="/food-dog">
-                            <h1 class="mb-2 font-bold">Dogs</h1>
-                            <img src="{{asset('image/dog.png')}}" alt="" class="w-32 object-cover">
+                        <a href="/{{ strtolower($category->name) }}">
+                            <h1 class="mb-2 font-bold">{{ $category->name }}</h1>
+                            <img src="{{ asset('image/' . strtolower($category->name) . '.png') }}" alt="" class="w-32 object-cover">
                         </a>
                     </div>
-                    <div class="bg-white py-2 px-8 rounded-xl">
-                        <a href="/food-cat">
-                            <h1 class="mb-2 font-bold">Cats</h1>
-                            <img src="{{asset('image/cat.png')}}" alt="" class="w-32 object-cover">
-                        </a>
-                    </div>
-                </div>
+                @endforeach
+            </div>
             </nav>
-        </div>
+         </div>
     </div>
 
     {{-- for food pet --}}
@@ -34,7 +31,6 @@
                 <div class="mb-5">
                     <div class="flex items-center justify-between">
                         <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
-                        <h1 class="text-2xl font-semibold">New Products</h1>
                         <h1 class="text-2xl font-semibold">New Products</h1>
                         <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
                     </div>
