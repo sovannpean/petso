@@ -30,7 +30,9 @@
                 <h4 class="text-3xl font-bold">{{ $item->name }}</h4>
             </div>
             <div class="mt-2">
-                <h4 class="text-sm text-gray-500">{{ $item->detail }}</h4>
+                <div class="ck-content">
+                    {!! $item->detail !!}
+                </div>
             </div>
             <div class="mt-4">
                 <h1 class="text-sm">
@@ -45,11 +47,11 @@
                 </h1>
                 <h1 class="text-sm">
                     <span class="font-bold">WEIGHT</span> 
-                    <span class="text-gray-500">{{ $item->price }}kg</span>  
+                    <span class="text-gray-500">{{ $item->price }}</span>  
                 </h1>
             </div>
             <div class="w-full bg-[#17554B] rounded-full mt-5">
-                <h4 class="text-center py-2 text-gray-100 font-semibold">{{ $item->weight }}$</h4>
+                <h4 class="text-center py-2 text-gray-100 font-semibold">{{ $item->weight }} $</h4>
             </div>            
         </div>
     </div>

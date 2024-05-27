@@ -7,23 +7,20 @@
                 </h1>
                 <p class="text-2xl text-gray-100 mt-4">High quality ingredients, balanced by experts.</p>
             </div>
+            
             <nav class="absolute bottom-[-20px] right-0">
                 <div class="flex justify-end gap-5">
+                @foreach($categories as $category)
                     <div class="bg-white py-2 px-8 rounded-xl">
-                        <a href="/food-dog">
-                            <h1 class="mb-2 font-bold">Dogs</h1>
-                            <img src="{{asset('image/dog.png')}}" alt="" class="w-32 object-cover">
+                        <a href="/{{ strtolower($category->name) }}">
+                            <h1 class="mb-2 font-bold">{{ $category->name }}</h1>
+                            <img src="{{ asset('image/' . strtolower($category->name) . '.png') }}" alt="" class="w-32 object-cover">
                         </a>
                     </div>
-                    <div class="bg-white py-2 px-8 rounded-xl">
-                        <a href="/food-cat">
-                            <h1 class="mb-2 font-bold">Cats</h1>
-                            <img src="{{asset('image/cat.png')}}" alt="" class="w-32 object-cover">
-                        </a>
-                    </div>
-                </div>
+                @endforeach
+            </div>
             </nav>
-        </div>
+         </div>
     </div>
 
     {{-- for food pet --}}
@@ -43,54 +40,50 @@
                         <i class="fa-solid fa-star-of-david text-sm"></i>
                     </div>
                 </div>
-<div class="grid grid-cols-4 gap-4">
-    {{-- loop --}}
-    @if($products->isEmpty())
-        <p>No products available.</p>
-    @else
-        @foreach($products->take(4) as $product)
-            <div class="border border-gray-200 bg-[#48b194]">
-                <div class="bg-gray-100">
-                    <a href="/detail-product/{{ $product->id }}">
-                        <img src="{{ asset('/images/' . $product->images) }}" alt="" class="w-full h-[350px] object-cover">
-                    </a>
-                </div>
-                <div class="p-4">
-                    <h1 class="font-bold text-[#602b05]">{{ $product->name }}</h1>
-                    <div class="flex justify-between items-center mt-2">
-                        <div>
-                            <a href="/detail-product/{{ $product->id }}">
-                                <h1 class="font-semibold text-gray-100">{{ $product->price }}$</h1>
-                                <h1 class="text-sm"><span class="font-semibold">SIZE:</span> {{ $product->size }}</h1>
-                            </a>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="flex gap-2">
-                                <form action="{{ route('wishlist.add') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <button type="submit" class="bg-white hover:border-[#115542] hover:border rounded-md" onclick="changeColor(this)">
-                                        <i class="fa-solid fa-heart p-2 text-red-900"></i>
-                                    </button>
-                                </form>
-                                <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                    <i class="fa-solid fa-cart-plus p-2"></i>
-                                </a>
+                <div class="grid grid-cols-4 gap-4">
+                    @if($products->isEmpty())
+                        <p>No products available.</p>
+                    @else
+                        @foreach($products->take(4) as $product)
+                            <div class="border border-gray-200 bg-[#48b194]">
+                                <div class="bg-gray-100">
+                                    <a href="{{ route('products.detail', $product->id) }}">
+                                        <img src="{{ asset('/images/' . $product->images) }}" alt="" class="w-full h-[350px] object-cover">
+                                    </a>
+                                </div>
+                                <div class="p-4">
+                                    <h1 class="font-bold text-[#602b05]">{{ $product->name }}</h1>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <div>
+                                            <a href="/detail-product">
+                                                <h1 class="font-semibold text-gray-100">{{ $product->price }}$</h1>
+                                                <h1 class="text-sm"><span class="font-semibold">SIZE:</span> {{ $product->size }}</h1>
+                                            </a>
+                                        </div>
+                                        <div class="flex flex-col items-center">
+                                            <div class="flex gap-2">
+                                                <a href="#" class="add-to-wishlist bg-white hover:border-[#115542] hover:border rounded-md" data-product-id="{{ $product->id }}">
+                                                    <i class="fa-solid fa-heart p-2 text-red-900"></i>
+                                                </a>
+                                                <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
+                                                    <i class="fa-solid fa-cart-plus p-2"></i>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                                <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                                <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                                <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                                <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                            </div>
-                        </div>
-                    </div>
+                        @endforeach
+                    @endif
                 </div>
-            </div>
-        @endforeach
-    @endif
-</div>
+
             </div>
         </div>
     </div>
@@ -310,6 +303,7 @@
                     <div class="flex items-center justify-between">
                         <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
                         <h1 class="text-2xl font-semibold">All Products</h1>
+                        <h1 class="text-2xl font-semibold">All Products</h1>
                         <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
                     </div>
                     <div class="text-center text-[#af9a4f]">
@@ -468,3 +462,32 @@
         </div>
     </div>
 </x-app-layout>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const wishlistButtons = document.querySelectorAll('.add-to-wishlist');
+        
+        wishlistButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const productId = this.getAttribute('data-product-id');
+                const url = "{{ route('wishlist.add') }}";
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify({ product_id: productId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+</script>

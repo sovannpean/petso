@@ -15,7 +15,7 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::all();
-        // $products = Product::all();
+        $categories = Category::with('subcategories')->get();        
         $products = Product::orderBy('created_at', 'desc')->get();
         return view('pages.homePage',compact('products'), compact('categories'));
     }
@@ -23,10 +23,7 @@ class HomeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+   
 
     /**
      * Store a newly created resource in storage.

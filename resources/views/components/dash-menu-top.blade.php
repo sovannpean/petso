@@ -34,7 +34,7 @@
             </button>
             <a href="/" class="flex items-center justify-between mr-4">
                 <img src="{{asset('image/logo.jpg')}}" class="mr-3 h-[48px] rounded-full" alt="">
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PetsRescue</span>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PetSo</span>
             </a>
             <form action="#" method="GET" class="hidden md:block md:pl-2">
                 <label for="topbar-search" class="sr-only">Search</label>
