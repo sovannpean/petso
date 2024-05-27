@@ -28,7 +28,6 @@
                     </button>
                 </div>
             </div>
-
             {{-- product card --}}
             <div class="mt-5">
                 <form id="order-form" action="{{ route('order.create') }}" method="POST">

@@ -38,8 +38,14 @@ use App\Http\Controllers\WishlistController;
 // Route::get('/favorite', function () {
 //     return view('/pages/favoritePage');
 // });
+Route::get('/shop', function () {
+    return view('/pages/shop');
+});
 Route::get('/order', function () {
     return view('/pages/orderPage');
+});
+Route::get('/view-cart-product', function () {
+    return view('/pages/viewCartProduct');
 });
 // cat
 Route::get('/food-cat', function () {
