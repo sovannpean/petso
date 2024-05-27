@@ -38,9 +38,9 @@ use App\Http\Controllers\WishlistController;
 // Route::get('/favorite', function () {
 //     return view('/pages/favoritePage');
 // });
-Route::get('/order', function () {
-    return view('/pages/orderPage');
-});
+// Route::get('/order', function () {
+//     return view('/pages/orderPage');
+// });
 // cat
 Route::get('/food-cat', function () {
     return view('/pages/cats/foodPage');
@@ -158,6 +158,6 @@ Route::post('/wishlist/add', [WishlistController::class, 'addWishlist'])->name('
 Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
 
 
-Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::get('pages/orderPage', [OrderController::class, 'indexOrder'])->name('orders.index');
 Route::post('/order/add', [OrderController::class, 'addOrder'])->name('order.add');
 Route::post('/order/create', [OrderController::class, 'create'])->name('order.create');

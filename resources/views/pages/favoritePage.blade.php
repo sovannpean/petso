@@ -23,9 +23,11 @@
                         <input type="checkbox" id="select-all" class="form-checkbox h-5 w-5 text-blue-600">
                         <span class="ml-2">Select All</span>
                     </label>
-                    <button id="order-selected" class="bg-[#48b194] hover:bg-[#6ad1b4] font-bold py-1.5 px-5 rounded-lg">
-                        Order
-                    </button>
+                   <a href="{{ url ('orders.index') }}">
+                        <button id="order-selected" class="bg-[#48b194] hover:bg-[#6ad1b4] font-bold py-1.5 px-5 rounded-lg">
+                            Order
+                        </button>
+                    </a>
                 </div>
             </div>
 

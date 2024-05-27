@@ -11,8 +11,13 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with('products')->where('user_id', Auth::id())->get();
+        $orders = Order::with('product')->where('user_id', Auth::id())->get();
         return view('dashboard.orders.index', compact('orders'));
+    }
+
+    public function indexOrder()
+    {
+        return view('pages.orderPage');
     }
 
     public function create(Request $request)

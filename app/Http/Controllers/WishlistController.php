@@ -19,7 +19,8 @@ class WishlistController extends Controller
         $wishlists = Wishlist::with('product')->get();
         return view('pages.favoritePage', ['wishlists' => $wishlists]);
     }
-    public function addWishlist(Request $request, Product $product = null)
+
+    public function addWishlist(Request $request)
     {
         $this->validate($request, [
             'product_id' => 'required',
@@ -30,7 +31,7 @@ class WishlistController extends Controller
         }
 
         $user_id = auth()->user()->id;
-        $product_id = $product ? $product->id : $request->product_id;
+        $product_id = $request->product_id;
 
         $isAlreadyAdded = Wishlist::where('user_id', $user_id)
             ->where('product_id', $product_id)
@@ -48,16 +49,22 @@ class WishlistController extends Controller
         return response()->json(['success' => true, 'message' => 'Product successfully added to favorites']);
     }
 
-
-    public function remove(Request $request, Product $product = null)
+    public function remove(Request $request)
     {
         $this->validate($request, [
             'product_id' => 'required',
         ]);
 
-        $product_id = $product ? $product->id : $request->product_id;
+        if (!auth()->check()) {
+            return response()->json(['success' => false, 'message' => 'You must be logged in to remove items from your wishlist.']);
+        }
 
-        $wishlist = Wishlist::where('product_id', $product_id)->first();
+        $user_id = auth()->user()->id;
+        $product_id = $request->product_id;
+
+        $wishlist = Wishlist::where('user_id', $user_id)
+            ->where('product_id', $product_id)
+            ->first();
 
         if (!$wishlist) {
             return response()->json(['success' => false, 'message' => 'Wishlist item not found']);
@@ -67,5 +74,4 @@ class WishlistController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Item removed from favorites']);
     }
-
 }
