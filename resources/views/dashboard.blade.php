@@ -54,6 +54,18 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
+
+    <script>
+        // Auto-hide alert after 3 seconds
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const alert = document.getElementById('alert');
+            if (alert) {
+                setTimeout(() => {
+                    alert.style.display = 'none';
+                }, 3000);
+            }
+        });
+    </script>
 </body>
 
 </html>

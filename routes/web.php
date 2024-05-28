@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\SubcategoryController;
@@ -28,20 +29,6 @@ use App\Http\Controllers\WishlistController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// Route::get('/', function () {
-//     return view('/pages/welcom');
-// });
-
-// Route::get('/', function () {
-//     return view('/pages/homePage');
-// });
-// Route::get('/favorite', function () {
-//     return view('/pages/favoritePage');
-// });
-// Route::get('/order', function () {
-//     return view('/pages/orderPage');
-// });
-// cat
 Route::get('/food-cat', function () {
     return view('/pages/cats/foodPage');
 });
@@ -113,11 +100,11 @@ Route::post('/dashboard/products/index/{id}', [ProductController::class, 'destro
 
 
 //overView
-Route::get('/dashboard/overView/index', [OverViewController::class, 'index']);
+Route::get('/dashboard/overView/index', [OverViewController::class, 'index'])->name('overview');
 
 //page
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/pages/detailproductPage/{id}', [ProductController::class, 'productDetail'])->name('products.detail');
+Route::get('/pages/detailproductPage/{id}', [PagesController::class, 'productDetail'])->name('products.detail');
 
 //homePage
 Route::get('/components/nav-menu', [CategoryController::class, 'homeshow'])->name('menu');
