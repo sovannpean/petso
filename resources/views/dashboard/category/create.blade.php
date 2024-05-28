@@ -8,7 +8,6 @@
             </a>
         </div>
 
-        {{-- form --}}
         <div class="mt-10 border">
             <form class="form-group" method="POST" action="{{url('/dashboard/category/create')}}" enctype="multipart/form-data">
 

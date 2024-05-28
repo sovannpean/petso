@@ -10,7 +10,7 @@
             
             <nav class="absolute bottom-[-20px] right-0">
                 <div class="flex justify-end gap-5">
-                @foreach($categories as $category)
+                @foreach($categories->take(2) as $category)
                     <div class="bg-white py-2 px-8 rounded-xl">
                         <a href="/{{ strtolower($category->name) }}">
                             <h1 class="mb-2 font-bold">{{ $category->name }}</h1>
