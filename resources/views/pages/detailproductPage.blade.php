@@ -75,8 +75,10 @@
                         </div>
                     </div>
                     <div class="mt-5">
-                        <p><span class="text-sm font-bold">CATEGORY: </span> {{ $product->category->name }}</p>
-                        <p><span class="text-sm font-bold">SIZE: </span> {{ $product->size }}</p>
+                        <p>
+                            <span class="text-sm font-bold">CATEGORY: </span> 
+                            {{ $product->category->name }}
+                        </p>
                         <p><span class="text-sm font-bold">WEIGHT: </span> {{ $product->weight }} kg</p>
                     </div>
 
@@ -105,7 +107,6 @@
                             </svg>
                             Add to favorites
                         </a>
-
                         <a href="#" title=""
                             class="text-white mt-4 sm:mt-0 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 flex items-center justify-center"
                             role="button">
@@ -116,7 +117,7 @@
                                     d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
                             </svg>
 
-                            Add to cart
+                            Order
                         </a>
                     </div>
 

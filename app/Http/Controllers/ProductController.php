@@ -64,38 +64,26 @@ class ProductController extends Controller
         $products = Product::find($id);
         $categories = Category::all();
         $subcategories = SubCategory::all(); 
-        return view('dashboard.products.update', compact('product', 'categories', 'subcategories'));
+        return view('dashboard.products.update', compact('products', 'categories', 'subcategories'));
     }
 
     public function edit(string $id): View
     {
         $product = Product::findOrFail($id);
         $categories = Category::all();
-        return view('dashboard.products.update', compact('product', 'categories'));
+        $subcategories = SubCategory::all(); 
+        return view('dashboard.products.update', compact('product', 'categories', 'subcategories'));
     }
 
     public function update(Request $request, string $id): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'detail' => 'required|string',
-            'stock' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'weight' => 'required|numeric',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'category_name' => 'required|string|max:255',
-            'sub_category_name' => 'required|string|max:255',
-        ]);
-
         $product = Product::findOrFail($id);
 
         $product->name = $request->input('name');
         $product->detail = $request->input('detail');
-        $product->size = $request->input('size');
-        $product->weight = (float) $request->input('weight');
-
-        $product->weight = (float) $request->input('weight');
-
+        $product->price = $request->input('price');
+        $product->stock = $request->input('stock');
+        $product->weight = $request->input('weight');
         $product->price = $this->calculatePrice($product->weight);
 
         if ($request->hasFile('image')) {
@@ -108,20 +96,23 @@ class ProductController extends Controller
         $product->category_id = $category->id;
 
 
-        $sub_category = SubCategory::firstOrCreate(['name' => $request->input('sub_category_name')]);
+        $sub_category = SubCategory::firstOrCreate(
+            ['name' => $request->input('sub_category_name')],
+            ['category_id' => $category->id]
+        );
         $product->sub_category_id = $sub_category->id;
 
         // dd($request->all());
 
         $product->save();
 
-        return redirect()->route('dashboard.products.index')->with('success', 'Product updated successfully.');
+        return redirect('/dashboard/products/index')->with('success', 'Product updated successfully.');
     }
 
     public function destroy(string $id): RedirectResponse
     {
         Product::destroy($id);
-        return redirect()->route('dashboard.products.index')->with('success', 'Product deleted successfully.');
+        return redirect('dashboard/products/index')->with('success', 'Product deleted successfully.');
     }
 
     private function calculatePrice(float $weight): float

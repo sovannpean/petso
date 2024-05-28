@@ -55,15 +55,15 @@
                                     <h1 class="font-bold text-[#602b05]">{{ $product->name }}</h1>
                                     <div class="flex justify-between items-center mt-2">
                                         <div>
-                                            <a href="/detail-product">
+                                            <a href="{{ route('products.detail', $product->id) }}">
                                                 <h1 class="font-semibold text-gray-100">{{ $product->price }}$</h1>
-                                                <h1 class="text-sm"><span class="font-semibold">SIZE:</span> {{ $product->size }}</h1>
+                                                <h1 class="text-sm"><span class="font-semibold">WEIGHT:</span> {{ $product->weight . 'kg'}}</h1>
                                             </a>
                                         </div>
                                         <div class="flex flex-col items-center">
                                             <div class="flex gap-2">
                                                 <a href="#" class="add-to-wishlist bg-white hover:border-[#115542] hover:border rounded-md" data-product-id="{{ $product->id }}">
-                                                    <i class="fa-solid fa-heart p-2 text-red-900"></i>
+                                                    <i class="fa-solid fa-heart p-2 {{ $product->isFavorited() ? 'favorite' : '' }}"></i>
                                                 </a>
                                                 <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
                                                     <i class="fa-solid fa-cart-plus p-2"></i>
@@ -172,123 +172,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="border border-gray-200 relative top-0">
-                    <div class="absolute top-0 left-0 bg-[#499e86] hover:bg-[#115542] ml-4 rounded-b-full cursor-pointer">
-                        <h1 style="writing-mode: vertical-lr;" class="px-0.5 pt-2 pb-5 text-sm text-gray-100 font-bold"> 50% </h1>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <img src="{{asset('image/dogfood2.webp')}}" alt="" class="w-full h-[350px] object-cover">
-                        </a>
-                    </div>
-                    <div class="bg-[#48b194]">
-                        <div class="flex justify-between items-end p-4">
-                            <div>
-                                <a href="#">
-                                    <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
-                                    <h1 class="font-semibold text-gray-100">$140.43</h1>
-                                    <h1 class="line-through text-sm">$160.00</h1>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center">
-                                <div class="flex gap-2">
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-regular fa-heart p-2"></i>
-                                    </a>
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-solid fa-cart-plus p-2"></i>
-                                    </a>
-                                </div>
-                                <div>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border border-gray-200 relative top-0">
-                    <div class="absolute top-0 left-0 bg-[#499e86] hover:bg-[#115542] ml-4 rounded-b-full cursor-pointer">
-                        <h1 style="writing-mode: vertical-lr;" class="px-0.5 pt-2 pb-5 text-sm text-gray-100 font-bold"> 50% </h1>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <img src="{{asset('image/dogfood2.webp')}}" alt="" class="w-full h-[350px] object-cover">
-                        </a>
-                    </div>
-                    <div class="bg-[#48b194]">
-                        <div class="flex justify-between items-end p-4">
-                            <div>
-                                <a href="#">
-                                    <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
-                                    <h1 class="font-semibold text-gray-100">$140.43</h1>
-                                    <h1 class="line-through text-sm">$160.00</h1>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center">
-                                <div class="flex gap-2">
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-regular fa-heart p-2"></i>
-                                    </a>
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-solid fa-cart-plus p-2"></i>
-                                    </a>
-                                </div>
-                                <div>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border border-gray-200 relative top-0">
-                    <div class="absolute top-0 left-0 bg-[#499e86] hover:bg-[#115542] ml-4 rounded-b-full cursor-pointer">
-                        <h1 style="writing-mode: vertical-lr;" class="px-0.5 pt-2 pb-5 text-sm text-gray-100 font-bold"> 50% </h1>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <img src="{{asset('image/dogfood2.webp')}}" alt="" class="w-full h-[350px] object-cover">
-                        </a>
-                    </div>
-                    <div class="bg-[#48b194]">
-                        <div class="flex justify-between items-end p-4">
-                            <div>
-                                <a href="#">
-                                    <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
-                                    <h1 class="font-semibold text-gray-100">$140.43</h1>
-                                    <h1 class="line-through text-sm">$160.00</h1>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center">
-                                <div class="flex gap-2">
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-regular fa-heart p-2"></i>
-                                    </a>
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-solid fa-cart-plus p-2"></i>
-                                    </a>
-                                </div>
-                                <div>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -302,7 +185,6 @@
                 <div class="mb-5">
                     <div class="flex items-center justify-between">
                         <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
-                        <h1 class="text-2xl font-semibold">All Products</h1>
                         <h1 class="text-2xl font-semibold">All Products</h1>
                         <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
                     </div>
@@ -349,114 +231,6 @@
                             </div>
                         </div>
                     </div>
-    
-                    <div class="border border-gray-200">
-                        <div>
-                            <a href="#">
-                                <img src="{{asset('image/dogfood1.webp')}}" alt="" class="w-full h-[350px] object-cover">
-                            </a>
-                        </div>
-                        <div class="bg-[#48b194]">
-                            <div class="flex justify-between items-end p-4">
-                                <div>
-                                    <a href="#">
-                                        <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
-                                        <h1 class="font-semibold text-gray-100">$140.43</h1>
-                                        <h1 class="line-through text-sm">$160.00</h1>
-                                    </a>
-                                </div>
-                                <div class="flex flex-col items-center">
-                                    <div class="flex gap-2">
-                                        <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                            <i class="fa-regular fa-heart p-2"></i>
-                                        </a>
-                                        <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                            <i class="fa-solid fa-cart-plus p-2"></i>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="border border-gray-200">
-                        <div>
-                            <a href="#">
-                                <img src="{{asset('image/dogfood2.webp')}}" alt="" class="w-full h-[350px] object-cover">
-                            </a>
-                        </div>
-                        <div class="bg-[#48b194]">
-                            <div class="flex justify-between items-end p-4">
-                                <div>
-                                    <a href="#">
-                                        <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
-                                        <h1 class="font-semibold text-gray-100">$140.43</h1>
-                                        <h1 class="line-through text-sm">$160.00</h1>
-                                    </a>
-                                </div>
-                                <div class="flex flex-col items-center">
-                                    <div class="flex gap-2">
-                                        <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                            <i class="fa-regular fa-heart p-2"></i>
-                                        </a>
-                                        <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                            <i class="fa-solid fa-cart-plus p-2"></i>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="border border-gray-200">
-                        <div>
-                            <a href="#">
-                                <img src="{{asset('image/dogfood3.jpeg')}}" alt="" class="w-full h-[350px] object-cover">
-                            </a>
-                        </div>
-                        <div class="bg-[#48b194]">
-                            <div class="flex justify-between items-end p-4">
-                                <div>
-                                    <a href="#">
-                                        <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
-                                        <h1 class="font-semibold text-gray-100">$140.43</h1>
-                                        <h1 class="line-through text-sm">$160.00</h1>
-                                    </a>
-                                </div>
-                                <div class="flex flex-col items-center">
-                                    <div class="flex gap-2">
-                                        <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                            <i class="fa-regular fa-heart p-2"></i>
-                                        </a>
-                                        <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                            <i class="fa-solid fa-cart-plus p-2"></i>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -465,14 +239,15 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const wishlistButtons = document.querySelectorAll('.add-to-wishlist');
-        
+
         wishlistButtons.forEach(button => {
             button.addEventListener('click', function (e) {
                 e.preventDefault();
-                
+
                 const productId = this.getAttribute('data-product-id');
                 const url = "{{ route('wishlist.add') }}";
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                const heartIcon = this.querySelector('i');
 
                 fetch(url, {
                     method: 'POST',
@@ -484,7 +259,11 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    alert(data.message);
+                    if (data.success) {
+                        heartIcon.classList.toggle('favorite');
+                    } else {
+                        alert(data.message);
+                    }
                 })
                 .catch(error => console.error('Error:', error));
             });
