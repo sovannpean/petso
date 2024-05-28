@@ -10,16 +10,22 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Added user_id column
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->integer('quantity');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('status');
+            $table->string('receiver_name');
+            $table->string('receiver_phone');
+            $table->string('province');
+            $table->string('district');
+            $table->string('commune');
+            $table->string('house_address');
+            $table->string('email');
+            $table->text('order_notes')->nullable();
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('orders'); // Correct table name
+        Schema::dropIfExists('orders');
     }
 };

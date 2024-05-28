@@ -12,7 +12,15 @@ class Order extends Model
     protected $table = 'orders';
     protected $fillable = [
         'user_id',
-        'product_id',
+        'status',
+        'receiver_name',
+        'receiver_phone',
+        'province',
+        'district',
+        'commune',
+        'house_address',
+        'email',
+        'order_notes',
     ];
 
     public function user()
@@ -20,8 +28,9 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function product()
+
+    public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsToMany(Product::class, 'order_product')->withPivot('quantity');
     }
 }
