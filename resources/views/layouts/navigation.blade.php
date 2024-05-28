@@ -30,13 +30,13 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <div class="flex gap-4 pr-5 items-center">
-                    <a href="/shop" class="text-xl font-medium">
+                    <a href="/pages/shop" class="text-xl font-medium">
                         Shop
                     </a>
                     <a href="/pages/favoritePage">
                         <i class="fa-solid fa-heart text-2xl hover:text-[#115542]"></i>
                     </a>
-                    <a href="/view-cart-product">
+                    <a href="{{ route('orders.index') }}">
                         <i class="fa-solid fa-cart-plus text-2xl hover:text-[#115542]"></i>
                         <sup class="text-lg text-red-900 font-bold">+1</sup>
                     </a>

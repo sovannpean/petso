@@ -16,6 +16,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\WishlistController;
 
 /*
@@ -158,6 +159,10 @@ Route::post('/wishlist/add', [WishlistController::class, 'addWishlist'])->name('
 Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
 
 
-Route::get('pages/orderPage', [OrderController::class, 'indexOrder'])->name('orders.index');
-Route::post('/order/add', [OrderController::class, 'addOrder'])->name('order.add');
-Route::post('/order/create', [OrderController::class, 'create'])->name('order.create');
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+Route::post('/orders/create', [OrderController::class, 'indexOrder'])->name('orders.indexOrder'); 
+Route::post('/orders/create-order', [OrderController::class, 'create'])->name('orders.create'); 
+Route::post('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus'); 
+
+Route::get('/pages/shop', [ShopController::class, 'index'])->name('shop.index');
