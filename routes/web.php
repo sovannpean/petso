@@ -42,8 +42,14 @@ Route::get('/toy-cat', function () {
 Route::get('/treat-cat', function () {
     return view('/pages/cats/treatPage');
 });
+Route::get('/all-product-cat', function () {
+    return view('/pages/cats/allProduct');
+});
 
 // dog
+// Route::get('/all-product-dog', function () {
+//     return view('/pages/dogs/allProduct');
+// });
 Route::get('/food-dog', function () {
     return view('/pages/dogs/foodPage');
 });
@@ -103,13 +109,6 @@ Route::post('/dashboard/products/index/{id}', [ProductController::class, 'destro
 //overView
 Route::get('/dashboard/overView/index', [OverViewController::class, 'index'])->name('overview');
 
-//page
-Route::get('/', [HomeController::class, 'index']);
-Route::get('/pages/detailproductPage/{id}', [PagesController::class, 'productDetail'])->name('products.detail');
-
-//homePage
-Route::get('/components/nav-menu', [CategoryController::class, 'homeshow'])->name('menu');
-
 
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
 Route::post('/events', [EventController::class, 'store'])->name('events.store');
@@ -152,4 +151,11 @@ Route::post('/orders/create', [OrderController::class, 'indexOrder'])->name('ord
 Route::post('/orders/create-order', [OrderController::class, 'create'])->name('orders.create'); 
 Route::post('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus'); 
 
-Route::get('/pages/shop', [ShopController::class, 'index'])->name('shop.index');
+// Route::get('/pages/shop', [ShopController::class, 'index'])->name('shop.index');
+
+//layout page
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/pages/detailproductPage/{id}', [PagesController::class, 'productDetail'])->name('products.detail');
+Route::get('/components/nav-menu', [CategoryController::class, 'homeshow'])->name('menu');
+Route::get('/pages/shops/shop', [PagesController::class, 'shop'])->name('shop');
+Route::get('/pages/dogs/allProduct', [PagesController::class, 'dogIndex'])->name('dog-index');

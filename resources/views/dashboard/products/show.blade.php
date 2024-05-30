@@ -36,17 +36,17 @@
             </div>
             <div class="mt-4">
                 <h1 class="text-sm">
-                    <span class="font-bold">CATEGORY</span> 
+                    <span class="font-bold">CATEGORY:</span> 
                     <span class="text-gray-500">{{ $categories->firstWhere('id', $item->category_id)->name }}  </span>  
                 </h1>
             </div>
             <div class="mt-4 flex gap-5">
                 <h1 class="text-sm">
-                    <span class="font-bold">SIZE</span> 
-                    <span class="text-gray-500">{{ $item->size }}</span>  
+                    <span class="font-bold">STOCK:</span> 
+                    <span class="text-gray-500">{{ $item->stock }}</span>  
                 </h1>
                 <h1 class="text-sm">
-                    <span class="font-bold">WEIGHT</span> 
+                    <span class="font-bold">WEIGHT:</span> 
                     <span class="text-gray-500">{{ $item->price }}</span>  
                 </h1>
             </div>
