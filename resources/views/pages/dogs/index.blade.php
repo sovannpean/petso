@@ -57,13 +57,13 @@
                         <nav class="absolute bottom-[-20px] right-0">
                             <div class="flex justify-end gap-5">
                                 <div class="bg-white py-2 px-8 rounded-xl">
-                                    <a href="/all-product-cat">
+                                    <a href="/pages/dogs/allProduct">
                                         <h1 class="mb-2 font-bold">Dogs</h1>
                                         <img src="{{asset('image/dog.png')}}" alt="" class="w-32 object-cover">
                                     </a>
                                 </div>
                                 <div class="bg-white py-2 px-8 rounded-xl">
-                                    <a href="/all-product-cat">
+                                    <a href="/pages/cats/allProduct">
                                         <h1 class="mb-2 font-bold">Cats</h1>
                                         <img src="{{asset('image/cat.png')}}" alt="" class="w-32 object-cover">
                                     </a>

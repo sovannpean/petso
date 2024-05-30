@@ -158,4 +158,5 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/pages/detailproductPage/{id}', [PagesController::class, 'productDetail'])->name('products.detail');
 Route::get('/components/nav-menu', [CategoryController::class, 'homeshow'])->name('menu');
 Route::get('/pages/shops/shop', [PagesController::class, 'shop'])->name('shop');
-Route::get('/pages/dogs/allProduct', [PagesController::class, 'dogIndex'])->name('dog-index');
+Route::get('/pages/dogs/allProduct', [PagesController::class, 'dogIndex'])->name('dog.index');
+Route::get('/pages/cats/allProduct', [PagesController::class, 'catIndex'])->name('cat.index');

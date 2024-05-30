@@ -63,7 +63,7 @@
                                     </a>
                                 </div>
                                 <div class="bg-white py-2 px-8 rounded-xl">
-                                    <a href="#">
+                                    <a href="/pages/cats/allProduct">
                                         <h1 class="mb-2 font-bold">Cats</h1>
                                         <img src="{{asset('image/cat.png')}}" alt="" class="w-32 object-cover">
                                     </a>
@@ -75,7 +75,7 @@
                 <div class="mt-20">
                     <h1 class="text-4xl font-bold text-center font-serif">Find Products For Your Cats</h1>
                     <div class="flex justify-center gap-5 mt-5">
-                        <a href="/all-product-cat" class="border border-[#48b194] px-5 py-1.5 rounded-full" id="all-link">
+                        <a href="/pages/cats/allProduct" class="border border-[#48b194] px-5 py-1.5 rounded-full" id="all-link">
                             <h1 class="font-medium">All</h1>
                         </a>
                         <a href="/food-cat" class="border border-[#48b194] px-5 py-1.5 rounded-full" id="food-link">
@@ -114,7 +114,7 @@
               });
           
               // Add the active class to the current page link
-              if (path.includes('all-product-cat')) {
+              if (path.includes('/pages/cats/allProduct')) {
                 document.getElementById('all-link').classList.add('active');
               } else if (path.includes('food-cat')) {
                 document.getElementById('food-link').classList.add('active');

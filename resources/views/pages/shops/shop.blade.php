@@ -11,15 +11,19 @@
     </div>
 
     <section class="max-w-screen-xl mx-auto my-10">
-        <div class="flex gap-5 justify-center">
-            @foreach($categories as $category)
-                <div class="bg-white py-2 px-8 rounded-xl">
-                    <a href="/{{ strtolower($category->name) }}">
-                        <h1 class="mb-2 font-bold">{{ $category->name }}</h1>
-                        <img src="{{ asset('image/' . strtolower($category->name) . '.png') }}" alt="" class="w-32 object-cover">
-                    </a>
-                </div>
-            @endforeach
+        <div class="flex justify-center gap-5">
+            <div class="bg-white py-2 px-8 rounded-xl">
+                <a href={{ route('dog.index')}}>
+                    <h1 class="mb-2 font-bold">Dogs</h1>
+                    <img src="{{asset('image/dog.png')}}" alt="" class="w-32 object-cover">
+                </a>
+            </div>
+            <div class="bg-white py-2 px-8 rounded-xl">
+                <a href="/pages/cats/allProduct">
+                    <h1 class="mb-2 font-bold">Cats</h1>
+                    <img src="{{asset('image/cat.png')}}" alt="" class="w-32 object-cover">
+                </a>
+            </div>
         </div>
         <div class="mt-10">
             <div class="mb-5">

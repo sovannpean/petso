@@ -33,4 +33,13 @@ class PagesController extends Controller
 
         return view('pages.dogs.allProduct', compact('products'));
     }
+
+    // cat section
+    public function catIndex() {
+        $products = Product::whereHas('category', function($query) {
+            $query->where('name', 'cat');
+        })->get();
+
+        return view('pages.cats.allProduct', compact('products'));
+    }
 }
