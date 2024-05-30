@@ -8,7 +8,7 @@
         </a>
         <div class="flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse">
             <div class="flex gap-4 pr-5 items-center">
-                <a href="/shop" class="text-lg font-medium">
+                <a href="/pages/shops/shop" class="text-lg font-medium">
                     Shop
                 </a>
                 <a href="/pages/favoritePage">

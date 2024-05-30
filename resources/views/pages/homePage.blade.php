@@ -21,15 +21,19 @@
             
             <nav class="absolute bottom-[-20px] right-0">
                 <div class="flex justify-end gap-5">
-                @foreach($categories->take(2) as $category)
                     <div class="bg-white py-2 px-8 rounded-xl">
-                        <a href="/{{ strtolower($category->name) }}">
-                            <h1 class="mb-2 font-bold">{{ $category->name }}</h1>
-                            <img src="{{ asset('image/' . strtolower($category->name) . '.png') }}" alt="" class="w-32 object-cover">
+                        <a href={{ route('dog.index')}}>
+                            <h1 class="mb-2 font-bold">Dogs</h1>
+                            <img src="{{asset('image/dog.png')}}" alt="" class="w-32 object-cover">
                         </a>
                     </div>
-                @endforeach
-            </div>
+                    <div class="bg-white py-2 px-8 rounded-xl">
+                        <a href="#">
+                            <h1 class="mb-2 font-bold">Cats</h1>
+                            <img src="{{asset('image/cat.png')}}" alt="" class="w-32 object-cover">
+                        </a>
+                    </div>
+                </div>
             </nav>
          </div>
     </div>
@@ -146,11 +150,11 @@
                 {{-- loop --}}
                 <div class="border border-gray-200 relative top-0">
                     <div class="absolute top-0 left-0 bg-[#499e86] hover:bg-[#115542] ml-4 rounded-b-full cursor-pointer">
-                        <h1 style="writing-mode: vertical-lr;" class="px-0.5 pt-2 pb-5 text-sm text-gray-100 font-bold"> 50% </h1>
+                        <h1 style="writing-mode: vertical-lr;" class="px-0.5 pt-2 pb-5 text-sm text-gray-100 font-bold">10%</h1>
                     </div>
                     <div>
                         <a href="#">
-                            <img src="{{asset('image/dogfood2.webp')}}" alt="" class="w-full h-[350px] object-cover">
+                            <img src="{{ asset('/images/' . $product->images) }}" alt="" class="w-full h-[350px] object-cover">
                         </a>
                     </div>
                     <div class="bg-[#48b194]">
@@ -183,7 +187,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 

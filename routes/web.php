@@ -43,8 +43,14 @@ Route::get('/toy-cat', function () {
 Route::get('/treat-cat', function () {
     return view('/pages/cats/treatPage');
 });
+Route::get('/all-product-cat', function () {
+    return view('/pages/cats/allProduct');
+});
 
 // dog
+// Route::get('/all-product-dog', function () {
+//     return view('/pages/dogs/allProduct');
+// });
 Route::get('/food-dog', function () {
     return view('/pages/dogs/foodPage');
 });

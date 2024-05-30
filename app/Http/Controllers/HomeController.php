@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Coupon;
 
 class HomeController extends Controller
 {
@@ -17,7 +18,8 @@ class HomeController extends Controller
         $categories = Category::all();
         $categories = Category::with('subcategories')->get();        
         $products = Product::orderBy('created_at', 'desc')->get();
-        return view('pages.homePage',compact('products'), compact('categories'));
+        $coupons = Coupon::all();
+        return view('pages.homePage',compact('products'), compact('categories', 'coupons'));
     }
 
     /**
