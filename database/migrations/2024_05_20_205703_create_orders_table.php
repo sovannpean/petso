@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('province');
             $table->string('district');
             $table->string('commune');
-            $table->string('house_address');
-            $table->string('email');
+            $table->string('village');
             $table->text('order_notes')->nullable();
             $table->timestamps();
         });

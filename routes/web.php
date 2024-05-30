@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
@@ -15,7 +16,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Auth\SocialAuthController;
-use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\CardOrderController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\WishlistController;
@@ -109,6 +110,13 @@ Route::post('/dashboard/products/index/{id}', [ProductController::class, 'destro
 //overView
 Route::get('/dashboard/overView/index', [OverViewController::class, 'index'])->name('overview');
 
+//page
+Route::get('/', [HomeController::class, 'index'])->name('home');;
+Route::get('/pages/detailproductPage/{id}', [PagesController::class, 'productDetail'])->name('products.detail');
+
+//homePage
+Route::get('/components/nav-menu', [CategoryController::class, 'homeshow'])->name('menu');
+
 
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
 Route::post('/events', [EventController::class, 'store'])->name('events.store');
@@ -144,12 +152,16 @@ Route::get('/pages/favoritePage', [WishlistController::class, 'index']);
 Route::post('/wishlist/add', [WishlistController::class, 'addWishlist'])->name('wishlist.add');
 Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
 
+Route::get('/pages/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::get('/pages/shop', [ShopController::class, 'index'])->name('shop.index');
 
-Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-Route::post('/orders/create', [OrderController::class, 'indexOrder'])->name('orders.indexOrder'); 
-Route::post('/orders/create-order', [OrderController::class, 'create'])->name('orders.create'); 
-Route::post('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus'); 
+Route::get('/orders/create', [OrderController::class, 'indexOrder'])->name('orders.indexOrder');
+Route::post('/orders/create-order', [OrderController::class, 'create'])->name('orders.create');
+Route::post('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+Route::get('/orders/create', [OrderController::class, 'indexOrder'])->name('orders.indexOrder');
+Route::post('/orders/create-order', [OrderController::class, 'create'])->name('orders.create');
+Route::post('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
 
 // Route::get('/pages/shop', [ShopController::class, 'index'])->name('shop.index');
 
@@ -160,3 +172,12 @@ Route::get('/components/nav-menu', [CategoryController::class, 'homeshow'])->nam
 Route::get('/pages/shops/shop', [PagesController::class, 'shop'])->name('shop');
 Route::get('/pages/dogs/allProduct', [PagesController::class, 'dogIndex'])->name('dog.index');
 Route::get('/pages/cats/allProduct', [PagesController::class, 'catIndex'])->name('cat.index');
+
+Route::get('/cart', [CardOrderController::class, 'index'])->name('pages.viewCartProduct');
+Route::post('/wishlist/add-to-cart', [CardOrderController::class, 'addToCart'])->name('cart.addMultiple');
+Route::post('/cart/add-multiple', [CardOrderController::class, 'addToCart'])->name('cart.addMultiple');
+Route::post('/cart/update', [CardOrderController::class, 'updateCart'])->name('cart.update');
+
+Route::get('/admin/orders', [AdminController::class, 'index'])->name('admin.orders.index');
+Route::post('/admin/orders/{order}/approve', [AdminController::class, 'approve'])->name('admin.orders.approve');
+Route::post('/admin/orders/{order}/reject', [AdminController::class, 'reject'])->name('admin.orders.reject');

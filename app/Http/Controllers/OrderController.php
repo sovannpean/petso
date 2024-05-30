@@ -6,6 +6,9 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
+
 
 class OrderController extends Controller
 {
@@ -17,48 +20,67 @@ class OrderController extends Controller
 
     public function indexOrder(Request $request)
     {
-        $selectedProducts = [];
-        if ($request->has('selected_products')) {
-            $selectedProducts = Product::whereIn('id', $request->input('selected_products'))->get();
+        $cart = Session::get('cart', []);
+        $selectedProductIds = array_keys($cart);
+        $selectedProducts = collect();
+
+        if (!empty($selectedProductIds)) {
+            $selectedProducts = Product::whereIn('id', $selectedProductIds)->get();
         }
 
-        return view('pages.orderPage', compact('selectedProducts'));
+        return view('pages.orderPage', compact('selectedProducts', 'cart'));
     }
 
     public function create(Request $request)
     {
+        Log::info('Create order method called.');
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:15',
             'province' => 'required|string|max:255',
             'district' => 'required|string|max:255',
             'commune' => 'required|string|max:255',
-            'house' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'village' => 'required|string|max:255',
             'order_notes' => 'nullable|string',
-            'selected_products' => 'required|array',
-            'selected_products.*' => 'exists:products,id',
         ]);
 
-        $order = Order::create([
-            'user_id' => Auth::id(),
-            'status' => 'pending',
-            'receiver_name' => $validatedData['name'],
-            'receiver_phone' => $validatedData['phone'],
-            'province' => $validatedData['province'],
-            'district' => $validatedData['district'],
-            'commune' => $validatedData['commune'],
-            'house_address' => $validatedData['house'],
-            'email' => $validatedData['email'],
-            'order_notes' => $validatedData['order_notes'],
-        ]);
+        Log::info('Validation passed.');
 
-        $order->products()->attach($validatedData['selected_products'], ['quantity' => 1]);
+        $cart = Session::get('cart', []);
+        $selectedProductIds = array_keys($cart);
 
-        $selectedProducts = Product::whereIn('id', $validatedData['selected_products'])->get();
-        $totalPrice = $selectedProducts->sum('price');
+        try {
+            $order = Order::create([
+                'user_id' => Auth::id(),
+                'status' => 'pending',
+                'receiver_name' => $validatedData['name'],
+                'receiver_phone' => $validatedData['phone'],
+                'province' => $validatedData['province'],
+                'district' => $validatedData['district'],
+                'commune' => $validatedData['commune'],
+                'village' => $validatedData['commune'],
+                'order_notes' => $validatedData['order_notes'],
+            ]);
 
-        return redirect()->route('orders.index')->with(['success' => 'Order created successfully!', 'selectedProducts' => $selectedProducts, 'totalPrice' => $totalPrice]);
+            Log::info('Order created with ID: ' . $order->id);
+
+            foreach ($selectedProductIds as $productId) {
+                $product = Product::find($productId);
+                if ($product) {
+                    $order->products()->attach($productId, ['quantity' => $cart[$productId]]);
+                }
+            }
+
+            Log::info('Products attached to order.');
+
+            Session::forget('cart');
+
+            return redirect()->route('home')->with('success', 'Order created successfully!');
+        } catch (\Exception $e) {
+            Log::error('Failed to create order: ' . $e->getMessage());
+            return redirect()->route('orders.indexOrder')->with('error', 'Failed to create order: ' . $e->getMessage());
+        }
     }
 
     public function store(Request $request)
@@ -73,9 +95,14 @@ class OrderController extends Controller
             'status' => 'pending',
         ]);
 
-        $order->products()->attach($request->products, ['quantity' => 1]);
+        foreach ($request->products as $productId) {
+            $product = Product::find($productId);
+            if ($product) {
+                $order->products()->attach($productId, ['quantity' => 1]);
+            }
+        }
 
-        return redirect()->route('orders.index')->with('success', 'Order created successfully.');
+        return redirect()->route('home')->with('success', 'Order created successfully.');
     }
 
     public function updateStatus(Order $order, Request $request)

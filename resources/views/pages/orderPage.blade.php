@@ -1,6 +1,28 @@
 <x-app-layout>
     <section class="max-w-screen-xl mx-auto my-20">
-        <div class="grid grid-cols-2 gap-5">
+        <div>
+            @if(session('success'))
+                <div class="alert alert-success bg-green-500 text-white p-4 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-error bg-red-500 text-white p-4 rounded mb-4">
+                    {{ session('error') }}
+                </div>
+            @endif
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
                 <h1 class="text-xl font-semibold">Delivery Detail</h1>
                 <div class="mt-5">
@@ -20,38 +42,26 @@
                                 <input type="text" name="province" placeholder="Select Province/City" class="w-full px-4 py-2 mt-2 rounded-md border" required>
                             </div>
                             <div>
-                                <label for="district">District/Khan*</label><br>
-                                <input type="text" name="district" placeholder="Select District/Khan" class="w-full px-4 py-2 mt-2 rounded-md border" required>
+                                <label for="district">District*</label><br>
+                                <input type="text" name="district" placeholder="Select District" class="w-full px-4 py-2 mt-2 rounded-md border" required>
                             </div>
                             <div>
-                                <label for="commune">Commune/Sangkat*</label><br>
-                                <input type="text" name="commune" placeholder="Select Commune/Sangkat" class="w-full px-4 py-2 mt-2 rounded-md border" required>
+                                <label for="commune">Commune*</label><br>
+                                <input type="text" name="commune" placeholder="Select Commune" class="w-full px-4 py-2 mt-2 rounded-md border" required>
                             </div>
                             <div>
-                                <label for="house">House & Street Address*</label><br>
-                                <input type="text" name="house" placeholder="e.g. #23, Near..." class="w-full px-4 py-2 mt-2 rounded-md border" required>
+                                <label for="village">Village*</label><br>
+                                <input type="text" name="village" placeholder="Enter Your Village" class="w-full px-4 py-2 mt-2 rounded-md border" required>
                             </div>
                         </div>
-                        <div class="mt-5">
-                            <label for="email">Email (Optional)</label>
-                            <input type="email" name="email" placeholder="example@gmail.com" class="w-full px-4 py-2 mt-2 rounded-md border">
-                        </div>
-                        <div class="mt-5">
-                            <label for="order-notes">Order notes (Optional)</label>
-                            <textarea name="order_notes" id="order-notes" rows="5" class="w-full border rounded-md mt-2 px-4 py-2" placeholder="Our delivery partner unable to bring package to your Apartment room and No Hourly Schedule Delivery available."></textarea>
-                        </div>
-                        <div class="flex justify-between mt-5">
-                            <a href="#" class="hover:text-blue-500 hover:underline">
-                                <div class="flex items-center gap-2">
-                                    <i class="fa-solid fa-chevron-left text-sm"></i>
-                                    <p>Return to cart</p>
-                                </div>
-                            </a>
-                            <button class="bg-blue-800 hover:bg-blue-700 px-10 text-white rounded-lg py-2">Order</button>
+                         <div>
+                            <label for="order_notes">Order Notes</label><br>
+                            <textarea name="order_notes" placeholder="Enter any notes about the order" class="w-full h-24 px-4 py-2 mt-2 rounded-md border"></textarea>
                         </div>
                         @foreach($selectedProducts as $product)
                             <input type="hidden" name="selected_products[]" value="{{ $product->id }}">
                         @endforeach
+                        <button type="submit" class="px-4 py-2 mt-4 bg-[#17554B] rounded-full text-white text-sm w-full">Place Order</button>
                     </form>
                 </div>
             </div>
@@ -63,18 +73,20 @@
                             <img src="{{ asset('images/' . $product->images) }}" alt="" class="h-20">
                             <div>
                                 <h1 class="text-lg font-medium">{{ $product->name }}</h1>
-                                <p class="text-sm text-gray-800 font-bold">Quantity: 1</p>
+                                <p class="text-sm text-gray-800 font-bold">Quantity: {{ $cart[$product->id] }}</p>
                                 <p class="text-sm text-gray-500">Ship every 3 weeks</p>
                             </div>
                         </div>
-                        <p>{{ $product->price }}$</p>
+                        <h1 class="text-sm">${{ $product->price * $cart[$product->id] }}</h1>
                     </div>
                 @endforeach
 
                 <div class="mt-5 border-b border-gray-500 pb-5">
                     <div class="flex justify-between">
                         <p>Subtotal</p>
-                        <p>{{ $selectedProducts->sum('price') }}$</p>
+                        <h1 class="text-sm">
+                            ${{ collect($selectedProducts)->sum(function($product) use ($cart) { return $product->price * $cart[$product->id]; }) }}
+                        </h1>
                     </div>
                     <div class="flex justify-between mt-5">
                         <p>Shipping</p>
@@ -84,7 +96,9 @@
                 <div class="mt-5 pb-5">
                     <div class="flex justify-between">
                         <p class="text-xl font-semibold">Total</p>
-                        <p class="text-xl font-bold">{{ $selectedProducts->sum('price') }}$</p>
+                        <h1 class="text-lg font-semibold">
+                            ${{ collect($selectedProducts)->sum(function($product) use ($cart) { return $product->price * $cart[$product->id]; }) }}
+                        </h1>
                     </div>
                 </div>
             </div>
