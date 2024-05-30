@@ -18,8 +18,7 @@ class Order extends Model
         'province',
         'district',
         'commune',
-        'house_address',
-        'email',
+        'village',
         'order_notes',
     ];
 
@@ -28,9 +27,21 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'order_product')->withPivot('quantity');
+        return $this->belongsToMany(Product::class)->withPivot('quantity');
     }
+
+    public function approve()
+    {
+        $this->status = 'approved';
+        $this->save();
+    }
+
+    public function reject()
+    {
+        $this->status = 'rejected';
+        $this->save();
+    }
+
 }

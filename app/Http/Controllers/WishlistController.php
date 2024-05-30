@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Log;
+
 
 class WishlistController extends Controller
 {
@@ -62,15 +64,19 @@ class WishlistController extends Controller
         $user_id = auth()->user()->id;
         $product_id = $request->product_id;
 
+        Log::info('Remove request received', ['user_id' => $user_id, 'product_id' => $product_id]);
+
         $wishlist = Wishlist::where('user_id', $user_id)
             ->where('product_id', $product_id)
             ->first();
 
         if (!$wishlist) {
+            Log::warning('Wishlist item not found', ['user_id' => $user_id, 'product_id' => $product_id]);
             return response()->json(['success' => false, 'message' => 'Wishlist item not found']);
         }
 
         $wishlist->delete();
+        Log::info('Wishlist item removed', ['user_id' => $user_id, 'product_id' => $product_id]);
 
         return response()->json(['success' => true, 'message' => 'Item removed from favorites']);
     }

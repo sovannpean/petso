@@ -47,7 +47,12 @@ class Product extends Model
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class, 'order_product')->withPivot('quantity');
+        return $this->belongsToMany(Order::class)->withPivot('quantity');
+    }
+
+    public function carts()
+    {
+        return $this->belongsToMany(Carts::class, 'carts_product')->withPivot('quantity');
     }
 
     public function wishlists()
@@ -70,10 +75,14 @@ class Product extends Model
         return $this->belongsToMany(Product::class, 'related_products', 'product_id', 'related_product_id');
     }
 
-    // favorite
     public function isFavorited()
     {
         return auth()->user() && auth()->user()->wishlist()->where('product_id', $this->id)->exists();
+    }
+
+    public function isCarts()
+    {
+        return auth()->user() && auth()->user()->carts()->where('product_id', $this->id)->exists();
     }
 
 }

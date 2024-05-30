@@ -1,4 +1,15 @@
 <x-app-layout>
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <div style="background-image: url({{ url('image/main-banner.jpeg') }});">
         <div class="h-[487px] relative max-w-screen-xl mx-auto">
             <div class="absolute top-20 right-0">
@@ -83,7 +94,6 @@
                         @endforeach
                     @endif
                 </div>
-
             </div>
         </div>
     </div>
@@ -268,5 +278,25 @@
                 .catch(error => console.error('Error:', error));
             });
         });
+    });
+
+    function addToCart(productId) {
+    var quantity = $('#quantity-' + productId).val();
+
+    $.ajax({
+      url: '/cart/add',
+      method: 'POST',
+      data: {
+        _token: '{{ csrf_token() }}',
+        product_id: productId,
+        quantity: quantity
+      },
+      success: function(response) {
+        alert('Product added to cart successfully!');
+        // Optionally update the cart UI here
+      },
+      error: function(response) {
+        alert('Failed to add product to cart.');
+      }
     });
 </script>
