@@ -153,11 +153,25 @@ Route::post('/wishlist/add', [WishlistController::class, 'addWishlist'])->name('
 Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
 
 Route::get('/pages/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::get('/pages/shop', [ShopController::class, 'index'])->name('shop.index');
 
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::get('/orders/create', [OrderController::class, 'indexOrder'])->name('orders.indexOrder');
 Route::post('/orders/create-order', [OrderController::class, 'create'])->name('orders.create');
 Route::post('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+Route::get('/orders/create', [OrderController::class, 'indexOrder'])->name('orders.indexOrder');
+Route::post('/orders/create-order', [OrderController::class, 'create'])->name('orders.create');
+Route::post('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+
+// Route::get('/pages/shop', [ShopController::class, 'index'])->name('shop.index');
+
+//layout page
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/pages/detailproductPage/{id}', [PagesController::class, 'productDetail'])->name('products.detail');
+Route::get('/components/nav-menu', [CategoryController::class, 'homeshow'])->name('menu');
+Route::get('/pages/shops/shop', [PagesController::class, 'shop'])->name('shop');
+Route::get('/pages/dogs/allProduct', [PagesController::class, 'dogIndex'])->name('dog.index');
+Route::get('/pages/cats/allProduct', [PagesController::class, 'catIndex'])->name('cat.index');
 
 Route::get('/cart', [CardOrderController::class, 'index'])->name('pages.viewCartProduct');
 Route::post('/wishlist/add-to-cart', [CardOrderController::class, 'addToCart'])->name('cart.addMultiple');
