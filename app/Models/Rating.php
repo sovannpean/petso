@@ -9,17 +9,19 @@ class Rating extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id', 'product_id', 'rating', 'review',
-    ];
+    protected $fillable = ['user_id', 'product_id', 'rating', 'review'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
-
-    public function user()
+    public function orders()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Order::class);
     }
 }

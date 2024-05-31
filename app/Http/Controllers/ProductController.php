@@ -131,4 +131,24 @@ class ProductController extends Controller
 
         return view('products.show', ['product' => $product, 'lowStock' => false]);
     }
+    public function rate(Request $request)
+    {
+        $productId = $request->input('product_id');
+        $rating = $request->input('rating');
+
+        return redirect()->back()->with('success', 'Rating submitted successfully');
+    }
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Search products based on the query
+        $products = Product::where('name', 'LIKE', "%{$query}%")
+        ->orWhere('detail', 'LIKE', "%{$query}%")
+        ->get();
+
+        // Return the search results to the view
+        return view('pages.homePage', ['products' => $products, 'search' => true]);
+    }
+
 }

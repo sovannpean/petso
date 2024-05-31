@@ -14,7 +14,8 @@ class HomeController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {       
+        $products = Product::all(); 
         $categories = Category::all();
         $categories = Category::with('subcategories')->get();        
         $products = Product::orderBy('created_at', 'desc')->get();

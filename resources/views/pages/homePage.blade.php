@@ -10,6 +10,68 @@
             {{ session('error') }}
         </div>
     @endif
+    
+<!-- Search bar results -->
+    @if(isset($search) && $search)
+        <div class="max-w-screen-xl mx-auto my-10">
+            <div class="mb-5">
+                <div class="flex items-center justify-between">
+                    <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
+                    <h1 class="text-2xl font-semibold">Search Results</h1>
+                    <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
+                </div>
+                <div class="text-center text-[#af9a4f]">
+                    <i class="fa-solid fa-star-of-david text-sm"></i>
+                    <i class="fa-solid fa-star-of-david text-sm"></i>
+                    <i class="fa-solid fa-star-of-david text-sm"></i>
+                </div>
+            </div>
+            <div class="grid grid-cols-4 gap-4">
+                @if($products->isEmpty())
+                    <p>No products found for "{{ request('query') }}".</p>
+                @else
+                    @foreach($products as $product)
+                        <div class="border border-gray-200 bg-[#48b194]">
+                            <div class="bg-gray-100">
+                                <a href="{{ route('products.detail', $product->id) }}">
+                                    <img src="{{ asset('/images/' . $product->images) }}" alt="" class="w-full h-[350px] object-cover">
+                                </a>
+                            </div>
+                            <div class="p-4">
+                                <h1 class="font-bold text-[#602b05]">{{ $product->name }}</h1>
+                                <div class="flex justify-between items-center mt-2">
+                                    <div>
+                                        <a href="{{ route('products.detail', $product->id) }}">
+                                            <h1 class="font-semibold text-gray-100">{{ $product->price }}$</h1>
+                                            <h1 class="text-sm"><span class="font-semibold">WEIGHT:</span> {{ $product->weight . 'kg'}}</h1>
+                                        </a>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="flex gap-2">
+                                            <a href="#" class="add-to-wishlist bg-white hover:border-[#115542] hover:border rounded-md" data-product-id="{{ $product->id }}">
+                                                <i class="fa-solid fa-heart p-2 {{ $product->isFavorited() ? 'favorite' : '' }}"></i>
+                                            </a>
+                                            <a href="#" class="add-to-cart bg-white hover:border-[#115542] hover:border rounded-md" data-product-id="{{ $product->id }}">
+                                                <i class="fa-solid fa-cart-plus p-2"></i>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+    @endif
+
     <div style="background-image: url({{ url('image/main-banner.jpeg') }});">
         <div class="h-[487px] relative max-w-screen-xl mx-auto">
             <div class="absolute top-20 right-0">
@@ -80,7 +142,7 @@
                                                 <a href="#" class="add-to-wishlist bg-white hover:border-[#115542] hover:border rounded-md" data-product-id="{{ $product->id }}">
                                                     <i class="fa-solid fa-heart p-2 {{ $product->isFavorited() ? 'favorite' : '' }}"></i>
                                                 </a>
-                                                <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
+                                                <a href="#" class="add-to-cart bg-white hover:border-[#115542] hover:border rounded-md" data-product-id="{{ $product->id }}">
                                                     <i class="fa-solid fa-cart-plus p-2"></i>
                                                 </a>
                                             </div>
@@ -130,7 +192,7 @@
                         </ul>
                     </div>
                     <div class="w-[949px]">
-                        <img src="{{asset('image/banner-content2.png')}}" alt="" >
+                        <img src="{{asset('image/banner-content2.png')}}" alt="">
                     </div>
                     <div>
                         <h1 class="text-xl font-semibold text-[#602b05]">FROM $3.00</h1>
@@ -148,46 +210,49 @@
             {{-- card --}}
             <div class="grid grid-cols-4 gap-4">
                 {{-- loop --}}
-                <div class="border border-gray-200 relative top-0">
-                    <div class="absolute top-0 left-0 bg-[#499e86] hover:bg-[#115542] ml-4 rounded-b-full cursor-pointer">
-                        <h1 style="writing-mode: vertical-lr;" class="px-0.5 pt-2 pb-5 text-sm text-gray-100 font-bold">10%</h1>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <img src="{{ asset('/images/' . $product->images) }}" alt="" class="w-full h-[350px] object-cover">
-                        </a>
-                    </div>
-                    <div class="bg-[#48b194]">
-                        <div class="flex justify-between items-end p-4">
-                            <div>
-                                <a href="#">
-                                    <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
-                                    <h1 class="font-semibold text-gray-100">$140.43</h1>
-                                    <h1 class="line-through text-sm">$160.00</h1>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center">
-                                <div class="flex gap-2">
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-solid fa-heart p-2 text-red-900"></i>
-                                    </a>
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-solid fa-cart-plus p-2"></i>
+                @foreach ($products as $product)
+                    <div class="border border-gray-200 relative top-0">
+                        <div class="absolute top-0 left-0 bg-[#499e86] hover:bg-[#115542] ml-4 rounded-b-full cursor-pointer">
+                            <h1 style="writing-mode: vertical-lr;" class="px-0.5 pt-2 pb-5 text-sm text-gray-100 font-bold">10%</h1>
+                        </div>
+                        <div>
+                            <a href="#">
+                                <img src="{{ asset('/images/' . $product->images) }}" alt="" class="w-full h-[350px] object-cover">
+                            </a>
+                        </div>
+                        <div class="bg-[#48b194]">
+                            <div class="flex justify-between items-end p-4">
+                                <div>
+                                    <a href="#">
+                                        <h1 class="font-bold text-[#602b05]">{{ $product->name }}</h1>
+                                        <h1 class="font-semibold text-gray-100">${{ $product->price }}</h1>
+                                        <h1 class="line-through text-sm">${{ $product->original_price }}</h1>
                                     </a>
                                 </div>
-                                <div>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                <div class="flex flex-col items-center">
+                                    <div class="flex gap-2">
+                                        <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
+                                            <i class="fa-solid fa-heart p-2 text-red-900"></i>
+                                        </a>
+                                        <a href="#" class="add-to-cart bg-white hover:border-[#115542] hover:border rounded-md" data-product-id="{{ $product->id }}">
+                                            <i class="fa-solid fa-cart-plus p-2"></i>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
             </div>
         </div>
+
     </div>
 
     {{-- for more --}}
@@ -209,46 +274,49 @@
                 </div>
                 <div class="grid grid-cols-4 gap-4">
                     {{-- loop --}}
-                    <div class="border border-gray-200">
-                        <div>
-                            <a href="#">
-                                <img src="{{asset('image/dogfood3.jpeg')}}" alt="" class="w-full h-[350px] object-cover">
-                            </a>
-                        </div>
-                        <div class="bg-[#48b194]">
-                            <div class="flex justify-between items-center p-4">
-                                <div>
-                                    <a href="#">
-                                        <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
-                                        <h1 class="font-semibold text-gray-100">$140.43</h1>
-                                        <h1 class="line-through text-sm">$160.0</h1>
-                                    </a>
-                                </div>
-                                <div class="flex flex-col items-center">
-                                    <div class="flex gap-2">
-                                        <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                            <i class="fa-solid fa-heart p-2 text-red-900"></i>
-                                        </a>
-                                        <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                            <i class="fa-solid fa-cart-plus p-2"></i>
+                    @foreach ($products as $product)
+                        <div class="border border-gray-200">
+                            <div>
+                                <a href="#">
+                                    <img src="{{ asset('/images/' . $product->images) }}" alt="" class="w-full h-[350px] object-cover">
+                                </a>
+                            </div>
+                            <div class="bg-[#48b194]">
+                                <div class="flex justify-between items-center p-4">
+                                    <div>
+                                        <a href="#">
+                                            <h1 class="font-bold text-[#602b05]">{{ $product->name }}</h1>
+                                            <h1 class="font-semibold text-gray-100">${{ $product->price }}</h1>
+                                            <h1 class="line-through text-sm">${{ $product->original_price }}</h1>
                                         </a>
                                     </div>
-                                    <div>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                        <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                    <div class="flex flex-col items-center">
+                                        <div class="flex gap-2">
+                                            <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
+                                                <i class="fa-solid fa-heart p-2 text-red-900"></i>
+                                            </a>
+                                            <a href="#" class="add-to-cart bg-white hover:border-[#115542] hover:border rounded-md" data-product-id="{{ $product->id }}">
+                                                <i class="fa-solid fa-cart-plus p-2"></i>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const wishlistButtons = document.querySelectorAll('.add-to-wishlist');
@@ -282,24 +350,36 @@
             });
         });
     });
+    
+    document.addEventListener('DOMContentLoaded', function () {
+    const cartButtons = document.querySelectorAll('.add-to-cart');
 
-    function addToCart(productId) {
-    var quantity = $('#quantity-' + productId).val();
+        cartButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
 
-    $.ajax({
-      url: '/cart/add',
-      method: 'POST',
-      data: {
-        _token: '{{ csrf_token() }}',
-        product_id: productId,
-        quantity: quantity
-      },
-      success: function(response) {
-        alert('Product added to cart successfully!');
-        // Optionally update the cart UI here
-      },
-      error: function(response) {
-        alert('Failed to add product to cart.');
-      }
+                const productId = this.getAttribute('data-product-id');
+                const url = "{{ route('cart.add') }}";
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify({ product_id: productId, quantity: 1 })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "{{ route('pages.viewCartProduct') }}"; // Redirect to cart page
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
     });
 </script>

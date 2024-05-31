@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 
-
 class OrderController extends Controller
 {
     public function index()
@@ -59,20 +58,29 @@ class OrderController extends Controller
                 'province' => $validatedData['province'],
                 'district' => $validatedData['district'],
                 'commune' => $validatedData['commune'],
-                'village' => $validatedData['commune'],
+                'village' => $validatedData['village'],
                 'order_notes' => $validatedData['order_notes'],
             ]);
 
             Log::info('Order created with ID: ' . $order->id);
 
             foreach ($selectedProductIds as $productId) {
-                $product = Product::find($productId);
-                if ($product) {
-                    $order->products()->attach($productId, ['quantity' => $cart[$productId]]);
+                $product = Product::findOrFail($productId);
+
+                // Check if the stock is sufficient
+                if ($product->stock < $cart[$productId]) {
+                    throw new \Exception('Insufficient stock for product: ' . $product->name);
                 }
+
+                // Reduce the stock
+                $product->stock -= $cart[$productId];
+                $product->save();
+
+                // Attach the product to the order
+                $order->products()->attach($productId, ['quantity' => $cart[$productId]]);
             }
 
-            Log::info('Products attached to order.');
+            Log::info('Products attached to order and stock updated.');
 
             Session::forget('cart');
 
@@ -114,5 +122,25 @@ class OrderController extends Controller
         $order->update(['status' => $request->status]);
 
         return redirect()->route('orders.index')->with('success', 'Order status updated successfully.');
+    }
+
+    public function status()
+    {
+        $orders = Order::where('user_id', Auth::id())->get(['id', 'status']);
+        return response()->json($orders);
+    }
+
+    public function cancel(Order $order)
+    {
+        if ($order->user_id !== Auth::id()) {
+            return redirect()->route('profile.show')->with('error', 'You are not authorized to cancel this order.');
+        }
+
+        if ($order->status === 'pending') {
+            $order->update(['status' => 'cancelled']);
+            return redirect()->route('profile.edit')->with('success', 'Order cancelled successfully.');
+        }
+
+        return redirect()->route('profile.edit')->with('error', 'Only pending orders can be cancelled.');
     }
 }

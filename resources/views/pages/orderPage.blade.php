@@ -1,3 +1,4 @@
+<!-- resources/views/pages/orderPage.blade.php -->
 <x-app-layout>
     <section class="max-w-screen-xl mx-auto my-20">
         <div>
@@ -54,7 +55,7 @@
                                 <input type="text" name="village" placeholder="Enter Your Village" class="w-full px-4 py-2 mt-2 rounded-md border" required>
                             </div>
                         </div>
-                         <div>
+                        <div>
                             <label for="order_notes">Order Notes</label><br>
                             <textarea name="order_notes" placeholder="Enter any notes about the order" class="w-full h-24 px-4 py-2 mt-2 rounded-md border"></textarea>
                         </div>

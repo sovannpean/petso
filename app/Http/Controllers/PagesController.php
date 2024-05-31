@@ -12,7 +12,7 @@ class PagesController extends Controller
     //
     public function productDetail($id)
     {
-        $product = Product::find($id);
+        $product = Product::with('ratings.user')->findOrFail($id);
         $category = Category::all();
         return view('/pages/detailproductPage', ['product' => $product], compact('product', 'category'));
     }

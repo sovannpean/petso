@@ -45,19 +45,19 @@ class CardOrderController extends Controller
             if ($cart[$productId] < $product->stock) {
                 $cart[$productId]++;
             } else {
-                return redirect()->route('pages.viewCartProduct')->with('error', 'Cannot add more than available stock.');
+                return response()->json(['success' => false, 'message' => 'Cannot add more than available stock.']);
             }
         } else {
             if ($product->stock > 0) {
                 $cart[$productId] = 1;
             } else {
-                return redirect()->route('pages.viewCartProduct')->with('error', 'Product is out of stock.');
+                return response()->json(['success' => false, 'message' => 'Product is out of stock.']);
             }
         }
 
         Session::put('cart', $cart);
 
-        return redirect()->route('pages.viewCartProduct')->with('success', 'Product added to cart successfully!');
+        return response()->json(['success' => true]);
     }
 
     public function createOrder(Request $request)
@@ -119,4 +119,5 @@ class CardOrderController extends Controller
 
         return redirect()->route('pages.viewCartProduct')->with('success', 'Cart updated successfully.');
     }
+
 }

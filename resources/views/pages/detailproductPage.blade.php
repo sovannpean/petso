@@ -1,4 +1,15 @@
 <x-app-layout>
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <section class="bg-white dark:bg-gray-900 antialiased pb-20">
         <div class="bg-gray-100 py-4">
             <div class="max-w-screen-xl mx-auto">
@@ -34,43 +45,24 @@
 
                         <div class="flex items-center gap-2 mt-2 sm:mt-0">
                             <div class="flex items-center gap-1">
-                                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                                </svg>
-                                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                                </svg>
-                                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                                </svg>
-                                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                                </svg>
-                                <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                                </svg>
+                                @php
+                                    $averageRating = round($product->approvedRatings()->avg('rating'));
+                                @endphp
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <svg class="w-4 h-4 {{ $i <= $averageRating ? 'text-yellow-300' : 'text-gray-300' }}" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                                    </svg>
+                                @endfor
                             </div>
                             <p class="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
-                                (5.0)
+                                ({{ round($product->approvedRatings()->avg('rating'), 1) }})
                             </p>
-                            <a href="#"
+                            <a href="#ratings"
                                 class="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white">
-                                345 Reviews
+                                {{ $product->approvedRatings()->count() }} Reviews
                             </a>
                         </div>
                     </div>
@@ -130,166 +122,32 @@
             </div>
         </div>
 
-        {{-- relation products --}}
-        <div class="max-w-screen-xl mx-auto mt-20">
-            <div class="mb-5">
-                <div class="flex items-center justify-between">
-                    <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
-                    <h1 class="text-2xl font-semibold">Related Product</h1>
-                    <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
-                </div>
-                <div class="text-center text-[#af9a4f]">
-                    <i class="fa-solid fa-star-of-david text-sm"></i>
-                    <i class="fa-solid fa-star-of-david text-sm"></i>
-                    <i class="fa-solid fa-star-of-david text-sm"></i>
-                </div>
-            </div>
-            <div class="grid grid-cols-4 gap-4">
-                {{-- loop --}}
-                <div class="border border-gray-200">
-                    <div>
-                        <a href="/detail-product">
-                            <img src="{{asset('image/dogfood3.jpeg')}}" alt="" class="w-full h-[350px] object-cover">
-                        </a>
-                    </div>
-                    <div class="bg-[#48b194]">
-                        <div class="flex justify-between items-center p-4">
-                            <div>
-                                <a href="/detail-product">
-                                    <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
-                                    <h1 class="font-semibold text-gray-100">$140.43</h1>
-                                    <h1 class="line-through text-sm">$160.0</h1>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center">
-                                <div class="flex gap-2">
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-solid fa-heart p-2 text-red-900"></i>
-                                    </a>
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-solid fa-cart-plus p-2"></i>
-                                    </a>
-                                </div>
-                                <div>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                </div>
-                            </div>
+        {{-- Ratings --}}
+        <div id="ratings" class="max-w-screen-xl mx-auto mt-20">
+            <h2 class="text-2xl font-semibold">Customer Ratings</h2>
+            @forelse ($product->approvedRatings as $rating)
+                <div class="mt-4">
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-1">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <svg class="w-4 h-4 {{ $i <= $rating->rating ? 'text-yellow-300' : 'text-gray-300' }}" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                                </svg>
+                            @endfor
                         </div>
+                        <p class="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
+                            ({{ $rating->rating }})
+                        </p>
                     </div>
+                    <p class="text-gray-900 dark:text-white mt-1">{{ $rating->review }}</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">by {{ $rating->user->name }}</p>
                 </div>
-
-                <div class="border border-gray-200">
-                    <div>
-                        <a href="#">
-                            <img src="{{asset('image/dogfood1.webp')}}" alt="" class="w-full h-[350px] object-cover">
-                        </a>
-                    </div>
-                    <div class="bg-[#48b194]">
-                        <div class="flex justify-between items-end p-4">
-                            <div>
-                                <a href="#">
-                                    <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
-                                    <h1 class="font-semibold text-gray-100">$140.43</h1>
-                                    <h1 class="line-through text-sm">$160.00</h1>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center">
-                                <div class="flex gap-2">
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-regular fa-heart p-2"></i>
-                                    </a>
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-solid fa-cart-plus p-2"></i>
-                                    </a>
-                                </div>
-                                <div>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border border-gray-200">
-                    <div>
-                        <a href="#">
-                            <img src="{{asset('image/dogfood2.webp')}}" alt="" class="w-full h-[350px] object-cover">
-                        </a>
-                    </div>
-                    <div class="bg-[#48b194]">
-                        <div class="flex justify-between items-end p-4">
-                            <div>
-                                <a href="#">
-                                    <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
-                                    <h1 class="font-semibold text-gray-100">$140.43</h1>
-                                    <h1 class="line-through text-sm">$160.00</h1>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center">
-                                <div class="flex gap-2">
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-regular fa-heart p-2"></i>
-                                    </a>
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-solid fa-cart-plus p-2"></i>
-                                    </a>
-                                </div>
-                                <div>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border border-gray-200">
-                    <div>
-                        <a href="#">
-                            <img src="{{asset('image/dogfood3.jpeg')}}" alt="" class="w-full h-[350px] object-cover">
-                        </a>
-                    </div>
-                    <div class="bg-[#48b194]">
-                        <div class="flex justify-between items-end p-4">
-                            <div>
-                                <a href="#">
-                                    <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
-                                    <h1 class="font-semibold text-gray-100">$140.43</h1>
-                                    <h1 class="line-through text-sm">$160.00</h1>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center">
-                                <div class="flex gap-2">
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-regular fa-heart p-2"></i>
-                                    </a>
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-solid fa-cart-plus p-2"></i>
-                                    </a>
-                                </div>
-                                <div>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @empty
+                <p>No ratings yet.</p>
+            @endforelse
         </div>
     </section>
 </x-app-layout>
