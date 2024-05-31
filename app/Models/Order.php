@@ -27,11 +27,6 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function products()
-    {
-        return $this->belongsToMany(Product::class)->withPivot('quantity');
-    }
-
     public function approve()
     {
         $this->status = 'approved';
@@ -43,5 +38,14 @@ class Order extends Model
         $this->status = 'rejected';
         $this->save();
     }
-
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'order_product')
+            ->withPivot('quantity')
+            ->withTimestamps();
+    }
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
 }

@@ -9,8 +9,14 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $appends = ['low_stock'];
+
+    protected $wishlist = ['wishlist'];
+
+    protected $carts = ['carts'];
+
     protected $fillable = [
-        'name','detail', 'price', 'stock', 'weight', 'images', 'category_id', 'sub_category_id'
+        'name', 'detail', 'price', 'stock', 'weight', 'images', 'category_id', 'sub_category_id'
     ];
 
     public function category()
@@ -40,36 +46,49 @@ class Product extends Model
 
         return $discountedPrice;
     }
+
     public function isNearlyOutOfStock()
     {
         return $this->stock <= 3;
     }
 
+    public function getLowStockAttribute()
+    {
+        return $this->isNearlyOutOfStock();
+    }
+
     public function orders()
     {
-        return $this->belongsToMany(Order::class)->withPivot('quantity');
+        return $this->belongsToMany(Order::class, 'order_product')
+            ->withPivot('quantity')
+            ->withTimestamps();
     }
 
     public function carts()
     {
-        return $this->belongsToMany(Carts::class, 'carts_product')->withPivot('quantity');
+        return $this->belongsToMany(Carts::class, 'cart_product')->withPivot('quantity');
     }
 
     public function wishlists()
     {
         return $this->belongsTo(Wishlist::class);
     }
-    
+
     public function ratings()
     {
         return $this->hasMany(Rating::class);
+    }
+
+    public function approvedRatings()
+    {
+        return $this->ratings()->where('approved', true);
     }
 
     public function averageRating()
     {
         return $this->ratings()->avg('rating');
     }
-    
+
     public function relatedProducts()
     {
         return $this->belongsToMany(Product::class, 'related_products', 'product_id', 'related_product_id');
@@ -84,5 +103,4 @@ class Product extends Model
     {
         return auth()->user() && auth()->user()->carts()->where('product_id', $this->id)->exists();
     }
-
 }

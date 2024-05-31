@@ -10,7 +10,7 @@ use App\Models\Product;
 class PagesController extends Controller
 {
     public function productDetail($id) {
-        $product = Product::find($id);
+        $product = Product::with('ratings.user')->findOrFail($id);
         
         if (!$product) {
             abort(404); // Handle case where product is not found

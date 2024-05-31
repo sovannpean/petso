@@ -3,26 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Rating;
 use App\Models\Product;
+use App\Models\Rating;
 use Illuminate\Support\Facades\Auth;
 
 class RatingController extends Controller
 {
     public function rateProduct(Request $request)
     {
-        $user = Auth::user();
-        $product = Product::find($request->product_id);
+        // Validate the incoming request data
+        $request->validate([
+            'order_id' => 'required|integer',
+            'comment' => 'nullable|string',
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
 
-        if (!$product) {
-            return response()->json(['message' => 'Product not found'], 404);
-        }
+        $review = new Rating();
+        $review->order_id = $request->order_id;
+        $review->comments = $request->comment;
+        $review->star_rating = $request->rating;
+        $review->save();
 
-        $rating = Rating::updateOrCreate(
-            ['user_id' => $user->id, 'product_id' => $product->id],
-            ['rating' => $request->rating, 'review' => $request->review]
-        );
-
-        return response()->json(['message' => 'Rating submitted']);
+        return redirect()->back()->with('success', 'Rating submitted successfully');
     }
 }

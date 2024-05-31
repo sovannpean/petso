@@ -78,6 +78,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.edit');
 
     Route::post('auth', [AuthenticatedSessionController::class, 'destroy'])->name('auth.logout');
 
@@ -105,10 +106,13 @@ Route::get('/dashboard/products/update/{id}', [ProductController::class, 'edit']
 Route::post('/dashboard/products/update/{id}', [ProductController::class, 'update']);
 Route::get('/dashboard/products/show/{id}', [ProductController::class, 'show']);
 Route::post('/dashboard/products/index/{id}', [ProductController::class, 'destroy']);
+Route::get('/search', [ProductController::class, 'search'])->name('products.search');
 
 
 //overView
 Route::get('/dashboard/overView/index', [OverViewController::class, 'index'])->name('overview');
+Route::get('/dashboard/overview', [ProductController::class, 'overview'])->name('dashboard.overview');
+
 
 //page
 Route::get('/', [HomeController::class, 'index'])->name('home');;
@@ -163,11 +167,21 @@ Route::post('/orders/{order}/status', [OrderController::class, 'updateStatus'])-
 Route::get('/orders/create', [OrderController::class, 'indexOrder'])->name('orders.indexOrder');
 Route::post('/orders/create-order', [OrderController::class, 'create'])->name('orders.create');
 Route::post('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+Route::get('/orders/status', [OrderController::class, 'status'])->name('orders.status');
+Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
+
+Route::post('/product/rate', [ProductController::class, 'rate']);
+Route::get('/product/rate', [RatingController::class, 'rateProduct'])->name('product.rate');
+Route::get('/product/{id}/ratings', [RatingController::class, 'showRatings'])->name('product.ratings');
+Route::get('/admin/ratings', [AdminController::class, 'showRatings'])->name('admin.ratings');
+Route::post('/admin/ratings/approve/{id}', [AdminController::class, 'approveRating'])->name('admin.ratings.approve');
+
+
 
 // Route::get('/pages/shop', [ShopController::class, 'index'])->name('shop.index');
 
 //layout page
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/pages/detailproductPage/{id}', [PagesController::class, 'productDetail'])->name('products.detail');
 Route::get('/components/nav-menu', [CategoryController::class, 'homeshow'])->name('menu');
 Route::get('/pages/shops/shop', [PagesController::class, 'shop'])->name('shop');
@@ -187,7 +201,11 @@ Route::get('/cart', [CardOrderController::class, 'index'])->name('pages.viewCart
 Route::post('/wishlist/add-to-cart', [CardOrderController::class, 'addToCart'])->name('cart.addMultiple');
 Route::post('/cart/add-multiple', [CardOrderController::class, 'addToCart'])->name('cart.addMultiple');
 Route::post('/cart/update', [CardOrderController::class, 'updateCart'])->name('cart.update');
+Route::post('/cart/add', [CardOrderController::class, 'create'])->name('cart.add');
 
-Route::get('/admin/orders', [AdminController::class, 'index'])->name('admin.orders.index');
-Route::post('/admin/orders/{order}/approve', [AdminController::class, 'approve'])->name('admin.orders.approve');
-Route::post('/admin/orders/{order}/reject', [AdminController::class, 'reject'])->name('admin.orders.reject');
+
+Route::get('/dashboard/orders', [AdminController::class, 'index'])->name('dashboard.orders.index');
+Route::post('/dashboard/orders/{order}/approve', [AdminController::class, 'approve'])->name('dashboard.orders.approve');
+Route::post('/dashboard/orders/{order}/reject', [AdminController::class, 'reject'])->name('dashboard.orders.reject');
+Route::post('/dashboard/product/{id}/status', [AdminController::class, 'changeProductStatus'])->name('admin.product.status');
+Route::post('/dashboard/order/{id}/status', [AdminController::class, 'changeOrderStatus'])->name('admin.order.status');
