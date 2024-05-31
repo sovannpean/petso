@@ -1,4 +1,3 @@
-<!-- resources/views/pages/orderPage.blade.php -->
 <x-app-layout>
     <section class="max-w-screen-xl mx-auto my-20">
         <div>
@@ -27,7 +26,7 @@
             <div>
                 <h1 class="text-xl font-semibold">Delivery Detail</h1>
                 <div class="mt-5">
-                    <form action="{{ route('orders.create') }}" method="POST">
+                    <form action="{{ route('orders.create') }}" method="POST" id="orderForm">
                         @csrf
                         <div class="grid grid-cols-2 gap-4">
                             <div>
@@ -62,6 +61,7 @@
                         @foreach($selectedProducts as $product)
                             <input type="hidden" name="selected_products[]" value="{{ $product->id }}">
                         @endforeach
+                        <input type="hidden" name="delivery_fee" id="delivery_fee" value="0">
                         <button type="submit" class="px-4 py-2 mt-4 bg-[#17554B] rounded-full text-white text-sm w-full">Place Order</button>
                     </form>
                 </div>
@@ -82,10 +82,9 @@
                 @endforeach
 
                 <div class="border border-gray-300 p-5 mt-5">
-
                     <div class="flex justify-between border-b border-gray-300 pb-4">
                         <p>Subtotal</p>
-                        <h1 class="text-sm">
+                        <h1 class="text-sm" id="subtotal">
                             ${{ collect($selectedProducts)->sum(function($product) use ($cart) { return $product->price * $cart[$product->id]; }) }}
                         </h1>
                     </div>
@@ -94,37 +93,36 @@
                     <div class="flex items-center justify-between mb-4 bg-blue-300 py-2 px-4 rounded-md mt-5 text-gray-800">
                         <div>
                             <i class="fa-solid fa-truck"></i>
-                            <label for="default-radio-1" class="ms-2 text-sm font-medium dark:text-gray-300">Deliver in 8-36 Hours:</label>
+                            <label for="delivery_8_36" class="ms-2 text-sm font-medium dark:text-gray-300">Deliver in 8-36 Hours:</label>
                         </div>
                         <div class="flex items-center gap-2">
                             <span>$1.50</span>
-                            <input id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <input id="delivery_8_36" type="radio" name="delivery_method" value="1.50" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onchange="updateTotal(this)">
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between mb-4 bg-yellow-100 py-2 px-4 rounded-md">
                         <div>
-                            <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Pick up at shop</label>
+                            <label for="pickup" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Pick up at shop</label>
                         </div>
-                        <input checked id="default-radio-2" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <input id="pickup" type="radio" name="delivery_method" value="0" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" onchange="updateTotal(this)" checked>
                     </div>
 
                     <div class="mt-5 border-t border-gray-300 pt-4">
                         <div class="flex justify-between">
                             <p class="text-xl font-semibold">Total</p>
-                            <h1 class="text-lg font-semibold">
+                            <h1 class="text-lg font-semibold" id="total">
                                 ${{ collect($selectedProducts)->sum(function($product) use ($cart) { return $product->price * $cart[$product->id]; }) }}
                             </h1>
                         </div>
                     </div>
-                    
                 </div>
 
                 <div class="border border-gray-300 p-5 mt-5">
                     <div id="accordion-flush" data-accordion="collapse" data-active-classes="dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
                         <h2 id="accordion-flush-heading-2">
                             <button type="button" class="w-full py-5 text-start font-medium rtl:text-right text-gray-800 border-b border-gray-300 dark:border-gray-700 dark:text-gray-400 gap-3" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
-                                <input checked type="radio" value="" name="pay-vai" class="w-4 h-4 text-blue-600 bg-gray-600 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input type="radio" value="" name="pay-via" class="w-4 h-4 text-blue-600 bg-gray-600 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <span>Transfer to (ABA, Acleda, TrueMoney or Wing)</span>
                             </button>
                         </h2>
@@ -135,7 +133,7 @@
                         </div>
                         <h2 id="accordion-flush-heading-1">
                             <button type="button" class="w-full text-start py-5 font-medium rtl:text-right text-gray-800 border-b border-gray-300 dark:border-gray-700 dark:text-gray-400 gap-3" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1">
-                                <input checked type="radio" value="" name="pay-vai" class="w-4 h-4 text-blue-600 bg-gray-600 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input type="radio" value="" name="pay-via" class="w-4 h-4 text-blue-600 bg-gray-600 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <span>ABA / Cash on Delivery</span>
                             </button>
                         </h2>
@@ -149,4 +147,16 @@
             </div>
         </div>
     </section>
+
+    <script>
+        function updateTotal(element) {
+            const deliveryFee = parseFloat(element.value);
+            document.getElementById('delivery_fee').value = deliveryFee;
+            
+            const subtotal = parseFloat(document.getElementById('subtotal').textContent.replace('$', ''));
+            const total = subtotal + deliveryFee;
+            
+            document.getElementById('total').textContent = '$' + total.toFixed(2);
+        }
+    </script>
 </x-app-layout>
