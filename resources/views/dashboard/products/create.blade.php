@@ -38,7 +38,7 @@
                     <label for="image" class="cursor-pointer">
                         <div class="w-[450px] h-[430px] border-2 border-gray-300 border-dashed flex flex-col items-center justify-center relative">
                             <i class="fa-regular fa-image text-9xl text-gray-400"></i>
-                            <img src="" id="file-preview" class="text-white absolute">
+                            <img src="" id="file-preview" class="text-white absolute w-full h-full object-cover rounded-lg">
                             <p class="mb-2 text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                             <input class="form-control" type="file" name="image" id="image" accept="images/*" onchange="showFile(event)" required>
                         </div>

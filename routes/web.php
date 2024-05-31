@@ -128,6 +128,7 @@ Route::post('/dashboard/coupons', [CouponController::class, 'store'])->name('cou
 Route::get('/dashboard/coupons/show', [CouponController::class, 'show'])->name('coupons.show');
 Route::get('/dashboard/coupons/coupons/apply', [CouponController::class, 'applyForm'])->name('coupons.applyForm');
 Route::post('/dashboard/coupons/coupons/apply', [CouponController::class, 'apply'])->name('coupons.apply');
+Route::post('/dashboard/coupons/index/{id}', [CouponController::class, 'destroy']);
 
 Route::get('/dashboard/subcategory/index', [SubcategoryController::class, 'index']);
 Route::get('/dashboard/subcategory/create', [SubcategoryController::class, 'create']);
@@ -171,7 +172,16 @@ Route::get('/pages/detailproductPage/{id}', [PagesController::class, 'productDet
 Route::get('/components/nav-menu', [CategoryController::class, 'homeshow'])->name('menu');
 Route::get('/pages/shops/shop', [PagesController::class, 'shop'])->name('shop');
 Route::get('/pages/dogs/allProduct', [PagesController::class, 'dogIndex'])->name('dog.index');
+Route::get('/pages/dogs/foodPage', [PagesController::class, 'dogFood'])->name('dog.food');
+Route::get('/pages/dogs/toyPage', [PagesController::class, 'dogToy'])->name('dog.toy');
+Route::get('/pages/dogs/healthcarePage', [PagesController::class, 'dogHealthcare'])->name('dog.healthcare');
+Route::get('/pages/dogs/treatPage', [PagesController::class, 'dogTreat'])->name('dog.treat');
+
 Route::get('/pages/cats/allProduct', [PagesController::class, 'catIndex'])->name('cat.index');
+Route::get('/pages/cats/foodPage', [PagesController::class, 'catFood'])->name('cat.food');
+Route::get('/pages/cats/toyPage', [PagesController::class, 'catToy'])->name('cat.toy');
+Route::get('/pages/cats/healthcarePage', [PagesController::class, 'catHealthcare'])->name('cat.healthcare');
+Route::get('/pages/cats/treatPage', [PagesController::class, 'catTreat'])->name('cat.treat');
 
 Route::get('/cart', [CardOrderController::class, 'index'])->name('pages.viewCartProduct');
 Route::post('/wishlist/add-to-cart', [CardOrderController::class, 'addToCart'])->name('cart.addMultiple');

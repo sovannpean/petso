@@ -50,7 +50,7 @@
                 @if($products->isEmpty())
                     <p>No products available.</p>
                 @else
-                    @foreach($products->take(4) as $product)
+                    @foreach($products as $product)
                         <div class="border border-gray-200 bg-[#48b194]">
                             <div class="bg-gray-100">
                                 <a href="{{ route('products.detail', $product->id) }}">

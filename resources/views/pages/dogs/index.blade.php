@@ -78,16 +78,16 @@
                         <a href="/pages/dogs/allProduct" class="border border-[#48b194] px-5 py-1.5 rounded-full" id="all-link">
                             <h1 class="font-medium">All</h1>
                         </a>
-                        <a href="/food-dog" class="border border-[#48b194] px-5 py-1.5 rounded-full" id="food-link">
+                        <a href="/pages/dogs/foodPage" class="border border-[#48b194] px-5 py-1.5 rounded-full" id="food-link">
                             <h1 class="font-medium">Food</h1>
                         </a>
-                        <a href="/healthcare-dog" class="border border-[#48b194] px-5 py-1.5 rounded-full" id="healthcare-link">
+                        <a href="/pages/dogs/healthcarePage" class="border border-[#48b194] px-5 py-1.5 rounded-full" id="healthcare-link">
                             <h1 class="font-medium">Healthcare</h1>
                         </a>
-                        <a href="/toy-dog" class="border border-[#48b194] px-5 py-1.5 rounded-full" id="toy-link">
+                        <a href="/pages/dogs/toyPage" class="border border-[#48b194] px-5 py-1.5 rounded-full" id="toy-link">
                             <h1 class="font-medium">Toy</h1>
                         </a>
-                        <a href="/treat-dog" class="border border-[#48b194] px-5 py-1.5 rounded-full" id="treat-link">
+                        <a href="/pages/dogs/treatPage" class="border border-[#48b194] px-5 py-1.5 rounded-full" id="treat-link">
                             <h1 class="font-medium">Treat</h1>
                         </a>
                     </div>
@@ -116,13 +116,13 @@
               // Add the active class to the current page link
               if (path.includes('pages/dogs/allProduct')) {
                 document.getElementById('all-link').classList.add('active');
-              } else if (path.includes('food-dog')) {
+              } else if (path.includes('/pages/dogs/foodPage')) {
                 document.getElementById('food-link').classList.add('active');
-              } else if (path.includes('healthcare-dog')) {
+              } else if (path.includes('/pages/dogs/healthcarePage')) {
                 document.getElementById('healthcare-link').classList.add('active');
-              } else if (path.includes('toy-dog')) {
+              } else if (path.includes('/pages/dogs/toyPage')) {
                 document.getElementById('toy-link').classList.add('active');
-              } else if (path.includes('treat-dog')) {
+              } else if (path.includes('/pages/dogs/treatPage')) {
                 document.getElementById('treat-link').classList.add('active');
               }
             }

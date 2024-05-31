@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Coupon;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse; 
+
 
 class CouponController extends Controller
 {
@@ -50,5 +52,10 @@ class CouponController extends Controller
         }
 
         return redirect('/dashboard/products/index')->with('success', 'Coupon applied successfully.');
+    }
+    public function destroy(string $id)
+    {
+        Coupon::destroy($id);
+        return redirect()->route('coupons.index')->with('success', 'Coupon deleted successfully.');
     }
 }

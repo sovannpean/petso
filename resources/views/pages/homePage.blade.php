@@ -148,44 +148,51 @@
             {{-- card --}}
             <div class="grid grid-cols-4 gap-4">
                 {{-- loop --}}
-                <div class="border border-gray-200 relative top-0">
-                    <div class="absolute top-0 left-0 bg-[#499e86] hover:bg-[#115542] ml-4 rounded-b-full cursor-pointer">
-                        <h1 style="writing-mode: vertical-lr;" class="px-0.5 pt-2 pb-5 text-sm text-gray-100 font-bold">10%</h1>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <img src="{{ asset('/images/' . $product->images) }}" alt="" class="w-full h-[350px] object-cover">
-                        </a>
-                    </div>
-                    <div class="bg-[#48b194]">
-                        <div class="flex justify-between items-end p-4">
+                @foreach ($products as $product)
+                    @if ($product->coupons->isNotEmpty())
+                        <div class="border border-gray-200 relative top-0">
+                            <div class="absolute top-0 left-0 bg-[#499e86] hover:bg-[#115542] ml-4 rounded-b-full cursor-pointer">
+                                <h1 style="writing-mode: vertical-lr;" class="px-0.5 pt-2 pb-5 text-sm text-gray-100 font-bold">
+                                    {{number_format( $product->coupons->first()->discount_amount,0)}}% Off
+                                </h1>
+                            </div>
                             <div>
-                                <a href="#">
-                                    <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
-                                    <h1 class="font-semibold text-gray-100">$140.43</h1>
-                                    <h1 class="line-through text-sm">$160.00</h1>
+                                <a href="{{ route('products.detail', $product->id) }}">
+                                    <img src="{{ asset('/images/' . $product->images) }}" alt="" class="w-full h-[350px] object-cover">
                                 </a>
                             </div>
-                            <div class="flex flex-col items-center">
-                                <div class="flex gap-2">
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-solid fa-heart p-2 text-red-900"></i>
-                                    </a>
-                                    <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
-                                        <i class="fa-solid fa-cart-plus p-2"></i>
-                                    </a>
-                                </div>
-                                <div>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
-                                    <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                            <div class="bg-[#48b194]">
+                                <div class="flex justify-between items-end p-4">
+                                    <div>
+                                        <a href="{{ route('products.detail', $product->id) }}">
+                                            <h1 class="font-bold text-[#602b05]">ETIAM GRADRE</h1>
+                                            <h1 class="text-sm"><span class="font-semibold">WEIGHT:</span> {{ $product->weight . 'kg'}}</h1>
+                                            <h1 class="font-semibold text-gray-100">${{ number_format($product->discounted_price, 2) }}</h1>
+                                            <h1 class="line-through text-sm">{{ $product->price }}$</h1>
+                                        </a>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="flex gap-2">
+                                            <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
+                                                <i class="fa-solid fa-heart p-2 text-red-900"></i>
+                                            </a>
+                                            <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
+                                                <i class="fa-solid fa-cart-plus p-2"></i>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </div>    
+                    @endif
+                @endforeach
             </div>
         </div>
     </div>
