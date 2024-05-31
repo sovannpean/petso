@@ -107,6 +107,65 @@
             </div>
         </div>
 
+        {{-- relation products --}}
+        <div class="max-w-screen-xl mx-auto mt-20">
+            <div class="mb-5">
+                <div class="flex items-center justify-between">
+                    <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
+                    <h1 class="text-2xl font-semibold">Related Product</h1>
+                    <hr class="w-[520px] h-1 bg-gray-400 border-0 rounded">
+                </div>
+                <div class="text-center text-[#af9a4f]">
+                    <i class="fa-solid fa-star-of-david text-sm"></i>
+                    <i class="fa-solid fa-star-of-david text-sm"></i>
+                    <i class="fa-solid fa-star-of-david text-sm"></i>
+                </div>
+            </div>
+            @if ($relatedProducts->isEmpty())
+                <p class="text-center mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">No Products Related.</p>
+            @else
+                <div class="grid grid-cols-4 gap-4">
+                    @foreach ($relatedProducts as $relatedProduct)
+                        <div class="border border-gray-200 bg-[#48b194]">
+                            <div>
+                                <a href="{{ route('products.detail', $relatedProduct->id) }}">
+                                    <img src="{{ asset('/images/' . $relatedProduct->images) }}" alt="{{ $relatedProduct->name }}" class="w-full h-[350px] object-cover">
+                                </a>
+                            </div>
+                            <div class="p-4">
+                                <h1 class="font-bold text-[#602b05]">{{ $relatedProduct->name }}</h1>
+                                <div class="flex justify-between items-center mt-2">
+                                    <div>
+                                        <a href="{{ route('products.detail', $relatedProduct->id) }}">
+                                            <h1 class="font-semibold text-gray-100">{{ $relatedProduct->price }}$</h1>
+                                            <h1 class="line-through text-sm">$160.0</h1>
+                                        </a>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="flex gap-2">
+                                            <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
+                                                <i class="fa-solid fa-heart p-2 text-red-900"></i>
+                                            </a>
+                                            <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
+                                                <i class="fa-solid fa-cart-plus p-2"></i>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                            <i class="fa-solid fa-star text-sm text-yellow-700"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+
         {{-- Ratings --}}
         <div id="ratings" class="max-w-screen-xl mx-auto mt-20">
             <h2 class="text-2xl font-semibold">Customer Ratings</h2>

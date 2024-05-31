@@ -31,13 +31,15 @@
                     @csrf
                     @forelse($wishlists as $wishlist)
                         <div class="flex justify-between items-center border-y border-gray-300 py-2 wishlist-item" id="wishlist-item-{{ $wishlist->product->id }}">
-                            <input type="checkbox" class="product-checkbox form-checkbox h-5 w-5 text-blue-600" name="selected_products[]" value="{{ $wishlist->product->id }}">
-                            <a href="/detail-product/{{ $wishlist->product->id }}">
-                                <div class="flex gap-2 items-center">
-                                    <img src="{{ asset('/images/' . $wishlist->product->images) }}" alt="" class="h-20">
-                                    <h1>{{ $wishlist->product->name }}</h1>
-                                </div>
-                            </a>
+                            <div class="flex items-center gap-5">
+                                <input type="checkbox" class="product-checkbox form-checkbox h-5 w-5 text-blue-600" name="selected_products[]" value="{{ $wishlist->product->id }}">
+                                <a href="/detail-product/{{ $wishlist->product->id }}">
+                                    <div class="flex gap-2 items-center">
+                                        <img src="{{ asset('/images/' . $wishlist->product->images) }}" alt="" class="h-20">
+                                        <h1>{{ $wishlist->product->name }}</h1>
+                                    </div>
+                                </a>
+                            </div>
                             <div class="flex gap-10 items-center">
                                 <h1 class="product-price">{{ $wishlist->product->price }}$</h1>
                                 <h1 class="text-[#48b194]">In Stock</h1>

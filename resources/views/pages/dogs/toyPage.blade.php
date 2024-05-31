@@ -1,7 +1,7 @@
 @extends('pages.dogs.index')
 @section('content')
     @if ($dogtoys->isEmpty())
-        <p class="text-center mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">No Products Related.</p>
+        <p class="text-center mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">No Products Toy.</p>
     @else
         <div class="grid grid-cols-4 gap-4 mt-10">
             @foreach ($dogtoys as $dogtoy)
