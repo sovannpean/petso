@@ -51,7 +51,9 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col justify-between items-end">
-                                    <i class="fa-solid fa-xmark"></i>
+                                    <button type="button" class="remove-button">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
                                     <p class="item-total-price">${{ $product->price * $cart[$product->id] }}</p>
                                 </div>
                             </div>
@@ -128,46 +130,60 @@
         </div>
     </section>
 
+    <form id="remove-form" action="{{ route('cart.remove') }}" method="POST" style="display:none;">
+        @csrf
+        <input type="hidden" name="product_id" id="remove-product-id">
+    </form>
+
     <script>
         document.querySelectorAll('.increment-button').forEach(button => {
-    button.addEventListener('click', function() {
-        const input = this.previousElementSibling;
-        const itemElement = this.closest('.flex.justify-between.mt-5.border-b.pb-5');
-        const stock = parseInt(itemElement.getAttribute('data-stock'));
-        if (parseInt(input.value) < stock) {
-            input.value = parseInt(input.value) + 1;
-            updatePrice(itemElement, input.value);
-        } else {
-            alert('Maximum stock limit reached.');
+            button.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                const itemElement = this.closest('.flex.justify-between.mt-5.border-b.pb-5');
+                const stock = parseInt(itemElement.getAttribute('data-stock'));
+                if (parseInt(input.value) < stock) {
+                    input.value = parseInt(input.value) + 1;
+                    updatePrice(itemElement, input.value);
+                } else {
+                    alert('Maximum stock limit reached.');
+                }
+            });
+        });
+
+        document.querySelectorAll('.decrement-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.nextElementSibling;
+                if (parseInt(input.value) > 1) {
+                    input.value = parseInt(input.value) - 1;
+                    updatePrice(this.closest('.flex.justify-between.mt-5.border-b.pb-5'), input.value);
+                }
+            });
+        });
+
+        document.querySelectorAll('.remove-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const productElement = this.closest('.flex.justify-between.mt-5.border-b.pb-5');
+                const productId = productElement.querySelector('.counter-input').name.match(/\d+/)[0];
+                document.getElementById('remove-product-id').value = productId;
+                document.getElementById('remove-form').submit();
+            });
+        });
+
+        function updatePrice(itemElement, quantity) {
+            const priceElement = itemElement.querySelector('.text-sm.text-gray-500');
+            const totalPriceElement = itemElement.querySelector('.item-total-price');
+            const price = parseFloat(priceElement.textContent.replace('$', ''));
+            const totalPrice = price * quantity;
+            totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+            updateSubtotal();
         }
-    });
-});
 
-document.querySelectorAll('.decrement-button').forEach(button => {
-    button.addEventListener('click', function() {
-        const input = this.nextElementSibling;
-        if (parseInt(input.value) > 1) {
-            input.value = parseInt(input.value) - 1;
-            updatePrice(this.closest('.flex.justify-between.mt-5.border-b.pb-5'), input.value);
+        function updateSubtotal() {
+            let subtotal = 0;
+            document.querySelectorAll('.item-total-price').forEach(priceElement => {
+                subtotal += parseFloat(priceElement.textContent.replace('$', ''));
+            });
+            document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
         }
-    });
-});
-
-function updatePrice(itemElement, quantity) {
-    const priceElement = itemElement.querySelector('.text-sm.text-gray-500');
-    const totalPriceElement = itemElement.querySelector('.item-total-price');
-    const price = parseFloat(priceElement.textContent.replace('$', ''));
-    const totalPrice = price * quantity;
-    totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
-    updateSubtotal();
-}
-
-function updateSubtotal() {
-    let subtotal = 0;
-    document.querySelectorAll('.item-total-price').forEach(priceElement => {
-        subtotal += parseFloat(priceElement.textContent.replace('$', ''));
-    });
-    document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
-}
     </script>
 </x-app-layout>

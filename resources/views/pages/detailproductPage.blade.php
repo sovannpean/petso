@@ -1,5 +1,6 @@
+<!-- resources/views/pages/viewCartProduct.blade.php -->
 <x-app-layout>
-        @if(session('success'))
+    @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
@@ -73,29 +74,17 @@
                                 </svg>
                             </button>
                         </div>
-                        <a href="#" title=""
-                            class="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                            role="button">
-                            <svg class="w-5 h-5 -ms-2 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z" />
-                            </svg>
-                            Add to favorites
-                        </a>
-                        <a href="#" title=""
-                            class="text-white mt-4 sm:mt-0 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 flex items-center justify-center"
-                            role="button">
-                            <svg class="w-5 h-5 -ms-2 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
-                            </svg>
-
-                            Order
-                        </a>
+                        <form id="add-to-cart-form">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="quantity" id="product-quantity" value="1">
+                            <button type="button" class="add-to-cart text-white mt-4 sm:mt-0 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 flex items-center justify-center" role="button">
+                                <svg class="w-5 h-5 -ms-2 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
+                                </svg>
+                                Add to cart
+                            </button>
+                        </form>
                     </div>
 
                     <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
@@ -146,7 +135,7 @@
                                             <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
                                                 <i class="fa-solid fa-heart p-2 text-red-900"></i>
                                             </a>
-                                            <a href="#" class="bg-white hover:border-[#115542] hover:border rounded-md">
+                                            <a href="#" class="add-to-cart bg-white hover:border-[#115542] hover:border rounded-md" data-product-id="{{ $relatedProduct->id }}">
                                                 <i class="fa-solid fa-cart-plus p-2"></i>
                                             </a>
                                         </div>
@@ -196,3 +185,53 @@
        
     </section>
 </x-app-layout>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            const productId = this.getAttribute('data-product-id');
+            const quantity = document.getElementById('counter-input').value;
+
+            fetch('{{ route('cart.add') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    quantity: quantity
+                })
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Product has been added to your cart!');
+                    window.location.href = '{{ route('pages.viewCartProduct') }}';
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while adding the product to your cart.');
+            });
+        });
+    });
+
+    document.getElementById('increment-button').addEventListener('click', function () {
+        const input = document.getElementById('counter-input');
+        input.value = parseInt(input.value) + 1;
+    });
+
+    document.getElementById('decrement-button').addEventListener('click', function () {
+        const input = document.getElementById('counter-input');
+        if (parseInt(input.value) > 1) {
+            input.value = parseInt(input.value) - 1;
+        }
+    });
+});
+</script>
+

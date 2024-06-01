@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Rating;
 use App\Models\ReviewRating;
 use App\Notifications\OrderStatusNotification;
 use Illuminate\Http\Request;
@@ -66,13 +67,13 @@ class AdminController extends Controller
 
     public function showRatings()
     {
-        $ratings = ReviewRating::with('user', 'product')->where('approved', false)->get();
+        $ratings = Rating::with('user', 'product')->where('approved', false)->get();
         return view('admin.ratings', compact('ratings'));
     }
 
     public function approveRating($id)
     {
-        $rating = ReviewRating::find($id);
+        $rating = Rating::find($id);
         if ($rating) {
             $rating->approved = true;
             $rating->save();

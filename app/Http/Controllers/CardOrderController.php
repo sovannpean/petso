@@ -119,5 +119,18 @@ class CardOrderController extends Controller
 
         return redirect()->route('pages.viewCartProduct')->with('success', 'Cart updated successfully.');
     }
+    public function remove(Request $request)
+    {
+        $cart = session()->get('cart', []);
+        $productId = $request->input('product_id');
+
+        if (isset($cart[$productId])) {
+            unset($cart[$productId]);
+            session()->put('cart', $cart);
+            return redirect()->route('pages.viewCartProduct')->with('success', 'Product removed from cart.');
+        }
+
+        return redirect()->route('pages.viewCartProduct')->with('error', 'Product not found in cart.');
+    }
 
 }

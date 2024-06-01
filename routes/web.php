@@ -82,6 +82,15 @@ Route::middleware('auth')->group(function () {
 
     Route::post('auth', [AuthenticatedSessionController::class, 'destroy'])->name('auth.logout');
 
+    // users
+    Route::get('/dashboard/users/index', [UserController::class, 'index'])->name('users.index');
+    Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/dashboard/users/store', [UserController::class, 'store'])->name('users.store');
+    Route::get('/dashboard/users/show/{id}', [UserController::class, 'show'])->name('users.show');
+    Route::get('/dashboard/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+    Route::post('/dashboard/users/update/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/dashboard/users/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
     
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
@@ -202,6 +211,7 @@ Route::post('/wishlist/add-to-cart', [CardOrderController::class, 'addToCart'])-
 Route::post('/cart/add-multiple', [CardOrderController::class, 'addToCart'])->name('cart.addMultiple');
 Route::post('/cart/update', [CardOrderController::class, 'updateCart'])->name('cart.update');
 Route::post('/cart/add', [CardOrderController::class, 'create'])->name('cart.add');
+Route::post('/cart/remove', [CardOrderController::class, 'remove'])->name('cart.remove');
 
 
 Route::get('/dashboard/orders', [AdminController::class, 'index'])->name('dashboard.orders.index');
