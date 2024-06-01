@@ -1,16 +1,4 @@
-<x-app-layout>
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
-    
+<x-app-layout>    
 <!-- Search bar results -->
     @if(isset($search) && $search)
         <div class="max-w-screen-xl mx-auto my-10">
@@ -326,4 +314,24 @@
             });
         });
     });
+
+    // Check for success or error message in the session
+    @if(session('success'))
+            swal({
+                title: "Success",
+                text: "{{ session('success') }}",
+                icon: "success",
+                button: "OK",
+            });
+        @endif
+
+        @if(session('error'))
+            swal({
+                title: "Error",
+                text: "{{ session('error') }}",
+                icon: "error",
+                button: "OK",
+                timer: 3000,
+            });
+        @endif
 </script>
