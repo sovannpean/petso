@@ -1,5 +1,3 @@
-<!-- resources/views/dashboard/orders/index.blade.php -->
-
 @extends('dashboard')
 
 @section('content')
@@ -37,18 +35,18 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $order->id }}
                         </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $order->user->name }}
-                        </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $order->user->name ?? $order->user->phone }}
+                        </td>
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             @foreach($order->products as $product)
                                 {{ $product->name }} ({{ $product->pivot->quantity }}),
                             @endforeach
-                        </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        </td>
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ ucfirst($order->status) }}
-                        </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        </td>
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             <form action="{{ route('dashboard.orders.approve', $order) }}" method="POST" style="display:inline;">
                                 @csrf
                                 <button type="submit" class="btn btn-success bg-blue-800 hover:bg-blue-600 px-4 py-1 text-gray-200 text-sm rounded-md">Approve</button>
@@ -57,12 +55,11 @@
                                 @csrf
                                 <button type="submit" class="btn btn-danger bg-rose-700 hover:bg-rose-600 px-4 py-1 text-gray-200 text-sm rounded-md">Reject</button>
                             </form>
-                        </th>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-
 </div>
 @endsection

@@ -18,7 +18,13 @@
         <div class="text-center pt-5 pb-5 border-2 border-dashed border-[#ffabab] rounded-lg">
             <div>
                 <i class="fa-solid fa-exclamation-triangle text-6xl pb-5 text-[#ffabab]"></i>
-                <h1 class="text-3xl font-mono font-semibold text-[#ffabab]">Nearly Out of Stock: {{ $nearlyOutOfStockCount }}</h1>
+                <h1 class="text-3xl font-mono font-semibold text-[#ffabab]">Nearly Out of Stock:    @foreach ($products as $product)
+            @if ($product->lowStock)
+                <div class="alert alert-warning">
+                     {{ $product->name }}
+                </div>
+            @endif
+    @endforeach</h1>
             </div>
         </div>
         <div class="text-center pt-5 pb-5 border-2 border-dashed border-[#ffcdab] rounded-lg">
@@ -36,9 +42,7 @@
         <div class="text-center pt-5 pb-5 border-2 border-dashed border-[#abc6ff] rounded-lg">
             <div>
                 <i class="fa-solid fa-hourglass-half text-6xl pb-5 text-[#abc6ff]"></i>
-                @foreach($productOrders as $productOrder)
-                    <h1 class="text-3xl font-mono font-semibold text-[#abc6ff]">Total Quantity Ordered: {{ $productOrder->total_quantity }} </h1>
-                @endforeach
+                    <h1 class="text-3xl font-mono font-semibold text-[#abc6ff]">Total Quantity Ordered: {{ $pendingApprovalCount }} </h1>
             </div>
         </div>
         <div class="text-center pt-5 pb-5 border-2 border-dashed border-[#abc6ff] rounded-lg">

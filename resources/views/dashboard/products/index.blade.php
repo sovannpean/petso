@@ -12,13 +12,6 @@
             {{ session('success') }}
         </div>
     @endif
-    @foreach ($products as $product)
-            @if ($product->lowStock)
-                <div class="alert alert-warning">
-                    The product {{ $product->name }} is nearly out of stock!
-                </div>
-            @endif
-    @endforeach
 
     {{-- @foreach ($products as $product)
         @if ($product->lowStock)

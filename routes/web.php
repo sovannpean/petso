@@ -214,8 +214,8 @@ Route::post('/cart/add', [CardOrderController::class, 'create'])->name('cart.add
 Route::post('/cart/remove', [CardOrderController::class, 'remove'])->name('cart.remove');
 
 
-Route::get('/dashboard/orders', [AdminController::class, 'index'])->name('dashboard.orders.index');
+Route::get('/dashboard/orders/index', [AdminController::class, 'index'])->name('dashboard.orders.index');
 Route::post('/dashboard/orders/{order}/approve', [AdminController::class, 'approve'])->name('dashboard.orders.approve');
 Route::post('/dashboard/orders/{order}/reject', [AdminController::class, 'reject'])->name('dashboard.orders.reject');
 Route::post('/dashboard/product/{id}/status', [AdminController::class, 'changeProductStatus'])->name('admin.product.status');
-Route::post('/dashboard/order/{id}/status', [AdminController::class, 'changeOrderStatus'])->name('admin.order.status');
+Route::post('/dashboard/order/{id}/status', [AdminController::class, 'changeOrderStatus'])->name('admin.orders.status');

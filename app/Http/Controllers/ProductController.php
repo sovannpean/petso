@@ -19,7 +19,6 @@ class ProductController extends Controller
         $subcategories = SubCategory::all();
         
         $products = Product::with('coupons')->get();
-
         foreach ($products as $product) {
             $product->lowStock = $product->isNearlyOutOfStock();
         }

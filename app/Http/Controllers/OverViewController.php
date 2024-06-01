@@ -15,7 +15,11 @@ class OverViewController extends Controller
 {
     public function index()
     {
-        $productCount = Product::count();
+        $products = Product::all(); 
+        foreach ($products as $product) {
+            $product->lowStock = $product->isNearlyOutOfStock();
+        }
+        $productCount = Product::count(); 
         $categoryCount = Category::count();
         $coupons = Coupon::count();
         $product_discount = Product::count();
@@ -36,6 +40,7 @@ class OverViewController extends Controller
         ->get();
 
         return view('/dashboard/overView/index', compact(
+            'products',
             'productCount',
             'coupons',
             'product_discount',
